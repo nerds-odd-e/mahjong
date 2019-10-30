@@ -1,14 +1,23 @@
-mahjong_cpp
+mahjong
 ===========
 
-The C plus plus version of the mahjong game. Mahjong is a Chinese game. This is also the base code of the exercise of my unit testing training.
+The C plus plus version of the mahjong game. Mahjong is a Chinese game.
+
 #How to build
+
+First, get the unit testing frame work https://github.com/cpputest/cpputest installed.
+
+Then, make sure you have make and cmake. Run
+
 <pre>
-make dependency
-make
+    mkdir build
+    cd build
+    cmake ..
+    make
 </pre>
+
 #How to run
 <pre>
-make product
+src/game
 </pre>
-and then it will start a http service on port 8888. Visit http://localhost:8888 to play the game.
+and then it will start a http service on port 8889. Visit http://localhost:8889 to play the game.
