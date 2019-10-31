@@ -33,7 +33,9 @@ set(Main_SRCS
       UserPerspective.cpp
       UserPerspective.h
       Wall.cpp
-      Wall.h)
+      Wall.h
+      HTMLUIEvent.h HTMLUIEvent.cpp
+      )
 
 add_library(mahjongCore ${Main_SRCS})
 

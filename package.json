@@ -1,0 +1,15 @@
+{
+    "name": "mahjong",
+    "version": "1.0.0",
+    "description": "mahjong ui",
+    "repository": "https://github.com/nerds-odd-e/mahjong.git",
+    "author": "Terry Yin <terry.yinzhe@gmail.com>",
+    "license": "MIT",
+    "private": true,
+    "devDependencies": {
+        "jest": "^24.9.0"
+    },
+    "scripts": {
+        "test": "jest"
+    }
+}
