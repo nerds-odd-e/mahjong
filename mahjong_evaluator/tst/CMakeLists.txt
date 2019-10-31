@@ -7,7 +7,7 @@ set(Test_SRCS
 include_directories(${PROJECT_SOURCE_DIR}/mahjong_evaluator/src)
 
 add_executable(mahjong-evaluator-test ${Test_SRCS})
-target_link_libraries(mahjong-evaluator-test cpputest CppUTestExt mahjong_evaluator)
+target_link_libraries(mahjong-evaluator-test CppUTest CppUTestExt mahjong_evaluator)
 
 set(UNIT_TEST mahjong-evaluator-test)
 add_custom_command(

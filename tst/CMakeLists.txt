@@ -29,7 +29,7 @@ include_directories(${PROJECT_SOURCE_DIR}/src/mahjongCore)
 include_directories(${PROJECT_SOURCE_DIR}/mahjong_evaluator/include)
 
 add_executable(mahjong-test ${Test_SRCS})
-target_link_libraries(mahjong-test cpputest CppUTestExt htmlGame mahjongCore)
+target_link_libraries(mahjong-test CppUTest CppUTestExt htmlGame mahjongCore)
 
 set(UNIT_TEST mahjong-test)
 add_custom_command(

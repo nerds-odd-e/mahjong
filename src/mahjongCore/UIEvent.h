@@ -2,6 +2,7 @@
 #define UIEVENTQUEUE_H_
 
 #include <queue>
+#include <string>
 
 class UIEvent{
 public:
