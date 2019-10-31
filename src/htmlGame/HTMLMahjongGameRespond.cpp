@@ -8,7 +8,7 @@
 const char * html_frame =
 		"<html>\n"
 				"<head>\n"
-				"<title>Mahjong Game - For Writing Effective Unit Test Training</title> "
+				"<title>Mahjong Game</title> "
 				"<script>game_id=%d;</script>\n"
 				"<LINK REL=StyleSheet HREF=\"mj.css\" TYPE=\"text/css\">\n"
 				"<script src=\"mj.js\" type=\"text/javascript\"></script>\n"
