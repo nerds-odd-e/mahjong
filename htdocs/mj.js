@@ -1,11 +1,9 @@
 /***********************************************************
  *  mj script for html mahjiong game.
- *  by Terry.Yinzhe@gmail.com
  * 
  *
  */
 var converter = new Array();
-var animations;
 
 converter[0] = 0;
 converter[49] = 1;
@@ -267,19 +265,19 @@ var App = {
             }
         };
     },
-    _DisplayAnimation: function() {
+    _DisplayAnimation: function(animations) {
         if (this.ti != -1)
             clearInterval(this.ti);
         eval(animations.shift());
         if (animations.length > 0)
-            this.ti = setInterval("App._DisplayAnimation()", 500);
+            this.ti = setInterval(function() { App._DisplayAnimation(animations) }, 500);
     },
 
     _Display: function(text) {
         this.ti = -1;
-        animations = text.split("|");
+        var animations = text.split("|");
         if (animations.length > 0)
-            App._DisplayAnimation();
+            App._DisplayAnimation(animations);
     },
 
     _showStatus: function(desc, result) {

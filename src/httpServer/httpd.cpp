@@ -442,6 +442,7 @@ int server_main(SimpleHTMLService *service) {
 
 	server_sock = startup(&port);
 	printf("httpd running on port %d\n", port);
+	fflush(stdout);
 
 	while (shutdown_flag == 0) {
 		client_sock = accept(server_sock, (struct sockaddr *) &client_name,
