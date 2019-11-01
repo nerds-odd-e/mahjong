@@ -10,7 +10,7 @@ int LIB_evaluator_evaluate_array(mahjong_evaluator_handle_t handle, tile_t tiles
 }
 mahjong_evaluator_handle_t LIB_create_evaluator(void) {
 	FAIL("LIB_create_evaluator HAS BEEN CALLED!");
-	return NULL;
+	return 0;
 }
 void LIB_evaluator_destroy(mahjong_evaluator_handle_t handle) {
 	FAIL("LIB_evaluator_destroy HAS BEEN CALLED!");

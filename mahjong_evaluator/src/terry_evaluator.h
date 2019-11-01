@@ -42,7 +42,7 @@ void tile_hash_init(tile_hash_t * hash);
 tile_hash_value_t tile_hash_get(tile_hash_t * hash, tile_t tiles[], int n);
 tile_hash_value_t tile_hash_set(tile_hash_t * hash, tile_t tiles[], int n, tile_hash_value_t value);
 
-#define PATTERN(name, base, count, v) base_score:base, negative_score_of_1_9:0.0, pattern_item_count:count, verb:v, following_items:
-#define PATTERNN(name, base, n19, count, v) base_score:base, negative_score_of_1_9:n19, pattern_item_count:count, verb:v, following_items:
+#define PATTERN(name, base, count, v) .base_score=base, .negative_score_of_1_9=0.0, .pattern_item_count=count, .verb=v, .following_items=
+#define PATTERNN(name, base, n19, count, v) .base_score=base, .negative_score_of_1_9=n19, .pattern_item_count=count, .verb=v, .following_items=
 
 #endif /* TERRY_EVALUATOR_H_ */
