@@ -13,11 +13,15 @@ Then, make sure you have make and cmake. Run
     mkdir build
     cd build
     cmake ..
-    make
+make
 </pre>
 
-#How to run
+# How to run
 <pre>
 src/game
 </pre>
 and then it will start a http service on port 8889. Visit http://localhost:8889 to play the game.
+
+# Acceptance Test
+
+Acceptance Test is using Behave with Python.

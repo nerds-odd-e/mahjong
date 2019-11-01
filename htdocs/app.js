@@ -40,18 +40,20 @@ converter[117] = 70;
 converter[120] = 73;
 converter[123] = 76;
 converter[126] = 79;
+var player_count = 2;
 var App = {
     max_holding_count: 13,
     max_meld_count: 4,
-    player_count: 2,
+    player_count: player_count,
     current_player: 0,
-    holdings: Array(this.player_count),
-    current: Array(this.player_count),
-    meld: Array(this.player_count),
+    holdings: Array(player_count),
+    current: Array(player_count),
+    meld: Array(player_count),
     board_index: 1,
     chowing: false,
     setup: function() {
-        for (j = 0; j < this.player_count; j++) {
+        var j;
+        for (var j = 0; j < this.player_count; j++) {
             this.holdings[j] = Array(0);
             this.meld[j] = Array(0);
         }
@@ -68,7 +70,7 @@ var App = {
     UpdateHolding: function(new_holdings) {
         for (var j = 0; j < this.player_count; j++) {
             var cnt = 0;
-            for (i in new_holdings[j])
+            for (var i in new_holdings[j])
                 if (new_holdings[j][i] < 0x80)
                     cnt++;
                 else
@@ -78,6 +80,7 @@ var App = {
                 this.holdings[j][i] = new_holdings[j][i];
             this.current[j] = new_holdings[j][i];
             this.meld[j] = Array(new_holdings[j].length - cnt)
+            var cnt;
             for (cnt = 0, i++; i < new_holdings[j].length; i++) {
                 this.meld[j][cnt++] = new_holdings[j][i];
             }
@@ -137,6 +140,7 @@ var App = {
 
     },
     onclick: function(e) {
+        var target;
         try {
             target = App._findClickableTarget(e.target);
         } catch (ex) {
@@ -147,12 +151,12 @@ var App = {
             if (App._isPicking() && !App.chowing) {
                 App._Pick();
             } else {
-                discard = -1
-                id = target.id.substr(5);
+                var discard = -1
+                var id = target.id.substr(5);
                 if (id == 'current') {
                     discard = App.current[0];
                 } else {
-                    index = parseInt(id);
+                    var index = parseInt(id);
                     index = App._CellIndexToHoldingIndex(0, index);
                     if (index >= 0) {
                         discard = App.holdings[0][index];
@@ -184,7 +188,7 @@ var App = {
     Throw: function(tile, player) {
         if (tile != 0) {
             if (this.current[player] != tile) {
-                for (i = 0; i < this.holdings[player].length; i++)
+                for (var i = 0; i < this.holdings[player].length; i++)
                     if (this.holdings[player][i] == tile) {
                         this.holdings[player][i] = this.current[player];
                         break;
@@ -194,18 +198,18 @@ var App = {
             this.current[player] = 0;
 
             this._UpdateAllCells();
-            cell = document.getElementById("sh_" + App.board_index);
+            var cell = document.getElementById("sh_" + App.board_index);
             App.board_index++;
             cell.innerHTML = "<img src='images/" + converter[tile] + ".png' height=64 width=41 style='-webkit-transform: rotate(180deg);-moz-transform: rotate(180deg);filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=2);'>"
         }
         this._Picking(player);
     },
     RemoveLast: function() {
-        cell = document.getElementById("sh_" + (App.board_index - 1));
+        var cell = document.getElementById("sh_" + (App.board_index - 1));
         cell.className = "meld";
     },
     LightButton: function(button) {
-        cell = document.getElementById(button + "_button");
+        var cell = document.getElementById(button + "_button");
         cell.style.cssText = "background: #FF0000;"
     },
     _ResetAllButtons: function() {
@@ -215,7 +219,7 @@ var App = {
         this._ResetButton("pong")
     },
     _ResetButton: function(button) {
-        cell = document.getElementById(button + "_button");
+        var cell = document.getElementById(button + "_button");
         cell.style.cssText = ""
     },
     t: -1,
@@ -250,6 +254,7 @@ var App = {
     },
     _ExecuteCmd: function(cmd, param) {
         this._resetChowing();
+        var http;
         try {
             http = new XMLHttpRequest();
         } catch (e) {
@@ -281,7 +286,7 @@ var App = {
     },
 
     _showStatus: function(desc, result) {
-        tstat = document.getElementById("tabel_status")
+        var tstat = document.getElementById("tabel_status")
         if (tstat.innerText)
             tstat.innerText = desc + ":" + result
         else
@@ -289,7 +294,7 @@ var App = {
 
     },
     _AddNotification: function() {
-        newNode = document.createElement("span")
+        var newNode = document.createElement("span")
         newNode.setAttribute("id", "tabel_status");
         newNode.style.cssText = "position: absolute;" +
             "margin: 0px;" +
@@ -298,11 +303,11 @@ var App = {
             "font-size: 12px;" +
             "background: #FFAA88;" +
             "left:0px;top:0px;"
-        newNode.innerHTML = "Mahjiong game is working! RNCIPA Coach Network"
+        newNode.innerHTML = "Mahjiong game is working!"
         document.body.appendChild(newNode);
     },
     _SetupPage: function() {
-        newNode = document.createElement("span")
+        var newNode = document.createElement("span")
         newNode.setAttribute("id", "game_board");
         newNode.innerHTML = "<table>\n" +
             "<tr><td id=player_1> put me here" +
@@ -320,37 +325,37 @@ var App = {
         }
     },
     _SetupPlayer: function(player) {
-        html = "<table class=player><tr><td width=50><table class='meld_plate'><tr>"
-        for (i = 0; i < this.max_meld_count; i++)
+        var html = "<table class=player><tr><td width=50><table class='meld_plate'><tr>"
+        for (var i = 0; i < this.max_meld_count; i++)
             html += ("<td id=meld_" + player + "_" + i + ">");
         html = html + "</table><td><table><tr>"
-        cnt = 1;
+        var cnt = 1;
         for (var i = 0; i < this.max_holding_count; i++) {
             html += ("<td id=ph_" + player + "_" + i + ">");
         }
         html += ("<td>-<td id=ph_" + player + "_current></table></table>");
-        player_html = document.getElementById("player_" + player);
+        var player_html = document.getElementById("player_" + player);
         player_html.innerHTML = html;
     },
 
     _SetupBoard: function() {
         this.board_index = 1;
-        html = "<table><tr><td width=800 height=150><table>"
-        cnt = 1;
-        for (i = 0; i < 4; i++) {
+        var html = "<table><tr><td width=800 height=150><table>"
+        var cnt = 1;
+        for (var i = 0; i < 4; i++) {
             html += "<tr>"
-            for (j = 0; j < 15; j++) {
+            for (var j = 0; j < 15; j++) {
                 html += ("<td id=sh_" + cnt + ">");
                 cnt++;
             }
         }
-        board = document.getElementById("board0");
+        var board = document.getElementById("board0");
 
         board.innerHTML = html;
     },
     _SetupPannel: function() {
 
-        panel = document.getElementById("panel0");
+        var panel = document.getElementById("panel0");
         panel.innerHTML = "<table><tr>" +
             "<td> <a class='button' id=chow_button onclick='return App.Chow()'>Chow</a>" +
             "<td> <a class='button' id=pong_button onclick='return App.Pong()'>Pong</a>" +
@@ -360,26 +365,26 @@ var App = {
 
     },
     _UpdateAllCells: function() {
-        for (j = 0; j < this.player_count; j++) {
-            for (i = 0; i < this.max_meld_count; i++) {
+        for (var j = 0; j < this.player_count; j++) {
+            for (var i = 0; i < this.max_meld_count; i++) {
                 this._Updatemeld(j, i)
             }
-            for (i = 0; i <= this.max_holding_count; i++)
+            for (var i = 0; i <= this.max_holding_count; i++)
                 this._UpdateCell(j, i);
         }
     },
     _Updatemeld: function(player, index) {
-        cell = document.getElementById("meld_" + player + "_" + index);
+        var cell = document.getElementById("meld_" + player + "_" + index);
         if (index < this.meld[player].length) {
-            inc = 0
-            e = this.meld[player][index];
+            var inc = 0
+            var e = this.meld[player][index];
             if (e > 0x100) {
                 e -= 0x100;
                 inc = 1;
             } else
                 e -= 0x80;
             e = converter[e];
-            html = "<table class=meld_w><tr>"
+            var html = "<table class=meld_w><tr>"
             html += ("<td class=meld_w>" + "<img class=meld_plate src='images/" + e + ".png' height=64 width=41>");
             e += inc;
             html += ("<td class=meld_w>" + "<img class=meld_plate src='images/" + e + ".png' height=64 width=41>");
@@ -393,13 +398,16 @@ var App = {
 
     },
     _CellIndexToHoldingIndex: function(player, cell_index) {
-        diff = this.max_holding_count - this.holdings[player].length;
+        var diff = this.max_holding_count - this.holdings[player].length;
         return cell_index >= diff ? cell_index - diff : -1;
     },
     _UpdateCell: function(player, index) {
+        var cell;
+        var tile;
         if (index != this.max_holding_count) {
             cell = document.getElementById("ph_" + player + "_" + index);
-            holding_index = this._CellIndexToHoldingIndex(player, index);
+            var holding_index = this._CellIndexToHoldingIndex(player, index);
+            tile;
             if (holding_index >= 0)
                 tile = this.holdings[player][holding_index];
             else
@@ -412,7 +420,6 @@ var App = {
             cell.innerHTML = "";
         else
             cell.innerHTML = "<img class='active_tile' src='images/" + converter[tile] + ".png' height=64 width=41>"
-
     },
 
     the_end: 1
@@ -421,4 +428,5 @@ var App = {
 function setup() {
     App.setup();
 }
+window.App = App;
 window.onload = setup;

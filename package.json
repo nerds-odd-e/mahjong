@@ -7,9 +7,15 @@
     "license": "MIT",
     "private": true,
     "devDependencies": {
-        "jest": "^24.9.0"
+        "babel-core": "^6.26.3",
+        "babel-loader": "^8.0.6",
+        "babel-preset-env": "^1.7.0",
+        "jest": "^24.9.0",
+        "webpack": "^4.41.2",
+        "webpack-cli": "^3.3.10"
     },
     "scripts": {
-        "test": "jest"
+        "test": "jest",
+        "build": "webpack --mode=development"
     }
 }
