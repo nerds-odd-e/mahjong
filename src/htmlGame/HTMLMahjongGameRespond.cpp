@@ -20,7 +20,8 @@ const char * html_frame =
 void HTMLMahjongGameRespond::newGame(GameID gameID) {
 	const int buffer_size = 1000;
 	char buffer[buffer_size];
-	snprintf(buffer, buffer_size, html_frame, gameID);
+	// snprintf(buffer, buffer_size, html_frame, gameID);
+	snprintf(buffer, buffer_size, "{\"player_id\":%d}", gameID);
 	content_ = buffer;
 }
 

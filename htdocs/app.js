@@ -51,6 +51,7 @@ var App = {
     meld: Array(player_count),
     board_index: 1,
     chowing: false,
+    game_id: undefined,
     setup: function() {
         var j;
         for (var j = 0; j < this.player_count; j++) {
@@ -62,7 +63,10 @@ var App = {
 
         this._AddNotification();
         this.StartGame();
-        this._ExecuteCmd("start", 0);
+        this._getRequest("game", null, function(http) {
+            App.game_id = JSON.parse(http.responseText).player_id;
+            App._ExecuteCmd("start", 0);
+        });
     },
     StartGame: function() {
         this._SetupPage();
@@ -252,24 +256,32 @@ var App = {
         } catch (e) {}
         return null;
     },
-    _ExecuteCmd: function(cmd, param) {
-        this._resetChowing();
+
+    _getRequest: function(cmd, raw_param, callback) {
         var http;
         try {
             http = new XMLHttpRequest();
         } catch (e) {
             http = new ActiveXObject("Microsoft.XMLHTTP");
         }
-        param = game_id * 1000 + param;
-        http.open("GET", cmd + '?' + param, true);
+        http.open("GET", cmd + '?' + raw_param, true);
         http.send(null);
         http.onreadystatechange = function() {
             if (http.readyState == 4) {
-                var textout = http.responseText;
-                App._Display(textout);
+                callback(http);
             }
         };
     },
+
+    _ExecuteCmd: function(cmd, param) {
+        this._resetChowing();
+        param = this.game_id * 1000 + param;
+        this._getRequest(cmd, param, function(http) {
+            var textout = http.responseText;
+            App._Display(textout);
+        });
+    },
+
     _DisplayAnimation: function(animations) {
         if (this.ti != -1)
             clearInterval(this.ti);
