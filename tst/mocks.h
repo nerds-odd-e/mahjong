@@ -69,10 +69,10 @@ public:
 	}
 };
 
-#include "HTMLMahjongGameRespond.h"
-class MockHTMLMahjongGameRespond: public HTMLMahjongGameRespond {
+#include "HTMLMahjongGameResponse.h"
+class MockHTMLMahjongGameResponse: public HTMLMahjongGameResponse {
 public:
-	virtual ~MockHTMLMahjongGameRespond(){}
+	virtual ~MockHTMLMahjongGameResponse(){}
 	void newGame(int gameID) {
 		mock().actualCall("newHTMLFrame").onObject(this).withParameter("gameID",
 				gameID);

@@ -1,10 +1,10 @@
 #ifndef MAHJONGGAMEFACTORY_H_
 #define MAHJONGGAMEFACTORY_H_
 
-class MahjongGameRespond;
+class MahjongGameResponse;
 struct MahjongGameFactory {
 	virtual ~MahjongGameFactory(){}
-	virtual MahjongGameRespond * createMahjongGameRespond() = 0;
+	virtual MahjongGameResponse * createMahjongGameRespond() = 0;
 
 };
 

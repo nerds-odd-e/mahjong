@@ -7,7 +7,7 @@
 #include "HTMLMahjongGameServer.h"
 #include "MahjongCommand.h"
 #include "HTMLCommandParser.h"
-#include "HTMLMahjongGameRespond.h"
+#include "HTMLMahjongGameResponse.h"
 #include "MahjongGameFactory.h"
 #include "GameIDMap.h"
 
@@ -35,9 +35,9 @@ void MahjongGameServer::killGame(GameID gameID) {
 	gamePool_->removeAndDeleteGame(gameID);
 }
 
-MahjongGameRespond * MahjongGameServer::executeGameCommand(const char * command,
+MahjongGameResponse * MahjongGameServer::executeGameCommand(const char * command,
 		const char *parameters) {
-	MahjongGameRespond *respond = factory_->createMahjongGameRespond();
+	MahjongGameResponse *respond = factory_->createMahjongGameRespond();
 	std::auto_ptr<MahjongCommand> mjCommand (commandParser_->parse(command, parameters));
 	mjCommand->execute(respond);
 	return respond;

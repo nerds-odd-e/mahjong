@@ -1,6 +1,6 @@
 #include "HTMLMahjongGameFactory.h"
-#include "HTMLMahjongGameRespond.h"
+#include "HTMLMahjongGameResponse.h"
 
-MahjongGameRespond * HTMLMahjongGameFactory::createMahjongGameRespond(){
-	return new HTMLMahjongGameRespond();
+MahjongGameResponse * HTMLMahjongGameFactory::createMahjongGameRespond(){
+	return new HTMLMahjongGameResponse();
 }

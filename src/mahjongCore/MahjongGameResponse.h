@@ -5,9 +5,9 @@
 
 class UserView;
 
-class MahjongGameRespond{
+class MahjongGameResponse{
 public:
-	virtual ~MahjongGameRespond(){}
+	virtual ~MahjongGameResponse(){}
 	virtual void newGame(GameID gameID) = 0;
 	virtual void bye() = 0;
 	virtual void shutdown() = 0;

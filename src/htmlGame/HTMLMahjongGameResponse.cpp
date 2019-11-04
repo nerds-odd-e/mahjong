@@ -1,29 +1,29 @@
-#include "HTMLMahjongGameRespond.h"
+#include "HTMLMahjongGameResponse.h"
 #include "game.h"
 #include "UserPerspective.h"
 #include "Hand.h"
 #include "string.h"
 #include "stdio.h"
 
-void HTMLMahjongGameRespond::newGame(GameID gameID) {
+void HTMLMahjongGameResponse::newGame(GameID gameID) {
 	const int buffer_size = 1000;
 	char buffer[buffer_size];
 	snprintf(buffer, buffer_size, "{\"game_id\":%d}", gameID);
 	content_ = buffer;
 }
 
-void HTMLMahjongGameRespond::bye() {
+void HTMLMahjongGameResponse::bye() {
 }
 
-const char * HTMLMahjongGameRespond::getString() {
+const char * HTMLMahjongGameResponse::getString() {
 	return content_.c_str();
 }
 
-void HTMLMahjongGameRespond::shutdown() {
+void HTMLMahjongGameResponse::shutdown() {
 	content_ = "<HTML><BODY>shutdown!</BODY></HTML>";
 }
 
-void HTMLMahjongGameRespond::gameDoesNotExist() {
+void HTMLMahjongGameResponse::gameDoesNotExist() {
 	content_ = "alert('Game does not exist. Restart, please.');";
 }
 
@@ -36,14 +36,14 @@ private:
 	void catPlayerTilesToString(Hand * player, char buffer[], int buffer_size);
 };
 
-void HTMLMahjongGameRespond::currentGameStatus(UserView * view) {
+void HTMLMahjongGameResponse::currentGameStatus(UserView * view) {
 	const int buffer_size = 1024;
 	char tmp[buffer_size];
 	TileArrayScriptGenerator().getTilesArrayString(view, tmp, buffer_size);
 	content_ = tmp;
 }
 
-void HTMLMahjongGameRespond::updateUIEvent(UserView * view) {
+void HTMLMahjongGameResponse::updateUIEvent(UserView * view) {
 	UIEvent *event;
 	while ((event = view->popEvent()) != NULL) {
 		content_ += event->toString();
@@ -51,7 +51,7 @@ void HTMLMahjongGameRespond::updateUIEvent(UserView * view) {
 	}
 }
 
-void HTMLMahjongGameRespond::clear() {
+void HTMLMahjongGameResponse::clear() {
 	content_ = "";
 }
 

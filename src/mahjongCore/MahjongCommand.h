@@ -2,13 +2,13 @@
 #define MAHJONGCOMMAND_H_
 
 #include "HTMLMahjongGameServer.h"
-class MahjongGameRespond;
+class MahjongGameResponse;
 
 class MahjongCommand {
 public:
 	virtual ~MahjongCommand() {
 	}
-	virtual void execute(MahjongGameRespond *respond) =0;
+	virtual void execute(MahjongGameResponse *respond) =0;
 };
 
 class MJCommandGetCurrentGameStatus: public MahjongCommand {
@@ -16,7 +16,7 @@ public:
 	MJCommandGetCurrentGameStatus(Game *game) :
 			game_(game) {
 	}
-	void execute(MahjongGameRespond *respond);
+	void execute(MahjongGameResponse *respond);
 private:
 	Game* game_;
 };
@@ -26,7 +26,7 @@ public:
 	MJCommandNewPlayerJoin(MahjongGameServer* server) :
 			server_(server) {
 	}
-	void execute(MahjongGameRespond *respond);
+	void execute(MahjongGameResponse *respond);
 private:
 	MahjongGameServer* server_;
 };
@@ -36,7 +36,7 @@ public:
 	MJCommandQuitGame(MahjongGameServer* server, GameID gameID) :
 			server_(server), gameID_(gameID) {
 	}
-	void execute(MahjongGameRespond *respond);
+	void execute(MahjongGameResponse *respond);
 private:
 	MahjongGameServer* server_;
 	GameID gameID_;
@@ -46,14 +46,14 @@ class MJCommandShutdownServer: public MahjongCommand {
 public:
 	MJCommandShutdownServer(MahjongGameServer* server):
 		server_(server) {}
-	void execute(MahjongGameRespond *respond);
+	void execute(MahjongGameResponse *respond);
 private:
 	MahjongGameServer* server_;
 };
 
 class MJCommandDoesNotExist: public MahjongCommand {
 public:
-	void execute(MahjongGameRespond *respond);
+	void execute(MahjongGameResponse *respond);
 };
 
 class MJCommandAction: public MahjongCommand {
@@ -61,7 +61,7 @@ public:
 	MJCommandAction(Game *game, action_t action, Tile tile) :
 			game_(game), action_(action), tile_(tile) {
 	}
-	void execute(MahjongGameRespond *respond);
+	void execute(MahjongGameResponse *respond);
 protected:
 	Game *game_;
 	action_t action_;

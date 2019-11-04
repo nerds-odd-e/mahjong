@@ -2,7 +2,7 @@
 #include "CppUTestExt/MockSupport.h"
 #include "MahjongCommand.h"
 #include "HTMLMahjongGameServer.h"
-#include "HTMLMahjongGameRespond.h"
+#include "HTMLMahjongGameResponse.h"
 #include "mocks.h"
 #include "CppUTest/TestHarness.h"
 
@@ -13,7 +13,7 @@ const GameID GAME_ID = 101;
 TEST_GROUP(MJCommand) {
 	char buffer[buffer_size];
 	MockHTMLMahjongGameServer server;
-	MockHTMLMahjongGameRespond respond;
+	MockHTMLMahjongGameResponse respond;
 	MockGame game;
 	MockUserView view;
 };

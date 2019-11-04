@@ -1,15 +1,15 @@
-#ifndef HTMLMAHJONGGAMERESPOND_H_
-#define HTMLMAHJONGGAMERESPOND_H_
+#ifndef HTMLMAHJONGGAMERESPONSE_H_
+#define HTMLMAHJONGGAMERESPONSE_H_
 
 #include <string>
-#include "MahjongGameRespond.h"
+#include "MahjongGameResponse.h"
 
 class UserView;
 class Hand;
 
-class HTMLMahjongGameRespond : public MahjongGameRespond{
+class HTMLMahjongGameResponse : public MahjongGameResponse{
 public:
-	virtual ~HTMLMahjongGameRespond(){}
+	virtual ~HTMLMahjongGameResponse(){}
 
 	void currentGameStatus(UserView * view);
 
@@ -31,4 +31,4 @@ private:
 	std::string content_;
 };
 
-#endif /* HTMLMAHJONGGAMERESPOND_H_ */
+#endif /* HTMLMAHJONGGAMERESPONSE_H_ */

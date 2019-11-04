@@ -18,7 +18,7 @@ set(Main_SRCS
       MahjongCommand.cpp
       MahjongCommand.h
       MahjongGameFactory.h
-      MahjongGameRespond.h
+      MahjongGameResponse.h
       mj_table.cpp
       mj_table.h
       Perspective.h

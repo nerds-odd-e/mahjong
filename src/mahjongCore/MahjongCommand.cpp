@@ -1,32 +1,32 @@
 #include "MahjongCommand.h"
 #include "mahjong_game.h"
 #include "HTMLMahjongGameServer.h"
-#include "HTMLMahjongGameRespond.h"
+#include "HTMLMahjongGameResponse.h"
 
-void MJCommandGetCurrentGameStatus::execute(MahjongGameRespond *respond) {
+void MJCommandGetCurrentGameStatus::execute(MahjongGameResponse *respond) {
 	respond->currentGameStatus(game_->getUserView());
 }
 
-void MJCommandNewPlayerJoin::execute(MahjongGameRespond *respond) {
+void MJCommandNewPlayerJoin::execute(MahjongGameResponse *respond) {
 	int gameID = server_->startNewGame();
 	respond->newGame(gameID);
 }
 
-void MJCommandQuitGame::execute(MahjongGameRespond *respond) {
+void MJCommandQuitGame::execute(MahjongGameResponse *respond) {
 	server_->killGame(gameID_);
 	respond->bye();
 }
 
-void MJCommandShutdownServer::execute(MahjongGameRespond *respond) {
+void MJCommandShutdownServer::execute(MahjongGameResponse *respond) {
 	server_->shutdown();
 	respond->shutdown();
 }
 
-void MJCommandDoesNotExist::execute(MahjongGameRespond *respond) {
+void MJCommandDoesNotExist::execute(MahjongGameResponse *respond) {
 	respond->gameDoesNotExist();
 }
 
-void MJCommandAction::execute(MahjongGameRespond *respond) {
+void MJCommandAction::execute(MahjongGameResponse *respond) {
 	PlayerActionRequest request(action_, tile_);
 	game_->nextMove(&request);
 	respond->updateUIEvent(game_->getUserView());

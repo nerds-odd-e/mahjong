@@ -5,7 +5,7 @@
 #include <string>
 
 class MahjongGameServer;
-class MahjongGameRespond;
+class MahjongGameResponse;
 class HTMLMahjongGame: public SimpleHTMLService {
 public:
 	HTMLMahjongGame(MahjongGameServer *server);
@@ -13,7 +13,7 @@ public:
 			int buffer_size);
 private:
 	MahjongGameServer *server_;
-	void responseToString(MahjongGameRespond *respond, char * buffer,
+	void responseToString(MahjongGameResponse *respond, char * buffer,
 			int buffer_size);
 };
 

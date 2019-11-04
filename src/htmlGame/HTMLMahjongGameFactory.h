@@ -3,7 +3,7 @@
 
 #include "MahjongGameFactory.h"
 struct HTMLMahjongGameFactory : public MahjongGameFactory{
-	MahjongGameRespond * createMahjongGameRespond();
+	MahjongGameResponse * createMahjongGameRespond();
 };
 
 #endif /* HTMLMAHJONGGAMEFACTORY_H_ */

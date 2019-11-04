@@ -24,17 +24,17 @@ public:
 
 class MockMahjongCommand: MahjongCommand {
 public:
-	virtual void execute(MahjongGameRespond *respond) {
+	virtual void execute(MahjongGameResponse *respond) {
 		mock().actualCall("execute").onObject(this).withParameter("respond",
 				respond);
 	}
 };
 
 struct MahjongGameFactorForMocks : public MahjongGameFactory {
-	MahjongGameRespond * createMahjongGameRespond() {
+	MahjongGameResponse * createMahjongGameRespond() {
 		return &respond;
 	}
-	MockHTMLMahjongGameRespond respond;
+	MockHTMLMahjongGameResponse respond;
 };
 
 TEST_GROUP(MahjongGameServer) {
@@ -57,7 +57,7 @@ TEST(MahjongGameServer, callback_should_be_call_when_shutdown) {
 
 TEST(MahjongGameServer, execute_command) {
 	MockMahjongCommand *command = new MockMahjongCommand;
-	MockHTMLMahjongGameRespond respond;
+	MockHTMLMahjongGameResponse respond;
 
 	mock().expectOneCall("parse").onObject(parser).withParameter("command",
 			"command").withParameter("parameters", "parameters").andReturnValue(
