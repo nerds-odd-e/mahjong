@@ -10,6 +10,9 @@ class Hand;
 class HTMLMahjongGameRespond : public MahjongGameRespond{
 public:
 	virtual ~HTMLMahjongGameRespond(){}
+
+	void currentGameStatus(UserView * view);
+
 	virtual void newGame(GameID gameID);
 
 	virtual void bye();
@@ -17,8 +20,6 @@ public:
 	virtual void shutdown();
 
 	virtual void gameDoesNotExist();
-
-	virtual void updateAllHoldings(UserView * view);
 
 	virtual void updateUIEvent(UserView * view);
 

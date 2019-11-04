@@ -69,9 +69,5 @@ TEST(HTMLUIEvent, dealEvent) {
 
 	event = factory.createDealEvent(&view);
 
-	mock().expectOneCall("getNumberOfPlayer").onObject(&view).andReturnValue(2);
-	mock().expectOneCall("getHand").onObject(&view).andReturnValue(&playerData1);
-	mock().expectOneCall("getHand").onObject(&view).andReturnValue(&playerData2);;
-
-	STRCMP_EQUAL("App.UpdateHolding([[1,0],[2,3,0]]);", event->toString().c_str());
+	STRCMP_EQUAL("App.deal();", event->toString().c_str());
 }

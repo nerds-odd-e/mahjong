@@ -95,11 +95,6 @@ public:
 		mock().actualCall("gameDoesNotExist").onObject(this);
 	}
 
-	void updateAllHoldings(UserView *view) {
-		mock().actualCall("updateAllHoldings").onObject(this).withParameter(
-				"view", view);
-	}
-
 };
 
 class MockHTMLMahjongGameServer: public MahjongGameServer {

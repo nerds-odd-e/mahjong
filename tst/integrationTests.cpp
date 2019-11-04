@@ -120,7 +120,14 @@ TEST_GROUP(html_game) {
 
 TEST(html_game, start) {
 	STRCMP_EQUAL(
-			"App.UpdateHolding([[1,2,3,4,5,6,7,8,9,10,11,12,13,27],[14,15,16,17,18,19,20,21,22,23,24,25,26,0]]);App.Pick(0, 27);",
+			"App.deal();App.Pick(0, 27);",
+			LastResponse());
+}
+
+TEST(html_game, get_current_status) {
+	execute_game_cmd("/current", 0);
+	STRCMP_EQUAL(
+			"[[1,2,3,4,5,6,7,8,9,10,11,12,13,27],[14,15,16,17,18,19,20,21,22,23,24,25,26,0]]",
 			LastResponse());
 }
 
@@ -139,7 +146,7 @@ TEST(html_game, a_game) {
 	setCheapestTileForSimpleEvaluator(27);
 	execute_game_cmd("/start", 0);
 	HAS_STRING(
-			"App.UpdateHolding([[14,15,16,17,18,19,20,21,22,23,24,25,26,0],[1,2,3,4,5,6,7,8,9,10,11,12,13,0]]);App.Pick(1, 27);|App.Throw(27, 1);",
+			"App.deal();App.Pick(1, 27);|App.Throw(27, 1);",
 			LastResponse());
 }
 
@@ -150,12 +157,12 @@ TEST(html_game, no_tile_any_more) {
 	setCheapestTileForSimpleEvaluator(54);
 	execute_game_cmd("/start", 0);
 	HAS_STRING(
-			"App.UpdateHolding([[41,42,43,44,45,46,47,48,49,50,51,52,53,0],[28,29,30,31,32,33,34,35,36,37,38,39,40,0]]);App.Pick(1, 54);|App.Throw(54, 1);",
+			"App.deal();App.Pick(1, 54);|App.Throw(54, 1);",
 			LastResponse());
 	HAS_STRING("App.WinAck(0, 0);", LastResponse());
 	execute_game_cmd("/start", 0);
 	STRCMP_EQUAL(
-			"App.UpdateHolding([[55,56,57,58,59,60,61,62,63,64,65,66,67,81],[68,69,70,71,72,73,74,75,76,77,78,79,80,0]]);App.Pick(0, 81);",
+			"App.deal();App.Pick(0, 81);",
 			LastResponse());
 }
 
@@ -201,9 +208,7 @@ TEST(html_game, pong) {
 			"App.Throw(3, 0);|App.Pick(1, 2);|App.Throw(2, 1);App.LightButton('pong');",
 			LastResponse());
 	execute_game_cmd("/pong", 0);
-	STRCMP_EQUAL( "App.UpdateHolding("
-	"[[4,5,6,7,8,9,10,11,12,13,27,130],"
-	"[15,16,17,18,19,20,21,22,23,24,25,26,28,0]]);", LastResponse());
+	STRCMP_EQUAL( "App.deal();", LastResponse());
 	execute_game_cmd("/throw", 4);
 	HAS_STRING( "App.Throw(4, 0);|App.Pick(1, 3);|App.Throw(15, 1);",
 			LastResponse());

@@ -11,6 +11,16 @@ public:
 	virtual void execute(MahjongGameRespond *respond) =0;
 };
 
+class MJCommandGetCurrentGameStatus: public MahjongCommand {
+public:
+	MJCommandGetCurrentGameStatus(Game *game) :
+			game_(game) {
+	}
+	void execute(MahjongGameRespond *respond);
+private:
+	Game* game_;
+};
+
 class MJCommandNewPlayerJoin: public MahjongCommand {
 public:
 	MJCommandNewPlayerJoin(MahjongGameServer* server) :

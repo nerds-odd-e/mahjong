@@ -71,7 +71,14 @@ var App = {
     StartGame: function() {
         this._SetupPage();
     },
-    UpdateHolding: function(new_holdings) {
+    deal: function() {
+        this._getCmdRequest("current", null, function(text) {
+            var data = JSON.parse(text)
+            App._UpdateHolding(data);
+        });
+
+    },
+    _UpdateHolding: function(new_holdings) {
         for (var j = 0; j < this.player_count; j++) {
             var cnt = 0;
             for (var i in new_holdings[j])
@@ -273,10 +280,16 @@ var App = {
         };
     },
 
-    _ExecuteCmd: function(cmd, param) {
-        this._resetChowing();
+    _getCmdRequest: function(cmd, param, callback) {
         this._getRequest('/' + this.game_id + '/' + cmd, param, function(http) {
             var textout = http.responseText;
+            callback(textout);
+        });
+    },
+
+    _ExecuteCmd: function(cmd, param) {
+        this._resetChowing();
+        this._getCmdRequest(cmd, param, function(textout) {
             App._Display(textout);
         });
     },

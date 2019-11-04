@@ -36,14 +36,11 @@ private:
 	void catPlayerTilesToString(Hand * player, char buffer[], int buffer_size);
 };
 
-void HTMLMahjongGameRespond::updateAllHoldings(UserView * view) {
-	const int buffer_size = 1000;
-	char buffer[buffer_size];
-	char tmp[buffer_size] = "";
-	TileArrayScriptGenerator script;
-	script.getTilesArrayString(view, tmp, buffer_size);
-	snprintf(buffer, buffer_size, "App.UpdateHolding(%s);", tmp);
-	content_ += buffer;
+void HTMLMahjongGameRespond::currentGameStatus(UserView * view) {
+	const int buffer_size = 1024;
+	char tmp[buffer_size];
+	TileArrayScriptGenerator().getTilesArrayString(view, tmp, buffer_size);
+	content_ = tmp;
 }
 
 void HTMLMahjongGameRespond::updateUIEvent(UserView * view) {

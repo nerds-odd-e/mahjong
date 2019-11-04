@@ -46,6 +46,9 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
 		if (strcmp(cmd, "start") == 0)
 			return new MJCommandStartNewGame(game);
 
+		if (strcmp(cmd, "current") == 0)
+			return new MJCommandGetCurrentGameStatus(game);
+
 		if (strcmp(cmd, "pick") == 0)
 			return new MJCommandPick(game);
 

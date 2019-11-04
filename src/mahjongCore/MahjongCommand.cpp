@@ -3,6 +3,10 @@
 #include "HTMLMahjongGameServer.h"
 #include "HTMLMahjongGameRespond.h"
 
+void MJCommandGetCurrentGameStatus::execute(MahjongGameRespond *respond) {
+	respond->currentGameStatus(game_->getUserView());
+}
+
 void MJCommandNewPlayerJoin::execute(MahjongGameRespond *respond) {
 	int gameID = server_->startNewGame();
 	respond->newGame(gameID);

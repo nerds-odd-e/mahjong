@@ -2,7 +2,6 @@
 #include "mj_table.h"
 
 GameState::GameState(MahjongTable * table) : table_(table) {
-
 }
 
 GameState::~GameState() {

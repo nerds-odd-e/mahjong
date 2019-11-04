@@ -111,22 +111,8 @@ string HTMLEnableChewEvent::toString() {
 	return "App.LightButton('chow');";
 }
 
-class TileArrayScriptGenerator {
-public:
-	const char * getTilesArrayString(UserView * view, char buffer[], int buffer_size);
-private:
-	void catTilesToString(char buffer[], const Tile * tiles, int n);
-	void catmeldToString(char buffer[], const Meld * meld, int n);
-	void catPlayerTilesToString(Hand * player, char buffer[], int buffer_size);
-};
-
 string HTMLDealEvent::toString() {
-	const int buffer_size = 1024;
-	char tmp[buffer_size];
-	char buffer[buffer_size];
-	TileArrayScriptGenerator().getTilesArrayString(view_, tmp, buffer_size);
-	snprintf(buffer, buffer_size, "App.UpdateHolding(%s);", tmp);
-	return buffer;
+	return "App.deal();";
 }
 
 UIEvent * HTMLEventFactory::createPickEvent(Tile tile, int distance) {
