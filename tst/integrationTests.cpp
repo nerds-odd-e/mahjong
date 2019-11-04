@@ -127,7 +127,8 @@ TEST(html_game, start) {
 TEST(html_game, get_current_status) {
 	execute_game_cmd("/current", 0);
 	STRCMP_EQUAL(
-			"[[1,2,3,4,5,6,7,8,9,10,11,12,13,27],[14,15,16,17,18,19,20,21,22,23,24,25,26,0]]",
+			"[{\"player_index\":0,\"hand\":[1,2,3,4,5,6,7,8,9,10,11,12,13,27]},"
+			"{\"player_index\":1,\"hand\":[14,15,16,17,18,19,20,21,22,23,24,25,26,0]}]",
 			LastResponse());
 }
 

@@ -93,13 +93,19 @@ void TileArrayScriptGenerator::catPlayerTilesToString(Hand * player, char buffer
 
 const char * TileArrayScriptGenerator::getTilesArrayString(UserView * view,
 		char buffer[], int buffer_size) {
+    char tmp[100];
 	sprintf(buffer, "[");
 	int count = view->getNumberOfPlayer();
 	for (int i = 0; i < count; i++) {
 		Hand *data = view->getHand(i);
 		if (i)
 			strcat(buffer, ",");
+		strcat(buffer, "{\"player_index\":");
+		sprintf(tmp, "%d", i);
+		strcat(buffer, tmp);
+		strcat(buffer, ",\"hand\":");
 		catPlayerTilesToString(data, buffer, buffer_size);
+		strcat(buffer, "}");
 	}
 	strcat(buffer, "]");
 	return buffer;

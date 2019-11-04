@@ -71,32 +71,33 @@ var App = {
     StartGame: function() {
         this._SetupPage();
     },
-    deal: function() {
-        this._getCmdRequest("current", null, function(text) {
-            var data = JSON.parse(text)
-            App._UpdateHolding(data);
-        });
+    _UpdateCurrentStatus: function(data) {
+        data.forEach((player) => {
+            var j = player.player_index;
 
-    },
-    _UpdateHolding: function(new_holdings) {
-        for (var j = 0; j < this.player_count; j++) {
             var cnt = 0;
-            for (var i in new_holdings[j])
-                if (new_holdings[j][i] < 0x80)
+            for (var i in player.hand)
+                if (player.hand[i] < 0x80)
                     cnt++;
                 else
                     break;
             this.holdings[j] = Array(cnt - 1)
             for (var i = 0; i < cnt - 1; i++)
-                this.holdings[j][i] = new_holdings[j][i];
-            this.current[j] = new_holdings[j][i];
-            this.meld[j] = Array(new_holdings[j].length - cnt)
+                this.holdings[j][i] = player.hand[i];
+            this.current[j] = player.hand[i];
+            this.meld[j] = Array(player.hand.length - cnt)
             var cnt;
-            for (cnt = 0, i++; i < new_holdings[j].length; i++) {
-                this.meld[j][cnt++] = new_holdings[j][i];
+            for (cnt = 0, i++; i < player.hand.length; i++) {
+                this.meld[j][cnt++] = player.hand[i];
             }
-        }
+        });
         this._UpdateAllCells();
+    },
+    deal: function() {
+        this._getCmdRequest("current", null, function(text) {
+            var data = JSON.parse(text)
+            App._UpdateCurrentStatus(data);
+        });
     },
     Pick: function(player, new_tile) {
         if (new_tile == 0) {
