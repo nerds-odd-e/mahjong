@@ -21,7 +21,7 @@ TEST_GROUP(MJCommand) {
 TEST(MJCommand, start_new){
 	mock().expectOneCall("startNewGame").onObject(&server).andReturnValue(NEW_ID);
 	mock().expectOneCall("newHTMLFrame").onObject(&respond).withParameter("gameID", NEW_ID);
-	MJCommandStartNew cmd(&server);
+	MJCommandNewPlayerJoin cmd(&server);
 	cmd.execute(&respond);
 }
 
@@ -44,7 +44,7 @@ TEST(MJCommand, start_game){
 	mock().expectOneCall("getUserView").onObject(&game).andReturnValue((void*)&view);
 	mock().expectOneCall("updateUIEvent").onObject(&respond).withParameter("view", &view);
 
-	MJCommandRestart cmd(&game);
+	MJCommandStartNewGame cmd(&game);
 	cmd.execute(&respond);
 }
 

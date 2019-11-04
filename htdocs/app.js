@@ -63,8 +63,8 @@ var App = {
 
         this._AddNotification();
         this.StartGame();
-        this._getRequest("game", null, function(http) {
-            App.game_id = JSON.parse(http.responseText).player_id;
+        this._getRequest("join", null, function(http) {
+            App.game_id = JSON.parse(http.responseText).game_id;
             App._ExecuteCmd("start", 0);
         });
     },
@@ -275,8 +275,7 @@ var App = {
 
     _ExecuteCmd: function(cmd, param) {
         this._resetChowing();
-        param = this.game_id * 1000 + param;
-        this._getRequest(cmd, param, function(http) {
+        this._getRequest('/' + this.game_id + '/' + cmd, param, function(http) {
             var textout = http.responseText;
             App._Display(textout);
         });

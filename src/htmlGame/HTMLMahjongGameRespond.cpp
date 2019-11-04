@@ -5,23 +5,10 @@
 #include "string.h"
 #include "stdio.h"
 
-const char * html_frame =
-		"<html>\n"
-				"<head>\n"
-				"<title>Mahjong Game</title> "
-				"<script>game_id=%d;</script>\n"
-				"<LINK REL=StyleSheet HREF=\"mj.css\" TYPE=\"text/css\">\n"
-				"<script src=\"mj.bundle.js\" type=\"text/javascript\"></script>\n"
-				"</head>\n"
-				"<body>\n"
-				"</body>\n"
-				"</html>\n";
-
 void HTMLMahjongGameRespond::newGame(GameID gameID) {
 	const int buffer_size = 1000;
 	char buffer[buffer_size];
-	// snprintf(buffer, buffer_size, html_frame, gameID);
-	snprintf(buffer, buffer_size, "{\"player_id\":%d}", gameID);
+	snprintf(buffer, buffer_size, "{\"game_id\":%d}", gameID);
 	content_ = buffer;
 }
 

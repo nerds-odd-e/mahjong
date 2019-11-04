@@ -21,12 +21,12 @@ TEST_GROUP(HTMLCommandParser) {
 };
 
 TEST(HTMLCommandParser, parse_start_new) {
-	cmd = parser->parse("/game", "");
-	STRCMP_EQUAL(typeid(MJCommandStartNew).name(), typeid(*cmd).name());
+	cmd = parser->parse("/join", "");
+	STRCMP_EQUAL(typeid(MJCommandNewPlayerJoin).name(), typeid(*cmd).name());
 }
 
 TEST(HTMLCommandParser, parse_bye) {
-	cmd = parser->parse("/bye", "");
+	cmd = parser->parse("/3/bye", "");
 	STRCMP_EQUAL(typeid(MJCommandQuitGame).name(), typeid(*cmd).name());
 }
 
@@ -39,14 +39,14 @@ TEST(HTMLCommandParser, restart) {
 	UserPerspective game;
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
-	cmd = parser->parse("/start", "3000");
-	STRCMP_EQUAL(typeid(MJCommandRestart).name(), typeid(*cmd).name());
+	cmd = parser->parse("/3/start", "");
+	STRCMP_EQUAL(typeid(MJCommandStartNewGame).name(), typeid(*cmd).name());
 }
 
 TEST(HTMLCommandParser, game_does_not_exist) {
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 4).andReturnValue((void *)NULL);
-	cmd = parser->parse("/start", "4000");
+	cmd = parser->parse("/4/start", "");
 	STRCMP_EQUAL(typeid(MJCommandDoesNotExist).name(), typeid(*cmd).name());
 }
 
@@ -54,7 +54,7 @@ TEST(HTMLCommandParser, MJCommandDiscard) {
 	UserPerspective game;
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
-	cmd = parser->parse("/throw", "3005");
+	cmd = parser->parse("/3/throw", "5");
 	STRCMP_EQUAL(typeid(MJCommandDiscard).name(), typeid(*cmd).name());
 }
 
@@ -62,7 +62,7 @@ TEST(HTMLCommandParser, MJCommandPick) {
 	UserPerspective game;
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
-	cmd = parser->parse("/pick", "3000");
+	cmd = parser->parse("/3/pick", "");
 	STRCMP_EQUAL(typeid(MJCommandPick).name(), typeid(*cmd).name());
 }
 
@@ -70,7 +70,7 @@ TEST(HTMLCommandParser, MJCommandChow) {
 	UserPerspective game;
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
-	cmd = parser->parse("/chow", "3002");
+	cmd = parser->parse("/3/chow", "2");
 	STRCMP_EQUAL(typeid(MJCommandChow).name(), typeid(*cmd).name());
 }
 
@@ -78,7 +78,7 @@ TEST(HTMLCommandParser, MJCommandPong) {
 	UserPerspective game;
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
-	cmd = parser->parse("/pong", "3000");
+	cmd = parser->parse("/3/pong", "");
 	STRCMP_EQUAL(typeid(MJCommandPong).name(), typeid(*cmd).name());
 }
 
@@ -86,7 +86,7 @@ TEST(HTMLCommandParser, MJCommandKong) {
 	UserPerspective game;
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
-	cmd = parser->parse("/kong", "3002");
+	cmd = parser->parse("/3/kong", "2");
 	STRCMP_EQUAL(typeid(MJCommandKong).name(), typeid(*cmd).name());
 }
 
@@ -94,7 +94,7 @@ TEST(HTMLCommandParser, MJCommandWin) {
 	UserPerspective game;
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
-	cmd = parser->parse("/win", "3000");
+	cmd = parser->parse("/3/win", "");
 	STRCMP_EQUAL(typeid(MJCommandWin).name(), typeid(*cmd).name());
 }
 

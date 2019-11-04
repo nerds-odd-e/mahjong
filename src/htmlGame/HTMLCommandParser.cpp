@@ -11,64 +11,57 @@ HTMLCommandParser::HTMLCommandParser(MahjongGameServer * server) :
 HTMLCommandParser::~HTMLCommandParser() {
 }
 
-void HTMLCommandParser::parse_parameter(const char* parameters, GameID& gameID,
-		Tile& tile) {
-	if (parameters != NULL && parameters[0] >= '0' && parameters[0] <= '9') {
-		int param = atoi(parameters);
-		gameID = param / 1000;
-		tile = param % 1000;
-	}
-}
-
 MahjongCommand * HTMLCommandParser::parse(const char * command,
 		const char *parameters) {
-	GameID gameID = 0;
-	Tile tile = NO_TILE;
 	const char * cmd = strchr(command, '/');
 
-	parse_parameter(parameters, gameID, tile);
-
-	return parseWithExtractedParameters(cmd, gameID, tile);
+	return parseWithExtractedParameters(cmd, parameters);
 }
 
 MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
-		const char * cmd, GameID gameID, Tile tile) {
+		const char * cmd, const char *parameters) {
 
-	if (strcmp(cmd, "/game") == 0)
-		return new MJCommandStartNew(server_);
-
-	if (strcmp(cmd, "/bye") == 0)
-		return new MJCommandQuitGame(server_, gameID);
+	if (strcmp(cmd, "/join") == 0)
+		return new MJCommandNewPlayerJoin(server_);
 
 	if (strcmp(cmd, "/shutdown") == 0)
 		return new MJCommandShutdownServer(server_);
 
-	Game * game = server_->getGameByID(gameID);
-	return parseWithExtractedParametersForGame(game, cmd, tile);
+	GameID gameID = 0;
+	char gameCmd[100];
+	sscanf(cmd, "/%d/%s", &gameID, gameCmd);
+	Tile tile = atoi(parameters);
+
+	return parseWithExtractedParametersForGame(gameID, gameCmd, tile);
 }
 
 MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
-		Game* game, const char * cmd, Tile tile) {
-	if (game != NULL) {
-		if (strcmp(cmd, "/start") == 0)
-			return new MJCommandRestart(game);
+		GameID gameID, const char * cmd, Tile tile) {
+	if (strcmp(cmd, "bye") == 0)
+		return new MJCommandQuitGame(server_, gameID);
 
-		if (strcmp(cmd, "/pick") == 0)
+	Game * game = server_->getGameByID(gameID);
+
+	if (game != NULL) {
+		if (strcmp(cmd, "start") == 0)
+			return new MJCommandStartNewGame(game);
+
+		if (strcmp(cmd, "pick") == 0)
 			return new MJCommandPick(game);
 
-		if (strcmp(cmd, "/throw") == 0)
+		if (strcmp(cmd, "throw") == 0)
 			return new MJCommandDiscard(game, tile);
 
-		if (strcmp(cmd, "/chow") == 0)
+		if (strcmp(cmd, "chow") == 0)
 			return new MJCommandChow(game, tile);
 
-		if (strcmp(cmd, "/pong") == 0)
+		if (strcmp(cmd, "pong") == 0)
 			return new MJCommandPong(game);
 
-		if (strcmp(cmd, "/kong") == 0)
+		if (strcmp(cmd, "kong") == 0)
 			return new MJCommandKong(game, tile);
 
-		if (strcmp(cmd, "/win") == 0)
+		if (strcmp(cmd, "win") == 0)
 			return new MJCommandWin(game);
 	}
 	return new MJCommandDoesNotExist;

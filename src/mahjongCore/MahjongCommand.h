@@ -11,9 +11,9 @@ public:
 	virtual void execute(MahjongGameRespond *respond) =0;
 };
 
-class MJCommandStartNew: public MahjongCommand {
+class MJCommandNewPlayerJoin: public MahjongCommand {
 public:
-	MJCommandStartNew(MahjongGameServer* server) :
+	MJCommandNewPlayerJoin(MahjongGameServer* server) :
 			server_(server) {
 	}
 	void execute(MahjongGameRespond *respond);
@@ -58,9 +58,9 @@ protected:
 	Tile tile_;
 };
 
-class MJCommandRestart: public MJCommandAction {
+class MJCommandStartNewGame: public MJCommandAction {
 public:
-	MJCommandRestart(Game *game) :
+	MJCommandStartNewGame(Game *game) :
 			MJCommandAction(game, ACTION_RESTART, NO_TILE) {
 	}
 };

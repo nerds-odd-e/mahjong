@@ -14,5 +14,5 @@ def before_all(context):
         context.aborted = True
 
 def after_all(context):
-    program.kill()
+    program.terminate()
 

@@ -16,11 +16,10 @@ public:
 			const char *parameters);
 private:
 	MahjongGameServer *server_;
-	void parse_parameter(const char* parameters, GameID& gameID, Tile& tile);
 	MahjongCommand * parseWithExtractedParameters(const char * cmd,
-			GameID gameID, Tile tile);
+			const char * parameters);
 	MahjongCommand * parseWithExtractedParametersForGame(
-			Game* game, const char * cmd, Tile tile);
+			GameID gameID, const char * cmd, Tile tile);
 };
 
 #endif /* HTMLCOMMANDPARSER_H_ */

@@ -3,7 +3,7 @@
 #include "HTMLMahjongGameServer.h"
 #include "HTMLMahjongGameRespond.h"
 
-void MJCommandStartNew::execute(MahjongGameRespond *respond) {
+void MJCommandNewPlayerJoin::execute(MahjongGameRespond *respond) {
 	int gameID = server_->startNewGame();
 	respond->newGame(gameID);
 }

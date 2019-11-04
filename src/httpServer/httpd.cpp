@@ -380,6 +380,8 @@ int startup(u_short *port) {
 	}
 #endif
 	httpd = socket(PF_INET, SOCK_STREAM, 0);
+	int T = 1;
+	setsockopt(httpd,SOL_SOCKET,SO_REUSEADDR,&T,sizeof(int));
 	if (httpd == -1)
 		error_die("socket");
 	memset(&name, 0, sizeof(name));
