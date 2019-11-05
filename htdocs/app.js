@@ -44,21 +44,13 @@ var player_count = 2;
 var App = {
     max_holding_count: 13,
     max_meld_count: 4,
+    players: Array(player_count),
     player_count: player_count,
     current_player: 0,
-    holdings: Array(player_count),
-    current: Array(player_count),
-    meld: Array(player_count),
     board_index: 1,
     chowing: false,
     game_id: undefined,
     setup: function() {
-        var j;
-        for (var j = 0; j < this.player_count; j++) {
-            this.holdings[j] = Array(0);
-            this.meld[j] = Array(0);
-        }
-
         document.onclick = App.onclick;
 
         this._AddNotification();
@@ -72,25 +64,7 @@ var App = {
         this._SetupPage();
     },
     _UpdateCurrentStatus: function(data) {
-        data.forEach((player) => {
-            var j = player.player_index;
-
-            var cnt = 0;
-            for (var i in player.hand)
-                if (player.hand[i] < 0x80)
-                    cnt++;
-                else
-                    break;
-            this.holdings[j] = Array(cnt - 1)
-            for (var i = 0; i < cnt - 1; i++)
-                this.holdings[j][i] = player.hand[i];
-            this.current[j] = player.hand[i];
-            this.meld[j] = Array(player.hand.length - cnt)
-            var cnt;
-            for (cnt = 0, i++; i < player.hand.length; i++) {
-                this.meld[j][cnt++] = player.hand[i];
-            }
-        });
+        this.players = data;
         this._UpdateAllCells();
     },
     deal: function() {
@@ -107,7 +81,7 @@ var App = {
             this._ExecuteCmd("start", 0);
             this._ExecuteCmd("all", 0);
         } else {
-            this.current[player] = new_tile;
+            this.players[player].new_pick = new_tile;
             this._UpdateAllCells();
         }
     },
@@ -166,12 +140,12 @@ var App = {
                 var discard = -1
                 var id = target.id.substr(5);
                 if (id == 'current') {
-                    discard = App.current[0];
+                    discard = App.players[0].new_pick;
                 } else {
                     var index = parseInt(id);
                     index = App._CellIndexToHoldingIndex(0, index);
                     if (index >= 0) {
-                        discard = App.holdings[0][index];
+                        discard = App.players[0].hand[index];
                     }
                 }
                 if (discard != -1)
@@ -183,8 +157,8 @@ var App = {
         }
     },
     _isPicking: function() {
-        if (this.current[0] == 0) {
-            if ((this.holdings[0].length % 3) == 1)
+        if (this.players[0].new_pick == 0) {
+            if ((this.players[0].hand.length % 3) == 1)
                 return true;
         }
         return false;
@@ -199,15 +173,15 @@ var App = {
     },
     Throw: function(tile, player) {
         if (tile != 0) {
-            if (this.current[player] != tile) {
-                for (var i = 0; i < this.holdings[player].length; i++)
-                    if (this.holdings[player][i] == tile) {
-                        this.holdings[player][i] = this.current[player];
+            if (this.players[player].new_pick != tile) {
+                for (var i = 0; i < this.players[player].hand.length; i++)
+                    if (this.players[player].hand[i] == tile) {
+                        this.players[player].hand[i] = this.players[player].new_pick;
                         break;
                     }
-                this.holdings[player].sort(function(a, b) { return a - b });
+                this.players[player].hand.sort(function(a, b) { return a - b });
             }
-            this.current[player] = 0;
+            this.players[player].new_pick = 0;
 
             this._UpdateAllCells();
             var cell = document.getElementById("sh_" + App.board_index);
@@ -400,9 +374,9 @@ var App = {
     },
     _Updatemeld: function(player, index) {
         var cell = document.getElementById("meld_" + player + "_" + index);
-        if (index < this.meld[player].length) {
+        if (index < this.players[player].melds.length) {
             var inc = 0
-            var e = this.meld[player][index];
+            var e = this.players[player].melds[index];
             if (e > 0x100) {
                 e -= 0x100;
                 inc = 1;
@@ -423,7 +397,7 @@ var App = {
 
     },
     _CellIndexToHoldingIndex: function(player, cell_index) {
-        var diff = this.max_holding_count - this.holdings[player].length;
+        var diff = this.max_holding_count - this.players[player].hand.length;
         return cell_index >= diff ? cell_index - diff : -1;
     },
     _UpdateCell: function(player, index) {
@@ -434,12 +408,12 @@ var App = {
             var holding_index = this._CellIndexToHoldingIndex(player, index);
             tile;
             if (holding_index >= 0)
-                tile = this.holdings[player][holding_index];
+                tile = this.players[player].hand[holding_index];
             else
                 tile = 0;
         } else {
             cell = document.getElementById("ph_" + player + "_current");
-            tile = this.current[player];
+            tile = this.players[player].new_pick;
         }
         if (tile == 0 && index != this.max_holding_count)
             cell.innerHTML = "";

@@ -75,16 +75,26 @@ void TileArrayScriptGenerator::catmeldToString(char buffer[], const Meld * meld,
 
 void TileArrayScriptGenerator::catPlayerTilesToString(Hand * player, char buffer[],
 		int buffer_size) {
-	strcat(buffer, "[");
+	strcat(buffer, ",\"hand\":[");
 	Tile tiles[MAX_HOLDING_COUNT];
 	Meld meld[MAX_MELD_COUNT];
 	int n = player->getHoldings(tiles, MAX_HOLDING_COUNT);
 	catTilesToString(buffer, tiles, n);
+	int len = strlen(buffer);
+	if (buffer[len - 1] == ',') {
+		buffer[len - 1] = '\0';
+	}
+	strcat(buffer, "]");
+
+	strcat(buffer, ",\"new_pick\":");
 	tiles[0] = player->getCurrentTileAtHand();
 	catTilesToString(buffer, tiles, 1);
+
+	strcat(buffer, "\"melds\":[");
 	n = player->getMelds(meld, MAX_MELD_COUNT);
 	catmeldToString(buffer, meld, n);
-	int len = strlen(buffer);
+
+	len = strlen(buffer);
 	if (buffer[len - 1] == ',') {
 		buffer[len - 1] = '\0';
 	}
@@ -103,7 +113,6 @@ const char * TileArrayScriptGenerator::getTilesArrayString(UserView * view,
 		strcat(buffer, "{\"player_index\":");
 		sprintf(tmp, "%d", i);
 		strcat(buffer, tmp);
-		strcat(buffer, ",\"hand\":");
 		catPlayerTilesToString(data, buffer, buffer_size);
 		strcat(buffer, "}");
 	}
