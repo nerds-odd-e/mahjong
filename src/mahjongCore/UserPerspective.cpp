@@ -27,6 +27,9 @@ void UserPerspective::_remove_players() {
 }
 UserPerspective::~UserPerspective() {
 	_remove_players();
+	for(UIEvent * event = popEvent(); event != NULL; event = popEvent())
+		delete event;
+
 	delete eventFactory_;
 }
 

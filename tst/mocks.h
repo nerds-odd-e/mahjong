@@ -86,8 +86,8 @@ public:
 		mock().actualCall("shutdown").onObject(this);
 	}
 
-	void updateUIEvent(UserView *view) {
-		mock().actualCall("updateUIEvent").onObject(this).withParameter("view",
+	void popAction(UserView *view) {
+		mock().actualCall("popAction").onObject(this).withParameter("view",
 				view);
 	}
 

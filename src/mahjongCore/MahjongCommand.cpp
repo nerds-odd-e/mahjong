@@ -7,6 +7,10 @@ void MJCommandGetCurrentGameStatus::execute(MahjongGameResponse *respond) {
 	respond->currentGameStatus(game_->getUserView());
 }
 
+void MJCommandPopAction::execute(MahjongGameResponse *respond) {
+	respond->popAction(game_->getUserView());
+}
+
 void MJCommandNewPlayerJoin::execute(MahjongGameResponse *respond) {
 	int gameID = server_->startNewGame();
 	respond->newGame(gameID);
@@ -29,5 +33,5 @@ void MJCommandDoesNotExist::execute(MahjongGameResponse *respond) {
 void MJCommandAction::execute(MahjongGameResponse *respond) {
 	PlayerActionRequest request(action_, tile_);
 	game_->nextMove(&request);
-	respond->updateUIEvent(game_->getUserView());
+	respond->popAction(game_->getUserView());
 }

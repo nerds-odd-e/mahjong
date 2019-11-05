@@ -67,6 +67,7 @@ var App = {
         this.players = data;
         this._UpdateAllCells();
     },
+    noop: function() {},
     deal: function() {
         this._getCmdRequest("current", null, function(text) {
             var data = JSON.parse(text)
@@ -208,17 +209,11 @@ var App = {
         var cell = document.getElementById(button + "_button");
         cell.style.cssText = ""
     },
-    t: -1,
 
-    ResumeUpdate: function() {
-        if (this.t == -1) {
-            //				this.t = setInterval("App._Update()", 250);
-        }
-    },
-    StopUpdate: function() {
-        if (this.t != -1) {
-            clearInterval(this.t);
-            this.t = -1;
+    _StopUpdate: function() {
+        if (this.ti1 != -1) {
+            clearInterval(this.ti1);
+            this.ti1 = -1;
         }
     },
     _Update: function() {
@@ -266,6 +261,11 @@ var App = {
         this._resetChowing();
         this._getCmdRequest(cmd, param, function(textout) {
             App._Display(textout);
+            if (textout != "App.noop();") {
+                setTimeout(function() {
+                    App._ExecuteCmd("next_action", 0);
+                }, 500);
+            }
         });
     },
 

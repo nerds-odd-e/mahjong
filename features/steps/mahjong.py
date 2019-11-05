@@ -6,6 +6,9 @@ def get_request(context, uri):
     r = requests.get(url = "http://localhost:8889" + uri) 
     return r.json()
     
+def get_game_request(context, uri):
+    r = requests.get(url = "http://localhost:8889" + uri) 
+    return r.json()
 
 @given(u'I have joined a game')
 def step_impl(context):
@@ -15,8 +18,6 @@ def step_impl(context):
 @when(u'I start a game')
 def step_impl(context):
     p = requests.get(url = "http://localhost:8889/" + str(context.scenario.game_id)+ "/start") 
-    x = p.json()['game_id']
-    print(x)
 
 
 @then(u'I should see that I\'ve got my hand of tiles')

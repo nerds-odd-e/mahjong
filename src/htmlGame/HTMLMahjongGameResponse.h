@@ -21,7 +21,7 @@ public:
 
 	virtual void gameDoesNotExist();
 
-	virtual void updateUIEvent(UserView * view);
+	virtual void popAction(UserView * view);
 
 	const char * getString();
 

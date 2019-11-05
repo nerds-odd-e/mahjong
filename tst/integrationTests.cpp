@@ -119,9 +119,11 @@ TEST_GROUP(html_game) {
 };
 
 TEST(html_game, start) {
-	STRCMP_EQUAL(
-			"App.deal();App.Pick(0, 27);",
-			LastResponse());
+	STRCMP_EQUAL( "App.deal();", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.Pick(0, 27);", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.noop();", LastResponse());
 }
 
 TEST(html_game, get_current_status) {
@@ -133,46 +135,63 @@ TEST(html_game, get_current_status) {
 }
 
 TEST(html_game, a_game) {
+	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/throw", 1);
-	HAS_STRING("App.Throw(1, 0);|App.Pick(1, 28);|App.Throw(14, 1);",
-			LastResponse());
+	HAS_STRING("App.Throw(1, 0);", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	HAS_STRING("App.Pick(1, 28);", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	HAS_STRING("App.Throw(14, 1);", LastResponse());
 	setCheapestTileForSimpleEvaluator(28);
 	wall->setCurrentTile(27);
 	execute_game_cmd("/pick", 0);
-	STRCMP_EQUAL( "App.Pick(0, 27);App.LightButton('win');",
-			LastResponse());
+	STRCMP_EQUAL( "App.Pick(0, 27);", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.LightButton('win');", LastResponse());
 	execute_game_cmd("/win", 0);
 	STRCMP_EQUAL("App.WinAck(0, 1);", LastResponse());
 	wall->setCurrentTile(1);
 	setCheapestTileForSimpleEvaluator(27);
 	execute_game_cmd("/start", 0);
-	HAS_STRING(
-			"App.deal();App.Pick(1, 27);|App.Throw(27, 1);",
-			LastResponse());
+	STRCMP_EQUAL( "App.deal();", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.Pick(1, 27);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.Throw(27, 1);", LastResponse());
 }
 
 TEST(html_game, no_tile_any_more) {
+	execute_game_cmd("/next_action", 0);
 	wall->empty();
 	execute_game_cmd("/throw", 1);
-	STRCMP_EQUAL( "App.Throw(1, 0);|App.WinAck(1, 0);", LastResponse());
+	STRCMP_EQUAL( "App.Throw(1, 0);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.WinAck(1, 0);", LastResponse());
 	setCheapestTileForSimpleEvaluator(54);
 	execute_game_cmd("/start", 0);
-	HAS_STRING(
-			"App.deal();App.Pick(1, 54);|App.Throw(54, 1);",
-			LastResponse());
-	HAS_STRING("App.WinAck(0, 0);", LastResponse());
+	STRCMP_EQUAL( "App.deal();", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.Pick(1, 54);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.Throw(54, 1);", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL("App.WinAck(0, 0);", LastResponse());
 	execute_game_cmd("/start", 0);
-	STRCMP_EQUAL(
-			"App.deal();App.Pick(0, 81);",
-			LastResponse());
+	STRCMP_EQUAL( "App.deal();", LastResponse());
 }
 
 TEST(html_game, _WIN) {
+	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/win", 1);
 	STRCMP_EQUAL("alert(\"Are you kidding?\");", LastResponse());
 	execute_game_cmd("/throw", 1);
-	HAS_STRING( "App.Throw(1, 0);|App.Pick(1, 28);|App.Throw(14, 1);",
-			LastResponse());
+	STRCMP_EQUAL( "App.Throw(1, 0);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.Pick(1, 28);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.Throw(14, 1);", LastResponse());
 	setCheapestTileForSimpleEvaluator(28);
 	execute_game_cmd("/win", 0);
 	STRCMP_EQUAL("alert(\"Are you kidding?\");", LastResponse());
@@ -180,34 +199,53 @@ TEST(html_game, _WIN) {
 	setCheapestTileForSimpleEvaluator(27);
 	wall->setCurrentTile(27);
 	execute_game_cmd("/throw", 29);
+	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/win", 0);
 	STRCMP_EQUAL("App.WinAck(0, 1);", LastResponse());
 }
 
 TEST(html_game, ai_WIN) {
+	execute_game_cmd("/next_action", 0);
 	wall->setCurrentTile(14);
 	execute_game_cmd("/throw", 1);
-	STRCMP_EQUAL( "App.Throw(1, 0);|App.Pick(1, 14);|App.WinAck(1, 1);",
-			LastResponse());
+	STRCMP_EQUAL( "App.Throw(1, 0);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.Pick(1, 14);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.WinAck(1, 1);", LastResponse());
 	execute_game_cmd("/start", 0);
 	wall->setCurrentTile(41);
 	execute_game_cmd("/pick", 0);
+	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/throw", 41);
-	STRCMP_EQUAL( "App.Throw(41, 0);|App.WinAck(1, 1);", LastResponse());
+	STRCMP_EQUAL( "App.Throw(41, 0);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL( "App.WinAck(1, 1);", LastResponse());
 }
 
 TEST(html_game, pong) {
 	execute_game_cmd("/throw", 1);
+	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/pong", 0);
 	STRCMP_EQUAL( "alert(\"Are you kidding?\");", LastResponse());
 	wall->setCurrentTile(2);
 	execute_game_cmd("/pick", 0);
 	wall->setCurrentTile(2);
 	setCheapestTileForSimpleEvaluator(2);
+	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/throw", 3);
-	HAS_STRING(
-			"App.Throw(3, 0);|App.Pick(1, 2);|App.Throw(2, 1);App.LightButton('pong');",
-			LastResponse());
+	STRCMP_EQUAL("App.Throw(3, 0);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL("App.Pick(1, 2);|", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL("App.Throw(2, 1);", LastResponse());
+	execute_game_cmd("/next_action", 0);
+	STRCMP_EQUAL("App.LightButton('pong');", LastResponse());
 	execute_game_cmd("/pong", 0);
 	STRCMP_EQUAL( "App.deal();", LastResponse());
 	execute_game_cmd("/current", 0);
@@ -216,9 +254,9 @@ TEST(html_game, pong) {
 		"},{"
 			"\"player_index\":1,\"hand\":[15,16,17,18,19,20,21,22,23,24,25,26,28],\"new_pick\":0,\"melds\":[]"
 	"}]", LastResponse());
+	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/throw", 4);
-	HAS_STRING( "App.Throw(4, 0);|App.Pick(1, 3);|App.Throw(15, 1);",
-			LastResponse());
+	STRCMP_EQUAL( "App.Throw(4, 0);|", LastResponse());
 }
 
 IGNORE_TEST(html_game, chow_when_not_able_to_chow) {

@@ -43,12 +43,14 @@ void HTMLMahjongGameResponse::currentGameStatus(UserView * view) {
 	content_ = tmp;
 }
 
-void HTMLMahjongGameResponse::updateUIEvent(UserView * view) {
-	UIEvent *event;
-	while ((event = view->popEvent()) != NULL) {
-		content_ += event->toString();
-		delete event;
+void HTMLMahjongGameResponse::popAction(UserView * view) {
+	UIEvent *event = view->popEvent();
+	if (event == NULL) {
+		content_ = "App.noop();";
+		return;
 	}
+	content_ = event->toString();
+	delete event;
 }
 
 void HTMLMahjongGameResponse::clear() {

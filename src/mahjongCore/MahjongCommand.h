@@ -21,6 +21,16 @@ private:
 	Game* game_;
 };
 
+class MJCommandPopAction: public MahjongCommand {
+public:
+	MJCommandPopAction(Game *game) :
+			game_(game) {
+	}
+	void execute(MahjongGameResponse *respond);
+private:
+	Game* game_;
+};
+
 class MJCommandNewPlayerJoin: public MahjongCommand {
 public:
 	MJCommandNewPlayerJoin(MahjongGameServer* server) :
