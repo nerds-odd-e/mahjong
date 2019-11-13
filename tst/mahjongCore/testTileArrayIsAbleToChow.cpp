@@ -4,12 +4,18 @@
 #include <stdio.h>
 #include "TileArray.h"
 
+#define MAX_HOLDING_COUNT 13
+
 TEST_GROUP(TileArrayIsAbleToChow) {
 
 };
 
-IGNORE_TEST(TileArrayIsAbleToChow, start_here)
+TEST(TileArrayIsAbleToChow, start_here)
 {
-	FAIL("START HERE");
+    Tile tiles[] = {NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE};
+
+    TileArray tileArray(tiles, MAX_HOLDING_COUNT);
+
+    CHECK_FALSE(tileArray.isAbleToChow(MJ_CHARACTOR(1)));
 }
 

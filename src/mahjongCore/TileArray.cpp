@@ -173,9 +173,6 @@ const Tile& TileArray::operator[] (int n) const {
 }
 
 bool TileArray::isAbleToChow(Tile tile) const {
-	/*
-	 * exercise: add your code here.
-	 */
 	return false;
 }
 
