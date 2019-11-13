@@ -176,6 +176,7 @@ const Tile &TileArray::operator[](int n) const {
 
 bool TileArray::isAbleToChow(Tile tile) const {
     return (has(tile.nextTile()) && has(tile.nextTile().nextTile())) ||
-           (has(tile.previousTile()) && has(tile.previousTile().previousTile()));
+           (has(tile.previousTile()) && has(tile.previousTile().previousTile())) ||
+           (has(tile.previousTile()) && has(tile.nextTile()));
 }
 
