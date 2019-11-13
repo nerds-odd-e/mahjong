@@ -26,3 +26,11 @@ TEST(TileArrayIsAbleToChow, chow_on_the_left) {
     CHECK_TRUE(tileArray.isAbleToChow(MJ_CHARACTOR(1)));
 }
 
+TEST(TileArrayIsAbleToChow, chow_on_the_right) {
+    Tile tiles[] = {MJ_CHARACTOR(1), MJ_CHARACTOR(2), MJ_EAST, MJ_WEST};
+
+    TileArray tileArray(tiles, sizeof(tiles));
+
+    CHECK_TRUE(tileArray.isAbleToChow(MJ_CHARACTOR(3)));
+}
+
