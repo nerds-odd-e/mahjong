@@ -173,6 +173,6 @@ const Tile& TileArray::operator[] (int n) const {
 }
 
 bool TileArray::isAbleToChow(Tile tile) const {
-	return false;
+	return has(tile + 1) && has(tile + 2);
 }
 

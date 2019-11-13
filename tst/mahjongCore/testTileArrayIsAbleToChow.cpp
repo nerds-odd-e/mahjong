@@ -10,12 +10,19 @@ TEST_GROUP(TileArrayIsAbleToChow) {
 
 };
 
-TEST(TileArrayIsAbleToChow, start_here)
-{
-    Tile tiles[] = {NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE, NO_TILE};
+TEST(TileArrayIsAbleToChow, not_able_to_chow) {
+    Tile tiles[] = {MJ_EAST, MJ_WEST, MJ_SOUTH, MJ_NORTH};
 
-    TileArray tileArray(tiles, MAX_HOLDING_COUNT);
+    TileArray tileArray(tiles, sizeof(tiles));
 
     CHECK_FALSE(tileArray.isAbleToChow(MJ_CHARACTOR(1)));
+}
+
+TEST(TileArrayIsAbleToChow, chow_on_the_left) {
+    Tile tiles[] = {MJ_CHARACTOR(2), MJ_CHARACTOR(3), MJ_EAST, MJ_WEST};
+
+    TileArray tileArray(tiles, sizeof(tiles));
+
+    CHECK_TRUE(tileArray.isAbleToChow(MJ_CHARACTOR(1)));
 }
 
