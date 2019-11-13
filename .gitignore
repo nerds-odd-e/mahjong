@@ -10,3 +10,5 @@ build/
 .DS_Store
 *.code-workspace
 node_modules/
+.idea
+cmake-build-debug
