@@ -1,7 +1,9 @@
+#include <string.h>
+#include <cstdio>
+#include <stdlib.h>
 #include "HTMLCommandParser.h"
 #include "MahjongCommand.h"
 #include "mahjong_game.h"
-#include "string.h"
 
 
 HTMLCommandParser::HTMLCommandParser(MahjongGameServer * server) :
@@ -29,7 +31,7 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 
 	GameID gameID = 0;
 	char gameCmd[100];
-	sscanf(cmd, "/%d/%s", &gameID, gameCmd);
+	std::sscanf(cmd, "/%d/%s", &gameID, gameCmd);
 	Tile tile = atoi(parameters);
 
 	return parseWithExtractedParametersForGame(gameID, gameCmd, tile);
