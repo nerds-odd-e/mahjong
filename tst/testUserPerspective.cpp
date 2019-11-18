@@ -126,7 +126,8 @@ TEST(UserPerspective, noEventWhenDealToOthers) {
 }
 
 TEST(UserPerspective, numberOfPlayerIs2WhenDealTwice) {
-	mock().ignoreOtherCalls();
+	mock().expectOneCall("createDealEvent").withParameter("view",
+			(UserView *) userPerspective).andReturnValue(NULL);
 
 	userPerspective->deal(defaultTilesPongTheWinningTileAndChowWinningTilePlusOne, 4, 0);
 	userPerspective->deal(defaultTilesPongTheWinningTileAndChowWinningTilePlusOne, 4, 1);
