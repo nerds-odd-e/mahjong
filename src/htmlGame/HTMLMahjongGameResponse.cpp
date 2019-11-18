@@ -46,7 +46,7 @@ void HTMLMahjongGameResponse::currentGameStatus(UserView * view) {
 void HTMLMahjongGameResponse::popAction(UserView * view) {
 	UIEvent *event = view->popEvent();
 	if (event == NULL) {
-		content_ = "App.noop();";
+		content_ = "{\"action\":\"your turn\"}";
 		return;
 	}
 	content_ = event->toString();

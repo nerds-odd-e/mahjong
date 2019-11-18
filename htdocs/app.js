@@ -63,15 +63,11 @@ var App = {
     StartGame: function() {
         this._SetupPage();
     },
-    _UpdateCurrentStatus: function(data) {
-        this.players = data;
-        this._UpdateAllCells();
-    },
-    noop: function() {},
     deal: function() {
         this._getCmdRequest("current", null, function(text) {
             var data = JSON.parse(text)
-            App._UpdateCurrentStatus(data);
+            App.players = data;
+            App._UpdateAllCells();
         });
     },
     Pick: function(player, new_tile) {
@@ -80,7 +76,6 @@ var App = {
             this._SetupBoard();
             this._UpdateAllCells();
             this._ExecuteCmd("start", 0);
-            this._ExecuteCmd("all", 0);
         } else {
             this.players[player].new_pick = new_tile;
             this._UpdateAllCells();
@@ -112,7 +107,6 @@ var App = {
     },
     WinAck: function(distance, score) {
         this._ResetAllButtons();
-        this.StopUpdate();
         if (score == 0) {
             alert("Nobody wins.");
         } else {
@@ -172,7 +166,7 @@ var App = {
         this._ResetAllButtons();
         App._ExecuteCmd('pick', 0);
     },
-    Throw: function(tile, player) {
+    Throw: function(player, tile) {
         if (tile != 0) {
             if (this.players[player].new_pick != tile) {
                 for (var i = 0; i < this.players[player].hand.length; i++)
@@ -260,8 +254,9 @@ var App = {
     _ExecuteCmd: function(cmd, param) {
         this._resetChowing();
         this._getCmdRequest(cmd, param, function(textout) {
-            App._Display(textout);
-            if (textout != "App.noop();") {
+            var data = JSON.parse(textout)
+            if (data.action != "your turn") {
+                App._DisplayAction(data);
                 setTimeout(function() {
                     App._ExecuteCmd("next_action", 0);
                 }, 500);
@@ -269,19 +264,11 @@ var App = {
         });
     },
 
-    _DisplayAnimation: function(animations) {
-        if (this.ti != -1)
-            clearInterval(this.ti);
-        eval(animations.shift());
-        if (animations.length > 0)
-            this.ti = setInterval(function() { App._DisplayAnimation(animations) }, 500);
-    },
-
-    _Display: function(text) {
-        this.ti = -1;
-        var animations = text.split("|");
-        if (animations.length > 0)
-            App._DisplayAnimation(animations);
+    _DisplayAction: function(data) {
+        if (data.action === 'deal') { App.deal(); return; }
+        if (data.action === 'pick') { App.Pick(data.player, data.tile); return; }
+        if (data.action === 'discard') { App.Throw(data.player, data.tile); return; }
+        alert("unknown action: " + data.action)
     },
 
     _showStatus: function(desc, result) {

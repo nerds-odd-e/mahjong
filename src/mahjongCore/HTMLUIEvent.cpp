@@ -71,19 +71,13 @@ private:
 
 string HTMLPickEvent::toString() {
 	char tmp[1024];
-	sprintf(tmp, "App.Pick(%d, %d);", distance_, tile_.getID());
-	if (0 != distance_)
-		strcat(tmp, "|");
-
+	sprintf(tmp, "{\"action\":\"pick\", \"player\":%d,\"tile\":%d}", distance_, tile_.getID());
 	return tmp;
 }
 
 string HTMLDiscardEvent::toString() {
 	char tmp[1024];
-	sprintf(tmp, "App.Throw(%d, %d);", tile_.getID(), distance_);
-	if (0 == distance_)
-		strcat(tmp, "|");
-
+	sprintf(tmp, "{\"action\":\"discard\", \"player\":%d,\"tile\":%d}", distance_, tile_.getID());
 	return tmp;
 }
 
@@ -93,13 +87,13 @@ string HTMLEnableWinEvent::toString() {
 
 string HTMLWinEvent::toString() {
 	char tmp[1024];
-	sprintf(tmp, "App.WinAck(%d, %d);", distance_, score_);
+	sprintf(tmp, "{\"action\":\"win\", \"player\":%d,\"score\":%d}", distance_, score_);
 	return tmp;
 }
 
 string HTMLMessageEvent::toString() {
 	char tmp[1024];
-	sprintf(tmp, "alert(\"%s\");", message_);
+	sprintf(tmp, "{\"action\":\"message\", \"content\":\"%s\"}", message_);
 	return tmp;
 }
 
@@ -112,7 +106,7 @@ string HTMLEnableChewEvent::toString() {
 }
 
 string HTMLDealEvent::toString() {
-	return "App.deal();";
+	return "{\"action\":\"deal\"}";
 }
 
 UIEvent * HTMLEventFactory::createPickEvent(Tile tile, int distance) {
