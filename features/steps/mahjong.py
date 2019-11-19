@@ -9,6 +9,18 @@ def get_request(context, uri):
 def game_get_request(context, cmd):
     return get_request(context, str(context.scenario.game_id)+ "/" + cmd) 
 
+def read_tiles(tiles):
+    map = {
+        "🀙": 65,
+        "🀚": 66,
+        "🀛": 67,
+        "🀡": 73,
+        "🀑": 98,
+        "🀔": 101,
+        "🀗": 104,
+        "🀘": 105
+    }
+    return [map[t] for t in tiles]
 
 @given(u'I have joined a game')
 def step_impl(context):
@@ -25,10 +37,3 @@ def step_impl(context):
     p = game_get_request(context, "current") 
     assert p[0]['player_index'] == 0
     assert len(p[0]['hand']) == 13
-
-
-@then(u'I\'ve got one tile picked')
-def step_impl(context):
-    p = game_get_request(context, "current") 
-    assert p[0]['new_pick'] != 0
-    assert p[1]['new_pick'] == 0
