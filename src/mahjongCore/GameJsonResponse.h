@@ -2,16 +2,16 @@
 #define HTMLMAHJONGGAMERESPONSE_H_
 
 #include <string>
-#include "MahjongGameResponse.h"
+#include "GameID.h"
 
 class UserView;
 class Hand;
 
-class HTMLMahjongGameResponse : public MahjongGameResponse{
+class GameJsonResponse{
 public:
-	virtual ~HTMLMahjongGameResponse(){}
+	virtual ~GameJsonResponse(){}
 
-	void currentGameStatus(UserView * view);
+	virtual void currentGameStatus(UserView * view);
 
 	virtual void newGame(GameID gameID);
 

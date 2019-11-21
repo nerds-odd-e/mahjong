@@ -1,8 +1,8 @@
 #include <queue>
 #include "CppUTestExt/MockSupport.h"
 #include "MahjongCommand.h"
-#include "HTMLMahjongGameServer.h"
-#include "HTMLMahjongGameResponse.h"
+#include "MahjongGameServer.h"
+#include "GameJsonResponse.h"
 #include "mocks.h"
 #include "CppUTest/TestHarness.h"
 
@@ -20,7 +20,7 @@ TEST_GROUP(MJCommand) {
 
 TEST(MJCommand, start_new){
 	mock().expectOneCall("startNewGame").onObject(&server).andReturnValue(NEW_ID);
-	mock().expectOneCall("newHTMLFrame").onObject(&respond).withParameter("gameID", NEW_ID);
+	mock().expectOneCall("newGame").onObject(&respond).withParameter("gameID", NEW_ID);
 	MJCommandNewPlayerJoin cmd(&server);
 	cmd.execute(&respond);
 }

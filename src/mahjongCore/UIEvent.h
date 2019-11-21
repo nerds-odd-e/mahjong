@@ -22,15 +22,16 @@ private:
 };
 
 class UserView;
+
 class UIEventFactory{
 public:
-	virtual ~UIEventFactory() {};
-	virtual UIEvent * createPickEvent(Tile tile, int distance) = 0;
-	virtual UIEvent * createDiscardEvent(Tile tile, int distance) = 0;
-	virtual UIEvent * createWinEvent(int distance, int score) = 0;
-	virtual UIEvent * createMessageEvent(const char * message) = 0;
-	virtual UIEvent * createDealEvent(UserView * view) = 0;
+	virtual UIEvent * createPickEvent(Tile tile, int distance);
+	virtual UIEvent * createDiscardEvent(Tile tile, int distance);
+	virtual UIEvent * createWinEvent(int distance, int score);
+	virtual UIEvent * createMessageEvent(const char * message);
+	virtual UIEvent * createUpdateAllEvent();
 };
+
 
 
 #endif /* UIEVENTQUEUE_H_ */

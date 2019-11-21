@@ -63,7 +63,7 @@ var App = {
     StartGame: function() {
         this._SetupPage();
     },
-    deal: function() {
+    updateAll: function() {
         this._getCmdRequest("current", null, function(text) {
             var data = JSON.parse(text)
             App.players = data.players;
@@ -263,13 +263,13 @@ var App = {
                     App._ExecuteCmd("next_action", 0);
                 }, 500);
             } else {
-                App.deal();
+                App.updateAll();
             }
         });
     },
 
     _DisplayAction: function(data) {
-        if (data.action === 'deal') { App.deal(); return; }
+        if (data.action === 'update_all') { App.updateAll(); return; }
         if (data.action === 'pick') { App.Pick(data.player, data.tile); return; }
         if (data.action === 'discard') { App.Throw(data.player, data.tile); return; }
         if (data.action === 'win') { App.WinAck(data.player, data.score); return; }

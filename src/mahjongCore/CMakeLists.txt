@@ -17,8 +17,6 @@ set(Main_SRCS
       mahjong_game.h
       MahjongCommand.cpp
       MahjongCommand.h
-      MahjongGameFactory.h
-      MahjongGameResponse.h
       mj_table.cpp
       mj_table.h
       Perspective.h
@@ -34,7 +32,8 @@ set(Main_SRCS
       UserPerspective.h
       Wall.cpp
       Wall.h
-      HTMLUIEvent.h HTMLUIEvent.cpp
+      GameJsonResponse.cpp GameJsonResponse.h
+      MahjongGameServer.cpp MahjongGameServer.h
       )
 
 add_library(mahjongCore ${Main_SRCS})

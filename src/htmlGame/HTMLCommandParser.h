@@ -2,13 +2,13 @@
 #define HTMLCOMMANDPARSER_H_
 
 #include "mahjong_game.h"
-#include "HTMLMahjongGameServer.h"
+#include "MahjongGameServer.h"
 
 class MahjongCommand;
 
 class HTMLCommandParser {
 public:
-	HTMLCommandParser(MahjongGameServer * server = NULL);
+	HTMLCommandParser(MahjongGameServer * server);
 
 	virtual ~HTMLCommandParser();
 

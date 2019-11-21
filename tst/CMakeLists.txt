@@ -14,7 +14,7 @@ set(Test_SRCS
     testMahjongTable.cpp
     testUIEvent.cpp
     testUserPerspective.cpp
-    testHTMLMahjongGameResponse.cpp
+    testJsonGameResponse.cpp
     mahjongCore/testGame.cpp
     mahjongCore/testHand.cpp
     mahjongCore/testTile.cpp

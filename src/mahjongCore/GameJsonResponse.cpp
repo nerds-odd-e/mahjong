@@ -1,30 +1,34 @@
-#include "HTMLMahjongGameResponse.h"
+#include "GameJsonResponse.h"
 #include "game.h"
 #include "UserPerspective.h"
 #include "Hand.h"
 #include "string.h"
 #include "stdio.h"
 
-void HTMLMahjongGameResponse::newGame(GameID gameID) {
+void GameJsonResponse::newGame(GameID gameID) {
 	const int buffer_size = 1000;
 	char buffer[buffer_size];
 	snprintf(buffer, buffer_size, "{\"game_id\":%d}", gameID);
 	content_ = buffer;
 }
 
-void HTMLMahjongGameResponse::bye() {
+void GameJsonResponse::bye() {
 }
 	
-const char * HTMLMahjongGameResponse::getString() {
+const char * GameJsonResponse::getString() {
 	return content_.c_str();
 }
 
-void HTMLMahjongGameResponse::shutdown() {
-	content_ = "<HTML><BODY>shutdown!</BODY></HTML>";
+void GameJsonResponse::shutdown() {
+	UIEvent * event = UIEventFactory().createMessageEvent("shutting down...");
+	content_ = event->toString();
+	delete event;
 }
 
-void HTMLMahjongGameResponse::gameDoesNotExist() {
-	content_ = "alert('Game does not exist. Restart, please.');";
+void GameJsonResponse::gameDoesNotExist() {
+	UIEvent * event = UIEventFactory().createMessageEvent("Game does not exist. Restart, please.");
+	content_ = event->toString();
+	delete event;
 }
 
 class GameStatusJSONGenerator {
@@ -38,14 +42,14 @@ private:
 
 };
 
-void HTMLMahjongGameResponse::currentGameStatus(UserView * view) {
+void GameJsonResponse::currentGameStatus(UserView * view) {
 	const int buffer_size = 1024;
 	char tmp[buffer_size];
 	GameStatusJSONGenerator().getCurrentStatus(view, tmp, buffer_size);
 	content_ = tmp;
 }
 
-void HTMLMahjongGameResponse::popAction(UserView * view) {
+void GameJsonResponse::popAction(UserView * view) {
 	UIEvent *event = view->popEvent();
 	if (event == NULL) {
 		content_ = "{\"action\":\"your turn\"}";
@@ -55,7 +59,7 @@ void HTMLMahjongGameResponse::popAction(UserView * view) {
 	delete event;
 }
 
-void HTMLMahjongGameResponse::clear() {
+void GameJsonResponse::clear() {
 	content_ = "";
 }
 

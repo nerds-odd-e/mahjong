@@ -6,12 +6,10 @@
 #include "assert.h"
 #include "mj_table.h"
 #include "game.h"
-#include "HTMLUIEvent.h"
+#include "UIEvent.h"
 
-UserPerspective::UserPerspective(UIEventFactory *eventFactory) {
-	if (eventFactory == NULL)
-		eventFactory = new HTMLEventFactory;
-	eventFactory_ = eventFactory;
+UserPerspective::UserPerspective() {
+	eventFactory_ = new UIEventFactory;
 	last_tile = NO_TILE;
 	int i = 0;
 	for (; i < MAX_NUMBER_OF_PLAYER; i++)
@@ -44,7 +42,7 @@ void UserPerspective::deal(const Tile tiles[], int n, int distance) {
 	delete Hands[distance];
 	this->Hands[distance] = player_data;
 	if (distance == 0)
-		add_event(eventFactory_->createDealEvent(this));
+		add_event(eventFactory_->createUpdateAllEvent());
 }
 
 void UserPerspective::add_event(UIEvent * event) {
@@ -63,7 +61,7 @@ void UserPerspective::pong(Tile tile, int distance) {
 	Hand * player_data = this->Hands[distance];
 	assert(player_data);
 	player_data->pong(tile);
-	add_event(eventFactory_->createDealEvent(this));
+	add_event(eventFactory_->createUpdateAllEvent());
 	this->last_tile = NO_TILE;
 }
 
@@ -75,7 +73,7 @@ int UserPerspective::chow(Tile tile, Tile with, int distance) {
 			add_event(eventFactory_->createMessageEvent("Cannot meld chow."));
 		return 0;
 	}
-	add_event(eventFactory_->createDealEvent(this));
+	add_event(eventFactory_->createUpdateAllEvent());
 	this->last_tile = NO_TILE;
 	return 1;
 }

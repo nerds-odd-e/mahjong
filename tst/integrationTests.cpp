@@ -8,11 +8,10 @@
 #include <stdio.h>
 
 #include "HTMLMahjongGame.h"
-#include "HTMLMahjongGameServer.h"
+#include "MahjongGameServer.h"
 #include "Wall.h"
 #include "TileArray.h"
 #include "EvaluatorAdaptor.h"
-#include "HTMLMahjongGameFactory.h"
 
 namespace {
 
@@ -65,13 +64,12 @@ TEST_GROUP(html_game) {
 
 	int gameID;
 	HTMLMahjongGame *game;
-	HTMLMahjongGameFactory factory;
 	MahjongGameServer *server;
 	EverIncreasingWall *wall;
 	char bigBuffer_[BIGGER_BUFFER_SIZE];
 
 	void setup() {
-		server = new MahjongGameServer(&factory);
+		server = new MahjongGameServer();
 		game = new HTMLMahjongGame(server);
 		UT_PTR_SET(createEvaluatorAdaptor, createSimpleEvaluator);
 		UT_PTR_SET(createWall, createEverIncreasingWall);
@@ -115,7 +113,7 @@ TEST_GROUP(html_game) {
 };
 
 TEST(html_game, start) {
-	STRCMP_EQUAL( "{\"action\":\"deal\"}", LastResponse());
+	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/next_action", 0);
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":0,\"tile\":27}", LastResponse());
 	execute_game_cmd("/next_action", 0);
@@ -154,7 +152,7 @@ TEST(html_game, a_game) {
 	wall->setCurrentTile(1);
 	setCheapestTileForSimpleEvaluator(27);
 	execute_game_cmd("/start", 0);
-	STRCMP_EQUAL( "{\"action\":\"deal\"}", LastResponse());
+	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/next_action", 0);
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":1,\"tile\":27}", LastResponse());
 	execute_game_cmd("/next_action", 0);
@@ -169,14 +167,14 @@ TEST(html_game, no_tile_any_more) {
 	STRCMP_EQUAL( "{\"action\":\"win\", \"player\":1,\"score\":0}", LastResponse());
 	setCheapestTileForSimpleEvaluator(54);
 	execute_game_cmd("/start", 0);
-	STRCMP_EQUAL( "{\"action\":\"deal\"}", LastResponse());
+STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/next_action", 0);
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":1,\"tile\":54}", LastResponse());
 	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/next_action", 0);
 	STRCMP_EQUAL("{\"action\":\"win\", \"player\":0,\"score\":0}", LastResponse());
 	execute_game_cmd("/start", 0);
-	STRCMP_EQUAL( "{\"action\":\"deal\"}", LastResponse());
+	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 }
 
 TEST(html_game, _WIN) {
@@ -231,7 +229,7 @@ TEST(html_game, pong) {
 	execute_game_cmd("/current", 0);
 	STRCMP_CONTAINS("\"allowed_actions\":[\"pong\"", LastResponse());
 	execute_game_cmd("/pong", 0);
-	STRCMP_EQUAL( "{\"action\":\"deal\"}", LastResponse());
+	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/current", 0);
 	STRCMP_CONTAINS( "{\"players\":[{"
 			"\"player_index\":0,\"hand\":[4,5,6,7,8,9,10,11,12,13],\"new_pick\":27,\"melds\":[130]"
@@ -254,7 +252,7 @@ TEST(html_game, chow) {
 	execute_game_cmd("/throw", 1);
 	get_next_action_until_it_is_my_turn();
 	execute_game_cmd("/chow", 12);
-	STRCMP_EQUAL( "{\"action\":\"deal\"}", LastResponse());
+	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/current", 0);
 	STRCMP_CONTAINS( "{\"players\":[{\"player_index\":0,\"hand\":[2,3,4,5,6,7,8,9,10,11],\"new_pick\":12,\"melds\":[268]}", LastResponse());
 }

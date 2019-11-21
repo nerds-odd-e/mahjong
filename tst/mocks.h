@@ -69,12 +69,12 @@ public:
 	}
 };
 
-#include "HTMLMahjongGameResponse.h"
-class MockHTMLMahjongGameResponse: public HTMLMahjongGameResponse {
+#include "GameJsonResponse.h"
+class MockHTMLMahjongGameResponse: public GameJsonResponse {
 public:
 	virtual ~MockHTMLMahjongGameResponse(){}
 	void newGame(int gameID) {
-		mock().actualCall("newHTMLFrame").onObject(this).withParameter("gameID",
+		mock().actualCall("newGame").onObject(this).withParameter("gameID",
 				gameID);
 	}
 
@@ -96,6 +96,8 @@ public:
 	}
 
 };
+
+#include "MahjongGameServer.h"
 
 class MockHTMLMahjongGameServer: public MahjongGameServer {
 public:
@@ -164,50 +166,6 @@ public:
 		return (Tile) mock().actualCall("getCurrentDiscardTile").onObject(this).returnValue().getIntValue();
 	}
 
-};
-
-#include "UIEvent.h"
-class MockUIEventFactory: public UIEventFactory {
-public:
-	virtual ~MockUIEventFactory() {
-	}
-
-	virtual UIEvent * createPickEvent(Tile tile, int distance) {
-		return (UIEvent *) mock().actualCall("createPickEvent").withParameter(
-				"tile", (const char *) tile).withParameter("distance", distance).returnValue().getObjectPointer();
-	}
-
-	virtual UIEvent * createDiscardEvent(Tile tile, int distance) {
-		return (UIEvent *) mock().actualCall("createDiscardEvent").withParameter(
-				"tile", (const char *) tile).withParameter("distance", distance).returnValue().getObjectPointer();
-	}
-
-	virtual UIEvent * createEnableWinEvent() {
-		return (UIEvent *) mock().actualCall("createEnableWinEvent").returnValue().getObjectPointer();
-	}
-
-	virtual UIEvent * createWinEvent(int distance, int score) {
-		return (UIEvent *) mock().actualCall("createWinEvent").withParameter(
-				"score", score).withParameter("distance", distance).returnValue().getObjectPointer();
-	}
-
-	virtual UIEvent * createMessageEvent(const char * message) {
-		return (UIEvent *) mock().actualCall("createMessageEvent").withParameter(
-				"message", message).returnValue().getObjectPointer();
-	}
-
-	virtual UIEvent * createEnablePongEvent() {
-		return (UIEvent *) mock().actualCall("createEnablePongEvent").returnValue().getObjectPointer();
-	}
-
-	virtual UIEvent * createEnableChewEvent() {
-		return (UIEvent *) mock().actualCall("createEnableChewEvent").returnValue().getObjectPointer();
-	}
-
-	virtual UIEvent * createDealEvent(UserView * view) {
-		return (UIEvent *) mock().actualCall("createDealEvent").withParameter(
-				"view", view).returnValue().getObjectPointer();
-	}
 };
 
 #endif /* MOCKS_H_ */

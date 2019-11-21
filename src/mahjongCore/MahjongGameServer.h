@@ -1,26 +1,25 @@
 #ifndef HTML_GAME_H_
 #define HTML_GAME_H_
 
+#include <memory>
 #include "Perspective.h"
 #include "GameID.h"
+#include "MahjongCommand.h"
+
 class Wall;
 class Game;
 class GameIDMap;
-class HTMLCommandParser;
-class MahjongGameResponse;
-class MahjongGameFactory;
+class GameJsonResponse;
 
 typedef void (*FpShutdownCallback)(void);
 
 class MahjongGameServer {
 public:
-	MahjongGameServer(MahjongGameFactory* factory = NULL, FpShutdownCallback shutdownCallback = NULL,
-			HTMLCommandParser *parser = NULL);
+	MahjongGameServer(FpShutdownCallback shutdownCallback = NULL);
 
 	virtual ~MahjongGameServer();
 
-	MahjongGameResponse * executeGameCommand(const char * command, const char *parameters);
-
+	GameJsonResponse * executeGameCommand(MahjongCommand* mjCommand);
 	virtual GameID startNewGame();
 
 	virtual void killGame(GameID gameID);
@@ -33,10 +32,8 @@ public:
 
 private:
 	GameIDMap *gamePool_;
-	HTMLCommandParser *commandParser_;
 	FpShutdownCallback shutdownCallback_;
 	GameID lastGameID_;
-	MahjongGameFactory * factory_;
 };
 
 #endif /* HTML_GAME_H_ */
