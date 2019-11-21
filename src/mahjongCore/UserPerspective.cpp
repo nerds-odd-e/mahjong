@@ -37,7 +37,7 @@ UIEvent * UserPerspective::popEvent() {
 	return eventQueue_.popEvent();
 }
 
-void UserPerspective::deal(Tile tiles[], int n, int distance) {
+void UserPerspective::deal(const Tile tiles[], int n, int distance) {
 	currentActionRequest_.action_ = NO_ACTION;
 	Hand * player_data = createHand();
 	player_data->deal(tiles, n);
@@ -51,30 +51,20 @@ void UserPerspective::add_event(UIEvent * event) {
 	eventQueue_.addEvent(event);
 }
 
-void UserPerspective::react_after_pick(int distance) {
-	this->last_tile = NO_TILE;
-	if (distance == 0) {
-		Hand * player = this->Hands[0];
-		if (player->isAbleToWin(NO_TILE))
-			add_event(eventFactory_->createEnableWinEvent());
-	}
-}
 void UserPerspective::pick(Tile tile, int distance) {
 	Hand * player_data = this->Hands[distance];
 	assert(player_data);
 	player_data->pick(tile);
 
 	add_event(eventFactory_->createPickEvent(tile, distance));
-
-	react_after_pick(distance);
+	this->last_tile = NO_TILE;
 }
 void UserPerspective::pong(Tile tile, int distance) {
 	Hand * player_data = this->Hands[distance];
 	assert(player_data);
 	player_data->pong(tile);
 	add_event(eventFactory_->createDealEvent(this));
-
-	react_after_pick(distance);
+	this->last_tile = NO_TILE;
 }
 
 int UserPerspective::chow(Tile tile, Tile with, int distance) {
@@ -86,7 +76,7 @@ int UserPerspective::chow(Tile tile, Tile with, int distance) {
 		return 0;
 	}
 	add_event(eventFactory_->createDealEvent(this));
-	react_after_pick(distance);
+	this->last_tile = NO_TILE;
 	return 1;
 }
 
@@ -115,19 +105,6 @@ void UserPerspective::pushActionRequest(PlayerActionRequest * actionRequest) {
 	this->currentActionRequest_ = *actionRequest;
 }
 
-void UserPerspective::react_others_throw(Tile tile, int distance) {
-	if (distance != 0) {
-		Hand * player = this->Hands[0];
-		if (player->isAbleToWin(tile))
-			add_event(eventFactory_->createEnableWinEvent());
-		if (player->isAbleToPong(tile))
-			add_event(eventFactory_->createEnablePongEvent());
-		if (distance == 1) {
-			if (player->isAbleToChow(tile))
-				add_event(eventFactory_->createEnableChewEvent());
-		}
-	}
-}
 void UserPerspective::discard(Tile tile, int distance) {
 	this->last_tile = tile;
 	Hand * player_data = this->Hands[distance];
@@ -135,8 +112,6 @@ void UserPerspective::discard(Tile tile, int distance) {
 		player_data->discard(tile);
 
 	add_event(eventFactory_->createDiscardEvent(tile, distance));
-
-	react_others_throw(tile, distance);
 }
 
 int UserPerspective::getNumberOfPlayer() {
@@ -149,6 +124,10 @@ int UserPerspective::getNumberOfPlayer() {
 
 Hand *UserPerspective::getHand(int distance) {
 	return this->Hands[distance];
+}
+
+Tile UserPerspective::getCurrentDiscardTile() {
+	return this->last_tile;
 }
 
 void UserPerspective::setHand(int distance, Hand * hand) {

@@ -66,7 +66,8 @@ var App = {
     deal: function() {
         this._getCmdRequest("current", null, function(text) {
             var data = JSON.parse(text)
-            App.players = data;
+            App.players = data.players;
+            App.allowed_actions = data.allowed_actions;
             App._UpdateAllCells();
         });
     },
@@ -252,6 +253,7 @@ var App = {
     },
 
     _ExecuteCmd: function(cmd, param) {
+        this.allowed_actions = []
         this._resetChowing();
         this._getCmdRequest(cmd, param, function(textout) {
             var data = JSON.parse(textout)
@@ -260,6 +262,8 @@ var App = {
                 setTimeout(function() {
                     App._ExecuteCmd("next_action", 0);
                 }, 500);
+            } else {
+                App.deal();
             }
         });
     },
@@ -268,6 +272,7 @@ var App = {
         if (data.action === 'deal') { App.deal(); return; }
         if (data.action === 'pick') { App.Pick(data.player, data.tile); return; }
         if (data.action === 'discard') { App.Throw(data.player, data.tile); return; }
+        if (data.action === 'win') { App.WinAck(data.player, data.score); return; }
         alert("unknown action: " + data.action)
     },
 
@@ -358,6 +363,8 @@ var App = {
             for (var i = 0; i <= this.max_holding_count; i++)
                 this._UpdateCell(j, i);
         }
+        this._ResetAllButtons();
+        this.allowed_actions.forEach(element => this.LightButton(element));
     },
     _Updatemeld: function(player, index) {
         var cell = document.getElementById("meld_" + player + "_" + index);

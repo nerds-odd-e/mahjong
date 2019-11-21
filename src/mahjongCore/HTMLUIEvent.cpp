@@ -18,11 +18,6 @@ private:
 	int distance_;
 };
 
-class HTMLEnableWinEvent: public UIEvent {
-public:
-	virtual std::string toString();
-};
-
 class HTMLDiscardEvent: public UIEvent {
 public:
 	HTMLDiscardEvent(Tile tile, int distance):
@@ -50,16 +45,6 @@ private:
 	const char * message_;
 };
 
-class HTMLEnablePongEvent: public UIEvent {
-public:
-	std::string toString();
-};
-
-class HTMLEnableChewEvent: public UIEvent {
-public:
-	std::string toString();
-};
-
 class UserView;
 class HTMLDealEvent: public UIEvent {
 public:
@@ -81,10 +66,6 @@ string HTMLDiscardEvent::toString() {
 	return tmp;
 }
 
-string HTMLEnableWinEvent::toString() {
-	return "App.LightButton('win');";
-}
-
 string HTMLWinEvent::toString() {
 	char tmp[1024];
 	sprintf(tmp, "{\"action\":\"win\", \"player\":%d,\"score\":%d}", distance_, score_);
@@ -97,24 +78,12 @@ string HTMLMessageEvent::toString() {
 	return tmp;
 }
 
-string HTMLEnablePongEvent::toString() {
-	return "App.LightButton('pong');";
-}
-
-string HTMLEnableChewEvent::toString() {
-	return "App.LightButton('chow');";
-}
-
 string HTMLDealEvent::toString() {
 	return "{\"action\":\"deal\"}";
 }
 
 UIEvent * HTMLEventFactory::createPickEvent(Tile tile, int distance) {
 	return new HTMLPickEvent(tile, distance);
-}
-
-UIEvent * HTMLEventFactory::createEnableWinEvent() {
-	return new HTMLEnableWinEvent();
 }
 
 UIEvent * HTMLEventFactory::createDiscardEvent(Tile tile, int distance) {
@@ -127,14 +96,6 @@ UIEvent * HTMLEventFactory::createWinEvent(int distance, int score) {
 
 UIEvent * HTMLEventFactory::createMessageEvent(const char * message) {
 	return new HTMLMessageEvent(message);
-}
-
-UIEvent * HTMLEventFactory::createEnablePongEvent() {
-	return new HTMLEnablePongEvent();
-}
-
-UIEvent * HTMLEventFactory::createEnableChewEvent() {
-	return new HTMLEnableChewEvent();
 }
 
 UIEvent * HTMLEventFactory::createDealEvent(UserView * view) {

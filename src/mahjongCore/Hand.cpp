@@ -50,7 +50,7 @@ Tile Hand::getCurrentTileAtHand() const {
 	return this->current_;
 }
 
-void Hand::deal(Tile tiles[], int buffer_size) {
+void Hand::deal(const Tile tiles[], int buffer_size) {
 	delete tileArray_;
 	tileArray_ = new TileArray(tiles, buffer_size);
 

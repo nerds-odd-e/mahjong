@@ -3,88 +3,8 @@
 #include "CppUTestExt/MockSupport.h"
 #include "UserPerspective.h"
 #include "HTMLUIEvent.h"
-#include "Hand.h"
 #include "mocks.h"
-
-class DummyUIEvent: public UIEvent {
-public:
-	virtual ~DummyUIEvent() {
-	}
-	virtual std::string toString() {
-		return "";
-	}
-};
-
-const Tile WINNING_TILE = 10;
-const Tile ANY_TILE = 8;
-Tile defaultTilesPongTheWinningTileAndChowWinningTilePlusOne[] = { WINNING_TILE, WINNING_TILE, WINNING_TILE+2, WINNING_TILE+2 };
-
-class HandBuilder {
-public:
-	HandBuilder(): numberOfTiles_(0){}
-	Hand * build() {
-		return createHand(tiles_, numberOfTiles_);
-	}
-
-	HandBuilder& withAPairOf(Tile tile) {
-		tiles_[numberOfTiles_++] = tile;
-		tiles_[numberOfTiles_++] = tile;
-		return *this;
-	}
-
-	HandBuilder& withPongOf(Tile tile) {
-		tiles_[numberOfTiles_++] = tile;
-		tiles_[numberOfTiles_++] = tile;
-		tiles_[numberOfTiles_++] = tile;
-		return *this;
-	}
-
-private:
-	Hand * createHand(Tile * tiles, int count) {
-		Hand * hand = new Hand();
-		hand->deal(tiles, count);
-		return hand;
-	}
-
-private:
-	Tile tiles_[MAX_HOLDING_COUNT];
-	int numberOfTiles_;
-};
-
-class HandDataMother {
-public:
-	Hand *createAllIrrelevantHand() {
-		Tile tiles[] = { 1, 4, 7, 11 };
-		return createHand(tiles, 4);
-	}
-
-	Hand * createHandWinWithTheWinningTile() {
-		Tile tiles[] = {WINNING_TILE};
-		return createHand(tiles, 1);
-	}
-
-	Hand *createHandPongTheWinningTile() {
-		Tile tiles[] = {WINNING_TILE, WINNING_TILE, WINNING_TILE + 3, WINNING_TILE + 6};
-		return createHand(tiles, 4);
-	}
-
-	Hand * createHandChowTheWinningTile() {
-		Tile tiles[] = {WINNING_TILE+1, WINNING_TILE+2, WINNING_TILE + 3, WINNING_TILE + 6};
-		return createHand(tiles, 4);
-	}
-
-	Hand * createHandPongAndWinTheWinningTile() {
-		Tile tiles[] = {WINNING_TILE, WINNING_TILE, WINNING_TILE + 2, WINNING_TILE + 2};
-		return createHand(tiles, 4);
-	}
-
-private:
-	Hand * createHand(Tile * tiles, int count) {
-		Hand * hand = new Hand();
-		hand->deal(tiles, count);
-		return hand;
-	}
-};
+#include "DataCreationHelpers.h"
 
 TEST_GROUP(UserPerspective) {
 	UserPerspective * userPerspective;
@@ -152,12 +72,10 @@ TEST(UserPerspective, gotAlsoWinEventWhenPickAWinningTile) {
 
 	mock().expectOneCall("createPickEvent").withParameter("tile",
 			(const char *)WINNING_TILE).withParameter("distance", 0).andReturnValue(&dummyEvent2);
-	mock().expectOneCall("createEnableWinEvent").andReturnValue(&dummyEvent3);
 
 	userPerspective->pick(WINNING_TILE, 0);
 
 	CHECK_EQUAL(&dummyEvent2, userPerspective->popEvent());
-	CHECK_EQUAL(&dummyEvent3, userPerspective->popEvent());
 	CHECK_EQUAL(NULL, userPerspective->popEvent());
 }
 
@@ -198,15 +116,11 @@ TEST(UserPerspective, shouldGetEnableEventsWhenOtherPlayerDiscard) {
 
 	mock().expectOneCall("createDiscardEvent").withParameter("tile",
 			(const char *)WINNING_TILE).withParameter("distance", 1).andReturnValue(&dummyEvent2);
-	mock().expectOneCall("createEnableWinEvent").andReturnValue(&dummyEvent3);
-	mock().expectOneCall("createEnablePongEvent").andReturnValue(&dummyEvent3);
 	mock().ignoreOtherCalls();
 
 	userPerspective->discard(WINNING_TILE, 1);
 
 	CHECK_EQUAL(&dummyEvent2, userPerspective->popEvent());
-	CHECK_EQUAL(&dummyEvent3, userPerspective->popEvent());
-	CHECK_EQUAL(&dummyEvent3, userPerspective->popEvent());
 }
 
 TEST(UserPerspective, action_get_empty) {

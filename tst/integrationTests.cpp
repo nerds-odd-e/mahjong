@@ -61,7 +61,6 @@ static Wall * createEverIncreasingWall() {
 	return lastCreatedEverIncreasingWall;
 }
 
-#define HAS_STRING(expect, actual) HAS_STRING_LOCATION(expect, actual, __FILE__, __LINE__)
 TEST_GROUP(html_game) {
 
 	int gameID;
@@ -101,20 +100,17 @@ TEST_GROUP(html_game) {
 				BIGGER_BUFFER_SIZE);
 	}
 
-	const char * LastResponse() {
-		return bigBuffer_;
+	void get_next_action_until_it_is_my_turn() {
+		int count = 0;
+		do {
+			execute_game_cmd("/next_action", 0);
+			count++;
+		} while(count < 10 && strcmp(LastResponse(), "{\"action\":\"your turn\"}") != 0);
+		CHECK_TRUE_TEXT(count < 10, "getting next action 10 time and still not your turn");
 	}
 
-	void HAS_STRING_LOCATION(const char * expect, const char * actual,
-			const char * filename, int line) {
-		if (strstr(actual, expect) == NULL) {
-			const int buffer_size = 500;
-			char text[buffer_size];
-			snprintf(text, buffer_size - 1, "The actual string <%s>\n"
-					"does not include the expected string <%s>", actual,
-					expect);
-			FAIL_LOCATION(text, filename, line);
-		}
+	const char * LastResponse() {
+		return bigBuffer_;
 	}
 };
 
@@ -129,27 +125,30 @@ TEST(html_game, start) {
 TEST(html_game, get_current_status) {
 	execute_game_cmd("/current", 0);
 	STRCMP_EQUAL(
-			"[{\"player_index\":0,\"hand\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"new_pick\":27,\"melds\":[]},"
-			"{\"player_index\":1,\"hand\":[14,15,16,17,18,19,20,21,22,23,24,25,26],\"new_pick\":0,\"melds\":[]}]",
+			"{"
+				"\"players\":["
+					"{\"player_index\":0,\"hand\":[1,2,3,4,5,6,7,8,9,10,11,12,13],\"new_pick\":27,\"melds\":[]},"
+					"{\"player_index\":1,\"hand\":[14,15,16,17,18,19,20,21,22,23,24,25,26],\"new_pick\":0,\"melds\":[]}"
+				"],"
+				"\"allowed_actions\":[\"chow\"]"
+			"}",
 			LastResponse());
 }
 
 TEST(html_game, a_game) {
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
+	get_next_action_until_it_is_my_turn();
 	execute_game_cmd("/throw", 1);
-	HAS_STRING("{\"action\":\"discard\", \"player\":0,\"tile\":1}", LastResponse());
+	STRCMP_CONTAINS("{\"action\":\"discard\", \"player\":0,\"tile\":1}", LastResponse());
 	execute_game_cmd("/next_action", 0);
-	HAS_STRING("{\"action\":\"pick\", \"player\":1,\"tile\":28}", LastResponse());
+	STRCMP_CONTAINS("{\"action\":\"pick\", \"player\":1,\"tile\":28}", LastResponse());
 	execute_game_cmd("/next_action", 0);
-	HAS_STRING("{\"action\":\"discard\", \"player\":1,\"tile\":14}", LastResponse());
+	STRCMP_CONTAINS("{\"action\":\"discard\", \"player\":1,\"tile\":14}", LastResponse());
 	setCheapestTileForSimpleEvaluator(28);
 	wall->setCurrentTile(27);
 	execute_game_cmd("/pick", 0);
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":0,\"tile\":27}", LastResponse());
-	execute_game_cmd("/next_action", 0);
-	STRCMP_EQUAL( "App.LightButton('win');", LastResponse());
+	execute_game_cmd("/current", 0);
+	STRCMP_CONTAINS("\"allowed_actions\":[\"win\"", LastResponse());
 	execute_game_cmd("/win", 0);
 	STRCMP_EQUAL("{\"action\":\"win\", \"player\":0,\"score\":1}", LastResponse());
 	wall->setCurrentTile(1);
@@ -195,9 +194,7 @@ TEST(html_game, _WIN) {
 	setCheapestTileForSimpleEvaluator(27);
 	wall->setCurrentTile(27);
 	execute_game_cmd("/throw", 29);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
+	get_next_action_until_it_is_my_turn();
 	execute_game_cmd("/win", 0);
 	STRCMP_EQUAL("{\"action\":\"win\", \"player\":0,\"score\":1}", LastResponse());
 }
@@ -221,9 +218,7 @@ TEST(html_game, ai_WIN) {
 
 TEST(html_game, pong) {
 	execute_game_cmd("/throw", 1);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
+	get_next_action_until_it_is_my_turn();
 	execute_game_cmd("/pong", 0);
 	STRCMP_EQUAL( "{\"action\":\"message\", \"content\":\"Are you kidding?\"}", LastResponse());
 	wall->setCurrentTile(2);
@@ -232,14 +227,13 @@ TEST(html_game, pong) {
 	setCheapestTileForSimpleEvaluator(2);
 	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/throw", 3);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
-	STRCMP_EQUAL("App.LightButton('pong');", LastResponse());
+	get_next_action_until_it_is_my_turn();
+	execute_game_cmd("/current", 0);
+	STRCMP_CONTAINS("\"allowed_actions\":[\"pong\"", LastResponse());
 	execute_game_cmd("/pong", 0);
 	STRCMP_EQUAL( "{\"action\":\"deal\"}", LastResponse());
 	execute_game_cmd("/current", 0);
-	STRCMP_EQUAL( "[{"
+	STRCMP_CONTAINS( "{\"players\":[{"
 			"\"player_index\":0,\"hand\":[4,5,6,7,8,9,10,11,12,13],\"new_pick\":27,\"melds\":[130]"
 		"},{"
 			"\"player_index\":1,\"hand\":[15,16,17,18,19,20,21,22,23,24,25,26,28],\"new_pick\":0,\"melds\":[]"
@@ -248,17 +242,19 @@ TEST(html_game, pong) {
 	execute_game_cmd("/throw", 4);
 }
 
-IGNORE_TEST(html_game, chow_when_not_able_to_chow) {
+TEST(html_game, chow_when_not_able_to_chow) {
 	execute_game_cmd("/throw", 1);
+	get_next_action_until_it_is_my_turn();
 	execute_game_cmd("/chow", 0);
-	STRCMP_EQUAL( "alert(\"Cannot meld chow.\");", LastResponse());
+	STRCMP_EQUAL( "{\"action\":\"message\", \"content\":\"Cannot meld chow.\"}", LastResponse());
 }
 
-IGNORE_TEST(html_game, chow) {
+TEST(html_game, chow) {
 	setCheapestTileForSimpleEvaluator(14);
 	execute_game_cmd("/throw", 1);
+	get_next_action_until_it_is_my_turn();
 	execute_game_cmd("/chow", 12);
-	STRCMP_EQUAL(
-			"App.UpdateHolding([[2,3,4,5,6,7,8,9,10,11,27,268],[15,16,17,18,19,20,21,22,23,24,25,26,28,0]]);",
-			LastResponse());
+	STRCMP_EQUAL( "{\"action\":\"deal\"}", LastResponse());
+	execute_game_cmd("/current", 0);
+	STRCMP_CONTAINS( "{\"players\":[{\"player_index\":0,\"hand\":[2,3,4,5,6,7,8,9,10,11],\"new_pick\":12,\"melds\":[268]}", LastResponse());
 }

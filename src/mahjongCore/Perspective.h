@@ -9,7 +9,7 @@ public:
 	Player() : currentActionRequest_(NO_ACTION, NO_TILE){}
 	virtual ~Player(){}
 
-	virtual void deal(Tile tiles[], int n, int distance)=0;
+	virtual void deal(const Tile tiles[], int n, int distance)=0;
 	virtual void pick(Tile tile, int distance)=0;
 	virtual void pong(Tile tile, int distance)=0;
 	virtual int chow(Tile tile, Tile with, int distance)=0;

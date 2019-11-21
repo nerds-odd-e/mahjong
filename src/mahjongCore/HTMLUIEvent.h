@@ -8,11 +8,8 @@ class HTMLEventFactory : public UIEventFactory{
 public:
 	UIEvent * createPickEvent(Tile tile, int distance);
 	UIEvent * createDiscardEvent(Tile tile, int distance);
-	UIEvent * createEnableWinEvent();
 	UIEvent * createWinEvent(int distance, int score);
 	UIEvent * createMessageEvent(const char * message);
-	UIEvent * createEnablePongEvent();
-	UIEvent * createEnableChewEvent();
 	UIEvent * createDealEvent(UserView * view);
 };
 

@@ -16,6 +16,7 @@ public:
 	virtual UIEvent * popEvent() = 0;
 	virtual int getNumberOfPlayer() = 0;
 	virtual Hand *getHand(int distance) = 0;
+	virtual Tile getCurrentDiscardTile() = 0;
 };
 
 class UserPerspective: public Player, public UserView {
@@ -23,7 +24,7 @@ public:
 	UserPerspective(UIEventFactory *eventFactory = NULL);
 	virtual ~UserPerspective();
 
-	virtual void deal(Tile tiles[], int n, int distance);
+	virtual void deal(const Tile tiles[], int n, int distance);
 	virtual void pick(Tile tile, int distance);
 	virtual void pong(Tile tile, int distance);
 	virtual int chow(Tile tile, Tile with, int distance);
@@ -35,13 +36,12 @@ public:
 	virtual UIEvent * popEvent();
 	virtual int getNumberOfPlayer();
 	virtual Hand *getHand(int distance);
+	virtual Tile getCurrentDiscardTile();
 
 	void setHand(int distance, Hand * hand);
 
 private:
 	void add_event(UIEvent * event);
-	void react_after_pick(int distance);
-	void react_others_throw(Tile tile, int distance);
 
 	UIEventQueue eventQueue_;
 	Tile last_tile;

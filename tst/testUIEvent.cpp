@@ -34,11 +34,6 @@ TEST(HTMLUIEvent, DiscardEvent_by_previous_player) {
 	STRCMP_EQUAL("{\"action\":\"discard\", \"player\":1,\"tile\":1}", event->toString().c_str());
 }
 
-TEST(HTMLUIEvent, EnableWinEvent) {
-	event = factory.createEnableWinEvent();
-	STRCMP_EQUAL("App.LightButton('win');", event->toString().c_str());
-}
-
 TEST(HTMLUIEvent, WinEvent) {
 	event = factory.createWinEvent(3, 1);
 	STRCMP_EQUAL("{\"action\":\"win\", \"player\":3,\"score\":1}", event->toString().c_str());
@@ -47,16 +42,6 @@ TEST(HTMLUIEvent, WinEvent) {
 TEST(HTMLUIEvent, MessageEvent) {
 	event = factory.createMessageEvent("hello");
 	STRCMP_EQUAL("{\"action\":\"message\", \"content\":\"hello\"}", event->toString().c_str());
-}
-
-TEST(HTMLUIEvent, EnablePongEvent) {
-	event = factory.createEnablePongEvent();
-	STRCMP_EQUAL("App.LightButton('pong');", event->toString().c_str());
-}
-
-TEST(HTMLUIEvent, EnableChewEvent) {
-	event = factory.createEnableChewEvent();
-	STRCMP_EQUAL("App.LightButton('chow');", event->toString().c_str());
 }
 
 TEST(HTMLUIEvent, dealEvent) {

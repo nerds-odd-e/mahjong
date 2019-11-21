@@ -17,7 +17,7 @@ AIPerspective::~AIPerspective() {
 	delete evaluator;
 }
 
-void AIPerspective::deal(Tile tiles[], int n, int distance) {
+void AIPerspective::deal(const Tile tiles[], int n, int distance) {
 	if (distance == 0) {
 		Hand * player_data = createHand();
 		player_data->deal(tiles, n);

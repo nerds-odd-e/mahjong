@@ -27,11 +27,8 @@ public:
 	virtual ~UIEventFactory() {};
 	virtual UIEvent * createPickEvent(Tile tile, int distance) = 0;
 	virtual UIEvent * createDiscardEvent(Tile tile, int distance) = 0;
-	virtual UIEvent * createEnableWinEvent() = 0;
 	virtual UIEvent * createWinEvent(int distance, int score) = 0;
 	virtual UIEvent * createMessageEvent(const char * message) = 0;
-	virtual UIEvent * createEnablePongEvent() = 0;
-	virtual UIEvent * createEnableChewEvent() = 0;
 	virtual UIEvent * createDealEvent(UserView * view) = 0;
 };
 

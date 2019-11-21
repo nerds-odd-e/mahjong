@@ -18,7 +18,7 @@ public:
 	void pong(Tile);
 	bool chow(Tile tile, Tile with);
 	Tile discard(Tile tile);
-	void deal(Tile tiles[], int tiles_count);
+	void deal(const Tile tiles[], int tiles_count);
 
 	int isAbleToPong(Tile tile) const;
 	int isAbleToChow(Tile tile) const;

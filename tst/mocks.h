@@ -30,7 +30,7 @@ public:
 		free(self);
 	}
 
-	virtual void deal(Tile tiles[], int buffer_size, int distance) {
+	virtual void deal(const Tile tiles[], int buffer_size, int distance) {
 		UNUSED(buffer_size);
 		mock().actualCall("deal").onObject(this).withParameter("distance",
 				distance).withParameter("tiles", tiles);
@@ -159,6 +159,11 @@ public:
 		UNUSED(distance);
 		return (Hand *) mock().actualCall("getHand").onObject(this).returnValue().getObjectPointer();
 	}
+
+	Tile getCurrentDiscardTile() {
+		return (Tile) mock().actualCall("getCurrentDiscardTile").onObject(this).returnValue().getIntValue();
+	}
+
 };
 
 #include "UIEvent.h"

@@ -176,6 +176,6 @@ bool TileArray::isAbleToChow(Tile tile) const {
 	/*
 	 * exercise: add your code here.
 	 */
-	return false;
+	return true;
 }
 

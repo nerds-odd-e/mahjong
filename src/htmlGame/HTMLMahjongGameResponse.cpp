@@ -14,7 +14,7 @@ void HTMLMahjongGameResponse::newGame(GameID gameID) {
 
 void HTMLMahjongGameResponse::bye() {
 }
-
+	
 const char * HTMLMahjongGameResponse::getString() {
 	return content_.c_str();
 }
@@ -27,19 +27,21 @@ void HTMLMahjongGameResponse::gameDoesNotExist() {
 	content_ = "alert('Game does not exist. Restart, please.');";
 }
 
-class TileArrayScriptGenerator {
+class GameStatusJSONGenerator {
 public:
-	const char * getTilesArrayString(UserView * view, char buffer[], int buffer_size);
+	const char * getCurrentStatus(UserView * view, char buffer[], int buffer_size);
 private:
 	void catTilesToString(char buffer[], const Tile * tiles, int n);
 	void catmeldToString(char buffer[], const Meld * meld, int n);
 	void catPlayerTilesToString(Hand * player, char buffer[], int buffer_size);
+	void catPlayerAllowedActionsToString(UserView * userView, char buffer[], int buffer_size);
+
 };
 
 void HTMLMahjongGameResponse::currentGameStatus(UserView * view) {
 	const int buffer_size = 1024;
 	char tmp[buffer_size];
-	TileArrayScriptGenerator().getTilesArrayString(view, tmp, buffer_size);
+	GameStatusJSONGenerator().getCurrentStatus(view, tmp, buffer_size);
 	content_ = tmp;
 }
 
@@ -57,7 +59,7 @@ void HTMLMahjongGameResponse::clear() {
 	content_ = "";
 }
 
-void TileArrayScriptGenerator::catTilesToString(char buffer[], const Tile * tiles, int n) {
+void GameStatusJSONGenerator::catTilesToString(char buffer[], const Tile * tiles, int n) {
 	char tmp_tile[100];
 	int i = 0;
 	for (i = 0; i < n; i++) {
@@ -66,7 +68,7 @@ void TileArrayScriptGenerator::catTilesToString(char buffer[], const Tile * tile
 	}
 }
 
-void TileArrayScriptGenerator::catmeldToString(char buffer[], const Meld * meld, int n) {
+void GameStatusJSONGenerator::catmeldToString(char buffer[], const Meld * meld, int n) {
 	char tmp_tile[100];
 	int i = 0;
 	for (i = 0; i < n; i++) {
@@ -75,7 +77,7 @@ void TileArrayScriptGenerator::catmeldToString(char buffer[], const Meld * meld,
 	}
 }
 
-void TileArrayScriptGenerator::catPlayerTilesToString(Hand * player, char buffer[],
+void GameStatusJSONGenerator::catPlayerTilesToString(Hand * player, char buffer[],
 		int buffer_size) {
 	strcat(buffer, ",\"hand\":[");
 	Tile tiles[MAX_HOLDING_COUNT];
@@ -103,10 +105,39 @@ void TileArrayScriptGenerator::catPlayerTilesToString(Hand * player, char buffer
 	strcat(buffer, "]");
 }
 
-const char * TileArrayScriptGenerator::getTilesArrayString(UserView * view,
+void GameStatusJSONGenerator::catPlayerAllowedActionsToString(UserView * view, char buffer[],
+		int buffer_size) {
+	strcat(buffer, "\"allowed_actions\":[");
+	bool first = true;
+    if (view->getHand(0)->isAbleToWin(view->getCurrentDiscardTile())) {
+		if (first)
+			first = false;
+		else
+			strcat(buffer, ",");
+		strcat(buffer, "\"win\"");
+	}
+    if (view->getHand(0)->isAbleToPong(view->getCurrentDiscardTile())) {
+		if (first)
+			first = false;
+		else
+			strcat(buffer, ",");
+		strcat(buffer, "\"pong\"");
+	}
+    if (view->getHand(0)->isAbleToChow(view->getCurrentDiscardTile())) {
+		if (first)
+			first = false;
+		else
+			strcat(buffer, ",");
+		strcat(buffer, "\"chow\"");
+	}
+
+	strcat(buffer, "]");
+}
+
+const char * GameStatusJSONGenerator::getCurrentStatus(UserView * view,
 		char buffer[], int buffer_size) {
     char tmp[100];
-	sprintf(buffer, "[");
+	sprintf(buffer, "{\"players\":[");
 	int count = view->getNumberOfPlayer();
 	for (int i = 0; i < count; i++) {
 		Hand *data = view->getHand(i);
@@ -118,6 +149,8 @@ const char * TileArrayScriptGenerator::getTilesArrayString(UserView * view,
 		catPlayerTilesToString(data, buffer, buffer_size);
 		strcat(buffer, "}");
 	}
-	strcat(buffer, "]");
+	strcat(buffer, "],");
+	catPlayerAllowedActionsToString(view, buffer, buffer_size);
+	strcat(buffer, "}");
 	return buffer;
 }
