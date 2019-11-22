@@ -254,5 +254,5 @@ TEST(html_game, chow) {
 	execute_game_cmd("/chow", 12);
 	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/current", 0);
-	STRCMP_CONTAINS( "{\"players\":[{\"player_index\":0,\"hand\":[2,3,4,5,6,7,8,9,10,11],\"new_pick\":12,\"melds\":[268]}", LastResponse());
+	STRCMP_CONTAINS( "{\"players\":[{\"player_index\":0,\"hand\":[2,3,4,5,6,7,8,9,10,11],\"new_pick\":27,\"melds\":[268]}", LastResponse());
 }

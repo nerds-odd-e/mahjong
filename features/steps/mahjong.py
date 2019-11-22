@@ -35,5 +35,10 @@ def step_impl(context):
 @then(u'I should see that I\'ve got my hand of tiles')
 def step_impl(context):
     p = game_get_request(context, "current") 
-    assert p[0]['player_index'] == 0
-    assert len(p[0]['hand']) == 13
+    assert p['players'][0]['player_index'] == 0
+    assert len(p['players'][0]['hand']) == 13
+
+@then(u'I\'ve got one tile picked')
+def step_impl(context):
+    p = game_get_request(context, "current") 
+    assert p['players'][0]['new_pick'] != 0

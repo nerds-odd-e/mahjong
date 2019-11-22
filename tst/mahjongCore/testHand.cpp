@@ -79,9 +79,22 @@ TEST(Hand,chow_middle) {
 	hand->deal(tiles1, 3);
 	CHECK(hand->chow(C(2), C(1)));
 	LONGS_EQUAL(0,hand->getHoldings(tiles, 3));
+	CHECK_EQUAL(C(4),hand->getCurrentTileAtHand());
 	LONGS_EQUAL(1,hand->getMelds(meld, 3));
 	LONGS_EQUAL(CHOW(C(1)), meld[0]);
 }
+
+TEST(Hand,chow_last) {
+	Tile tiles1[] = {C(2), C(3), C(4), C(9)};
+	Meld meld[3];
+	hand->deal(tiles1, 4);
+	CHECK(hand->chow(C(5), C(3)));
+	LONGS_EQUAL(1,hand->getHoldings(tiles, 4));
+	CHECK_EQUAL(C(9),hand->getCurrentTileAtHand());
+	LONGS_EQUAL(1,hand->getMelds(meld, 3));
+	LONGS_EQUAL(CHOW(C(3)), meld[0]);
+}
+
 
 const Tile CURRENT_TILE = C(1);
 const Tile HOLDING_TILE = C(2);

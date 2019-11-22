@@ -16,7 +16,7 @@ TEST_GROUP(GameJsonResponse) {
 };
 
 TEST(GameJsonResponse, when_opponent_discards_a_tile_player_can_both_pong_and_win) {
-    handBuilder.withAPairOf(MJ_BAMBOO(1)).withTiles(MJ_BAMBOO(2), MJ_BAMBOO(3)).dealToPlease(&userPerspective, 0);
+    handBuilder.withAPairOf(B(1)).withTiles(B(2), B(3)).dealToPlease(&userPerspective, 0);
     userPerspective.discard(MJ_BAMBOO(1), 1);
     response.currentGameStatus(&userPerspective);
     const char * result = response.getString();

@@ -104,7 +104,7 @@ void Hand::_chow(Tile tile, Tile smallest)
 {
 	for (int i = 0; i < 3; i++)
 		if (tile != smallest + i) {
-			tileArray_->remove(tile, 1);
+			tileArray_->remove(smallest + i, 1);
 		}
 
 	rearrangeAfterMeld(CHOW(smallest));
