@@ -77,6 +77,7 @@ TEST_GROUP(html_game) {
 		gameID = server->getLastGameID();
 		wall = lastCreatedEverIncreasingWall;
 		execute_game_cmd("/start", 0);
+        execute_game_cmd("/pick", 0);
 	}
 
 	void teardown() {
@@ -113,9 +114,7 @@ TEST_GROUP(html_game) {
 };
 
 TEST(html_game, start) {
-	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
-	execute_game_cmd("/next_action", 0);
-	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":0,\"tile\":27}", LastResponse());
+    STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":0,\"tile\":27}", LastResponse());
 	execute_game_cmd("/next_action", 0);
 	STRCMP_EQUAL( "{\"action\":\"your turn\"}", LastResponse());
 }
@@ -167,8 +166,9 @@ TEST(html_game, no_tile_any_more) {
 	STRCMP_EQUAL( "{\"action\":\"win\", \"player\":1,\"score\":0}", LastResponse());
 	setCheapestTileForSimpleEvaluator(54);
 	execute_game_cmd("/start", 0);
-STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
+    STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/next_action", 0);
+    STRCMP_EQUAL( "{\"action\":\"your turn\"}", LastResponse());
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":1,\"tile\":54}", LastResponse());
 	execute_game_cmd("/next_action", 0);
 	execute_game_cmd("/next_action", 0);
