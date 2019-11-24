@@ -22,6 +22,7 @@ void AIPerspective::deal(const Tile tiles[], int n, int distance) {
 		Hand * player_data = createHand();
 		player_data->deal(tiles, n);
 		player = player_data;
+		currentActionRequest_.action_ = ACTION_PICK;
 	}
 }
 

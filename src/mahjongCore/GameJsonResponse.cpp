@@ -52,7 +52,7 @@ void GameJsonResponse::currentGameStatus(UserView * view) {
 void GameJsonResponse::popAction(UserView * view) {
 	UIEvent *event = view->popEvent();
 	if (event == NULL) {
-		content_ = "{\"action\":\"your turn\"}";
+		content_ = "{\"action\":\"your_turn\"}";
 		return;
 	}
 	content_ = event->toString();

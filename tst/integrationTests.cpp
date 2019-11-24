@@ -99,12 +99,12 @@ TEST_GROUP(html_game) {
 				BIGGER_BUFFER_SIZE);
 	}
 
-	void get_next_action_until_it_is_my_turn() {
+	void get_next_event_until_it_is_my_turn() {
 		int count = 0;
 		do {
-			execute_game_cmd("/next_action", 0);
+			execute_game_cmd("/next_event", 0);
 			count++;
-		} while(count < 10 && strcmp(LastResponse(), "{\"action\":\"your turn\"}") != 0);
+		} while(count < 10 && strcmp(LastResponse(), "{\"action\":\"your_turn\"}") != 0);
 		CHECK_TRUE_TEXT(count < 10, "getting next action 10 time and still not your turn");
 	}
 
@@ -115,8 +115,8 @@ TEST_GROUP(html_game) {
 
 TEST(html_game, start) {
     STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":0,\"tile\":27}", LastResponse());
-	execute_game_cmd("/next_action", 0);
-	STRCMP_EQUAL( "{\"action\":\"your turn\"}", LastResponse());
+	execute_game_cmd("/next_event", 0);
+	STRCMP_EQUAL( "{\"action\":\"your_turn\"}", LastResponse());
 }
 
 TEST(html_game, get_current_status) {
@@ -133,12 +133,12 @@ TEST(html_game, get_current_status) {
 }
 
 TEST(html_game, a_game) {
-	get_next_action_until_it_is_my_turn();
+	get_next_event_until_it_is_my_turn();
 	execute_game_cmd("/throw", 1);
 	STRCMP_CONTAINS("{\"action\":\"discard\", \"player\":0,\"tile\":1}", LastResponse());
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_CONTAINS("{\"action\":\"pick\", \"player\":1,\"tile\":28}", LastResponse());
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_CONTAINS("{\"action\":\"discard\", \"player\":1,\"tile\":14}", LastResponse());
 	setCheapestTileForSimpleEvaluator(28);
 	wall->setCurrentTile(27);
@@ -152,39 +152,39 @@ TEST(html_game, a_game) {
 	setCheapestTileForSimpleEvaluator(27);
 	execute_game_cmd("/start", 0);
 	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":1,\"tile\":27}", LastResponse());
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_EQUAL( "{\"action\":\"discard\", \"player\":1,\"tile\":27}", LastResponse());
 }
 
 TEST(html_game, no_tile_any_more) {
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	wall->empty();
 	execute_game_cmd("/throw", 1);
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_EQUAL( "{\"action\":\"win\", \"player\":1,\"score\":0}", LastResponse());
 	setCheapestTileForSimpleEvaluator(54);
 	execute_game_cmd("/start", 0);
     STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
-	execute_game_cmd("/next_action", 0);
-    STRCMP_EQUAL( "{\"action\":\"your turn\"}", LastResponse());
+	execute_game_cmd("/next_event", 0);
+    STRCMP_EQUAL( "{\"action\":\"your_turn\"}", LastResponse());
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":1,\"tile\":54}", LastResponse());
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_EQUAL("{\"action\":\"win\", \"player\":0,\"score\":0}", LastResponse());
 	execute_game_cmd("/start", 0);
 	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 }
 
 TEST(html_game, _WIN) {
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	execute_game_cmd("/win", 1);
 	STRCMP_EQUAL("{\"action\":\"message\", \"content\":\"Are you kidding?\"}", LastResponse());
 	execute_game_cmd("/throw", 1);
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":1,\"tile\":28}", LastResponse());
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	setCheapestTileForSimpleEvaluator(28);
 	execute_game_cmd("/win", 0);
 	STRCMP_EQUAL("{\"action\":\"message\", \"content\":\"Are you kidding?\"}", LastResponse());
@@ -192,40 +192,40 @@ TEST(html_game, _WIN) {
 	setCheapestTileForSimpleEvaluator(27);
 	wall->setCurrentTile(27);
 	execute_game_cmd("/throw", 29);
-	get_next_action_until_it_is_my_turn();
+	get_next_event_until_it_is_my_turn();
 	execute_game_cmd("/win", 0);
 	STRCMP_EQUAL("{\"action\":\"win\", \"player\":0,\"score\":1}", LastResponse());
 }
 
 TEST(html_game, ai_WIN) {
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	wall->setCurrentTile(14);
 	execute_game_cmd("/throw", 1);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_EQUAL( "{\"action\":\"win\", \"player\":1,\"score\":1}", LastResponse());
 	execute_game_cmd("/start", 0);
 	wall->setCurrentTile(41);
 	execute_game_cmd("/pick", 0);
-	execute_game_cmd("/next_action", 0);
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
+	execute_game_cmd("/next_event", 0);
 	execute_game_cmd("/throw", 41);
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	STRCMP_EQUAL( "{\"action\":\"win\", \"player\":1,\"score\":1}", LastResponse());
 }
 
 TEST(html_game, pong) {
 	execute_game_cmd("/throw", 1);
-	get_next_action_until_it_is_my_turn();
+	get_next_event_until_it_is_my_turn();
 	execute_game_cmd("/pong", 0);
 	STRCMP_EQUAL( "{\"action\":\"message\", \"content\":\"Are you kidding?\"}", LastResponse());
 	wall->setCurrentTile(2);
 	execute_game_cmd("/pick", 0);
 	wall->setCurrentTile(2);
 	setCheapestTileForSimpleEvaluator(2);
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	execute_game_cmd("/throw", 3);
-	get_next_action_until_it_is_my_turn();
+	get_next_event_until_it_is_my_turn();
 	execute_game_cmd("/current", 0);
 	STRCMP_CONTAINS("\"allowed_actions\":[\"pong\"", LastResponse());
 	execute_game_cmd("/pong", 0);
@@ -236,13 +236,13 @@ TEST(html_game, pong) {
 		"},{"
 			"\"player_index\":1,\"hand\":[15,16,17,18,19,20,21,22,23,24,25,26,28],\"new_pick\":0,\"melds\":[]"
 	"}]", LastResponse());
-	execute_game_cmd("/next_action", 0);
+	execute_game_cmd("/next_event", 0);
 	execute_game_cmd("/throw", 4);
 }
 
 TEST(html_game, chow_when_not_able_to_chow) {
 	execute_game_cmd("/throw", 1);
-	get_next_action_until_it_is_my_turn();
+	get_next_event_until_it_is_my_turn();
 	execute_game_cmd("/chow", 0);
 	STRCMP_EQUAL( "{\"action\":\"message\", \"content\":\"Cannot meld chow.\"}", LastResponse());
 }
@@ -250,7 +250,7 @@ TEST(html_game, chow_when_not_able_to_chow) {
 TEST(html_game, chow) {
 	setCheapestTileForSimpleEvaluator(14);
 	execute_game_cmd("/throw", 1);
-	get_next_action_until_it_is_my_turn();
+	get_next_event_until_it_is_my_turn();
 	execute_game_cmd("/chow", 12);
 	STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/current", 0);

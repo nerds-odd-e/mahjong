@@ -257,10 +257,10 @@ var App = {
         this._resetChowing();
         this._getCmdRequest(cmd, param, function(textout) {
             var data = JSON.parse(textout)
-            if (data.action != "your turn") {
+            if (data.action != "your_turn") {
                 App._DisplayAction(data);
                 setTimeout(function() {
-                    App._ExecuteCmd("next_action", 0);
+                    App._ExecuteCmd("next_event", 0);
                 }, 500);
             } else {
                 App.updateAll();

@@ -69,13 +69,13 @@ Get the latest status of the game. Returns:
 }
 ```
 
-## `GET /<game_id>/next_action`
+## `GET /<game_id>/next_event`
 
 After the human player moves, there could be multiple actions taken by other player(s). This api returns one action at a time. When playing with a fast AI player, the UI can use this to display the opponent's move in slow motion. Returns:
 ```
 {"action":"pick", "player":0,"tile":97}
 {"action":"discard", "player":1,"tile":117}
-{"action":"your turn"}
+{"action":"your_turn"}
 {"action":"message", "content":"Are you kidding?"}
 {"action":"win", "player":1,"score":1}
 ```
