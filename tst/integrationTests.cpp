@@ -168,7 +168,6 @@ TEST(html_game, no_tile_any_more) {
 	execute_game_cmd("/start", 0);
     STRCMP_EQUAL( "{\"action\":\"update_all\"}", LastResponse());
 	execute_game_cmd("/next_event", 0);
-    STRCMP_EQUAL( "{\"action\":\"your_turn\"}", LastResponse());
 	STRCMP_EQUAL( "{\"action\":\"pick\", \"player\":1,\"tile\":54}", LastResponse());
 	execute_game_cmd("/next_event", 0);
 	execute_game_cmd("/next_event", 0);
