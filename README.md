@@ -94,6 +94,7 @@ Tell the server you want to pong the last discarded tile from your opponent.
 Tell the server you want to chow the last discarded tile from your opponent. The <tile id> indicate the smallest tile you want chow with. For example, if you have 🀚🀛🀜🀝🀞 at hand, and your opponent just discarded 🀜:
 
 | *command* | *new meld*  | *tiles remain at hand* |
+| --------- | ----------- | ---------------------- |
 |chow?🀚     | 🀚🀛🀜         | 🀜🀝🀞                    |
 |chow?🀛     | 🀛🀜🀝         | 🀚🀜🀞                    |
 |chow?🀜     | illegal     |                        |
