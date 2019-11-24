@@ -19,7 +19,7 @@ make
 # How to run
 
 <pre>
-src/game
+./build/src/game
 </pre>
 
 Visit http://localhost:8889 to play the game.
