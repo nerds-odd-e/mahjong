@@ -3,7 +3,7 @@ import requests
 
 
 def get_request(context, uri):
-    r = requests.get(url = "http://localhost:8889/" + uri) 
+    r = requests.get(url = "http://localhost:8889/" + uri)
     return r.json()
 
 def game_get_request(context, cmd):
@@ -29,8 +29,11 @@ def step_impl(context):
 
 @when(u'I start a game')
 def step_impl(context):
-    game_get_request(context, "start") 
+    game_get_request(context, "start")
 
+@when(u'I pick')
+def step_impl(context):
+    game_get_request(context, "pick")
 
 @then(u'I should see that I\'ve got my hand of tiles')
 def step_impl(context):
@@ -42,3 +45,8 @@ def step_impl(context):
 def step_impl(context):
     p = game_get_request(context, "current") 
     assert p['players'][0]['new_pick'] != 0
+
+@then(u'I have nothing picked')
+def step_impl(context):
+    p = game_get_request(context, "current")
+    assert p['players'][0]['new_pick'] == 0
