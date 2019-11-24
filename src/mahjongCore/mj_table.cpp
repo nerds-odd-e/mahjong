@@ -99,8 +99,8 @@ void MahjongTable::restartGame() {
 		}
 		deal(tiles, MAX_HOLDING_COUNT);
 	}
-	pick(wall_->popATile());
-	currentState_ = &pickedState_;
+    currentState_ = &pickingState_;
+//	pick(wall_->popATile());
 }
 
 void MahjongTable::restartGameWhenAllPlayersAreReady() {
