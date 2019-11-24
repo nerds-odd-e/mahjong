@@ -16,6 +16,8 @@ void GameJsonResponse::bye() {
 }
 	
 const char * GameJsonResponse::getString() {
+	if (content_.empty())
+		return "{}";
 	return content_.c_str();
 }
 

@@ -132,4 +132,15 @@ public:
 	}
 };
 
+class MJTestSetNextPick: public MahjongCommand {
+public:
+	MJTestSetNextPick(Game *game, Tile tile) :
+			game_(game), tile_(tile) {
+	}
+	void execute(GameJsonResponse *respond);
+private:
+	Game* game_;
+	Tile tile_;
+};
+
 #endif /* MAHJONGCOMMAND_H_ */

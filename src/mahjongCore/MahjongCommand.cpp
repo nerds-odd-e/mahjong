@@ -2,6 +2,7 @@
 #include "mahjong_game.h"
 #include "MahjongGameServer.h"
 #include "GameJsonResponse.h"
+#include "Wall.h"
 
 void MJCommandGetCurrentGameStatus::execute(GameJsonResponse *respond) {
 	respond->currentGameStatus(game_->getUserView());
@@ -34,4 +35,8 @@ void MJCommandAction::execute(GameJsonResponse *respond) {
 	PlayerActionRequest request(action_, tile_);
 	game_->nextMove(&request);
 	respond->popAction(game_->getUserView());
+}
+
+void MJTestSetNextPick::execute(GameJsonResponse *respond) {
+	game_->getWall()->changeFirstTileTo(tile_);
 }

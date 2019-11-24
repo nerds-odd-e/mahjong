@@ -71,6 +71,9 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
 
 		if (strcmp(cmd, "win") == 0)
 			return new MJCommandWin(game);
+
+		if (strcmp(cmd, "test_set_next_pick") == 0)
+			return new MJTestSetNextPick(game, tile);
 	}
 	return new MJCommandDoesNotExist;
 }

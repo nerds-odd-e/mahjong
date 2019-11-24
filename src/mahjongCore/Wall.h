@@ -12,6 +12,7 @@ public:
 	virtual void shuffleAndRebuild();
 	virtual bool isEnd();
 	virtual Tile popATile();
+	virtual void changeFirstTileTo(Tile tile);
 
 private:
 	void initializePool();

@@ -15,6 +15,10 @@ TEST_GROUP(GameJsonResponse) {
 	}
 };
 
+TEST(GameJsonResponse, empty_response) {
+    const char * result = response.getString();
+    STRCMP_CONTAINS("{}", result);
+}
 TEST(GameJsonResponse, when_opponent_discards_a_tile_player_can_both_pong_and_win) {
     handBuilder.withAPairOf(B(1)).withTiles(B(2), B(3)).dealToPlease(&userPerspective, 0);
     userPerspective.discard(MJ_BAMBOO(1), 1);

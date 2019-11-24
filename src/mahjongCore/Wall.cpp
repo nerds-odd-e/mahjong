@@ -73,3 +73,8 @@ bool Wall::isEnd() {
 	return this->picksCount_ >= maxPicks_ || this->picksCount_ == getAllCount();
 }
 
+
+void Wall::changeFirstTileTo(Tile tile){
+	tilePool_[picksCount_] = tile;
+}
+

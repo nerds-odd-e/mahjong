@@ -22,11 +22,11 @@ public:
 
 	void tick();
 
+	Wall * getWall();
+
 private:
 	PlayerActionRequest * popActionRequest();
 	Player * getPlayerOfDistance(int i);
-
-private:
 	Wall * wall_;
 	MahjongTable * table_;
 	Player * aiPerspective_;

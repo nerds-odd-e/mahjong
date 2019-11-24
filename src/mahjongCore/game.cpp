@@ -53,3 +53,7 @@ void Game::tick() {
 		actionRequest->doPlayerAction(NULL);
 	}
 }
+
+Wall * Game::getWall() {
+	return wall_;
+}
