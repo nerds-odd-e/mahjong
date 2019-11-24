@@ -26,7 +26,7 @@ TEST_GROUP(ai_perspective)
 
 TEST(ai_perspective, player_creation)
 {
-	LONGS_EQUAL(ACTION_RESTART, perspective->takeActionRequest().action_);
+	LONGS_EQUAL(ACTION_PICK, perspective->takeActionRequest().action_);
 }
 
 TEST(ai_perspective, player_pick_when_winning)
