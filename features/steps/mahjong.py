@@ -88,7 +88,7 @@ def step_impl(context, result):
 
 @given(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
-    game_get_request(context, "set_level_settings?" + str(lvl))
+    get_request(context, "set_level_settings?" + str(lvl))
 
 @then(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
@@ -97,9 +97,21 @@ def step_impl(context, lvl):
 @then(u'All of my tiles should be "{character}"')
 def step_impl(constext, character):
     pass
-    
+
+@when(u'I win the game')
+def step_impl(context):
+    raise NotImplementedError(u'STEP: When I win the game')
+
+@when(u'I start an immediately win game')
+def step_impl(context):
+    game_get_request(context, "start_immediately_win")
+
+@when(u'I try to win')
+def step_impl(context):
+    result = game_get_request(context, "win")
+    assert False, f"result_of_wins: {result}"
+
 @step(u'My number of wins should be {expected_number_of_wins}')
 def step_impl(context,expected_number_of_wins):
     result = game_get_request(context, "get_number_of_wins")
     assert str(expected_number_of_wins) == str(result["number_of_wins"]), f"expected_number_of_wins: {expected_number_of_wins} == number_of_wins {number_of_wins}"
-

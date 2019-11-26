@@ -48,6 +48,10 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 	{
 		return new MJCommandGetLevel(game);
 	}
+	if (strcmp(gameCmd, "start_immediately_win") == 0)
+	{
+		return new MJCommandStartImmediateWinGame(game);
+	}
 
 	return parseWithExtractedParametersForGame(game, gameCmd, tile);
 }

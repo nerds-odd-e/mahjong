@@ -76,7 +76,7 @@ public:
 	MJCommandAction(Game *game, action_t action, Tile tile) :
 			game_(game), action_(action), tile_(tile) {
 	}
-	void execute(GameJsonResponse *respond);
+	virtual void execute(GameJsonResponse *respond);
 protected:
 	Game *game_;
 	action_t action_;
@@ -164,6 +164,21 @@ public:
 		private:
 		Game* game_;
 };
+
+class MJCommandStartImmediateWinGame:public MJCommandStartNewGame
+{
+	public:
+	MJCommandStartImmediateWinGame(Game *game) : MJCommandStartNewGame(game)
+	{
+
+	}
+
+	void execute(GameJsonResponse *respond)
+	{
+		MJCommandStartNewGame::execute(respond);
+	}
+};
+
 class MJCommandNumberOfWins: public MahjongCommand {
 public:
 	MJCommandNumberOfWins(Game *game) :
