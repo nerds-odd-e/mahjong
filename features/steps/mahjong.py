@@ -78,10 +78,6 @@ def step_impl(context, tile):
     expected = to_tile_id(tile)
     assert  actual == expected, f"expected '{expected}', but got '{actual}'"
 
-@step(u'I\'m in level 2')
-def step_impl(context):
-    raise NotImplementedError(u'STEP: Given I\'m in level 2')
-
 @step(u'My number of wins is "{wins}"')
 def step_impl(context, wins):
     raise NotImplementedError(u'STEP: When My number of wins is 2')
@@ -89,3 +85,12 @@ def step_impl(context, wins):
 @when(u'Outcome of the game is "{result}"')
 def step_impl(context, result):
     raise NotImplementedError(u'STEP: When Result of the game is win')
+
+@given(u'I am level "{lvl}" player')
+def step_impl(context, lvl):
+    pass
+
+@then(u'I am level "{lvl}" player')
+def step_impl(context, lvl):
+    pass
+

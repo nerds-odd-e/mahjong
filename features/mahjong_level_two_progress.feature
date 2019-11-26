@@ -3,7 +3,7 @@ Feature: Mahjong Game Level Two
 
     Background:
         Given I have joined a game
-        And I'm in level 2
+        And I am level "2" player
         And I start a game
 
     Scenario Outline: Checking the progress of level two
