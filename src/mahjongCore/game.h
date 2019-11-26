@@ -10,7 +10,7 @@ class UserView;
 
 class Game {
 public:
-	Game();
+	Game(unsigned int level=1);
 
 	virtual ~Game();
 
@@ -32,6 +32,7 @@ private:
 	Player * aiPerspective_;
 	Player * player_;
 	UserPerspective * userPerspective_;
+	unsigned char level_;
 };
 
 #endif /* SYSTEM_H_ */

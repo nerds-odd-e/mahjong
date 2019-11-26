@@ -2,12 +2,23 @@
 #include "Wall.h"
 #include "mj_table.h"
 #include "UserPerspective.h"
-#include "AIPerspective.h"
+#include "DummyPlayerPerspective.h"
 
-Game::Game() {
+namespace {
+
+ Player* createAIPlayerPerspective(unsigned int level){
+	 if(level == 0){
+		 return new DummyPlayerPerspective();
+	 }
+	return new AIPerspective();
+ }
+
+}
+
+Game::Game(unsigned int level){
 	wall_ = createWall();
 	table_ = new MahjongTable(wall_);
-	aiPerspective_ = new AIPerspective();
+	aiPerspective_ = createAIPlayerPerspective(level);
 	userPerspective_ = new UserPerspective();
 	table_->addPlayer(userPerspective_);
 	table_->addPlayer(aiPerspective_);
