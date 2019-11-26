@@ -4,6 +4,7 @@
 #include "Hand.h"
 #include "string.h"
 #include "stdio.h"
+#include "configuration.h"
 
 void GameJsonResponse::newGame(GameID gameID) {
 	const int buffer_size = 1000;
@@ -88,7 +89,7 @@ void GameStatusJSONGenerator::catPlayerTilesToString(Hand * player, char buffer[
 	strcat(buffer, ",\"hand\":[");
 	Tile tiles[MAX_HOLDING_COUNT];
 	Meld meld[MAX_MELD_COUNT];
-	int n = player->getHoldings(tiles, MAX_HOLDING_COUNT);
+	int n = player->getHoldings(tiles, Configuration::getInstance().GetMaxHoldingCount());
 	catTilesToString(buffer, tiles, n);
 	int len = strlen(buffer);
 	if (buffer[len - 1] == ',') {

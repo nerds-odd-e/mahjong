@@ -2,6 +2,7 @@
 #include "Hand.h"
 #include "Wall.h"
 #include "mj_table.h"
+#include "configuration.h"
 
 MahjongTable::MahjongTable(Wall *wall) :
 		wall_(wall), player_count_(0), current_player(0), host(0), restartCount_(
@@ -94,10 +95,10 @@ void MahjongTable::restartGame() {
 	Tile tiles[MAX_HOLDING_COUNT];
 	int cnt = getPlayerCount();
 	for (; cnt > 0; cnt--) {
-		for (int i = 0; i < MAX_HOLDING_COUNT; i++) {
+		for (int i = 0; i < Configuration::getInstance().GetMaxHoldingCount(); i++) {
 			tiles[i] = wall_->popATile();
 		}
-		deal(tiles, MAX_HOLDING_COUNT);
+		deal(tiles, Configuration::getInstance().GetMaxHoldingCount());
 	}
 //	pick(wall_->popATile());
     currentState_ = &pickingState_;
