@@ -19,9 +19,11 @@ public:
 	virtual void pushActionRequest(PlayerActionRequest * actionRequest);
 	void setEvaluator(EvaluatorAdaptor * evaluator);
 
-private:
-	Tile whichToDiscard();
+protected:
+	virtual Tile whichToDiscard();
 	Hand * player;
+
+private:
 	EvaluatorAdaptor * evaluator;
 
 };

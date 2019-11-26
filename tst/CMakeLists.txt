@@ -6,6 +6,7 @@ set(Test_SRCS
     mocks.h
     simple_evaluator.cpp
     testAIPerspective.cpp
+    testDummyPlayerPerspective.cpp
     testEvaluatorAdaptor.cpp
     testGameIDMap.cpp
     testHTMLCommandParser.cpp

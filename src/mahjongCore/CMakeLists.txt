@@ -3,7 +3,8 @@ set(Main_SRCS
       aiGame.h
       AIPerspective.cpp
       AIPerspective.h
-      CMakeLists.txt
+      DummyPlayerPerspective.cpp
+      DummyPlayerPerspective.h
       EvaluatorAdaptor.cpp
       EvaluatorAdaptor.h
       game.cpp
