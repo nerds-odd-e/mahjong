@@ -17,7 +17,7 @@ MahjongGameServer::~MahjongGameServer() {
 }
 
 GameID MahjongGameServer::startNewGame() {
-	Game * game = new Game;
+	Game * game = new Game(settings_);
 	lastGameID_ = gamePool_->addGameAndGetID(game);
 	return lastGameID_;
 }

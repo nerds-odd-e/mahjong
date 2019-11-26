@@ -5,9 +5,8 @@
 #include "Hand.h"
 #include "EvaluatorAdaptor.h"
 #include "assert.h"
-#include "configuration.h"
 
-AIPerspective::AIPerspective() {
+AIPerspective::AIPerspective(unsigned int max_holding_count) : max_holding_count_{max_holding_count} {
 	currentActionRequest_.action_ = ACTION_RESTART;
 	player = NULL;
 	evaluator = createEvaluatorAdaptor();
@@ -33,10 +32,10 @@ Tile AIPerspective::whichToDiscard() {
 	int index_to_throw = 0;
 	Tile holdings[MAX_HOLDING_COUNT + 1];
 	Tile tiles[MAX_HOLDING_COUNT + 1];
-	int tile_count = player->getHoldings(holdings, Configuration::getInstance().GetMaxHoldingCount());
+	int tile_count = player->getHoldings(holdings, max_holding_count_);
 	holdings[tile_count] = player->getCurrentTileAtHand();
 	for (i = 0; i < tile_count + 1; i++) {
-		player->getHoldings(tiles, Configuration::getInstance().GetMaxHoldingCount());
+		player->getHoldings(tiles, max_holding_count_);
 		tiles[i] = player->getCurrentTileAtHand();
 		int score = evaluator->evaluate_array(TileArray(tiles, tile_count));
 		if (score > max) {

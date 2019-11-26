@@ -7,7 +7,7 @@ TEST_GROUP(dummy_player_perspective)
 {
 	DummyPlayerPerspective * perspective;
 	void setup() {
-		perspective = new DummyPlayerPerspective();
+		perspective = new DummyPlayerPerspective(13);
 		Tile holdings[] = { C(1) };
 		perspective->deal(holdings, 1, 0);
 	}

@@ -4,21 +4,11 @@
 #include "UserPerspective.h"
 #include "DummyPlayerPerspective.h"
 
-namespace {
 
- Player* createAIPlayerPerspective(unsigned int level){
-	 if(level == 0){
-		 return new DummyPlayerPerspective();
-	 }
-	return new AIPerspective();
- }
-
-}
-
-Game::Game(unsigned int level){
+Game::Game(const Settings& settings) {
 	wall_ = createWall();
 	table_ = new MahjongTable(wall_);
-	aiPerspective_ = createAIPlayerPerspective(level);
+	aiPerspective_ = new AIPerspective(settings.GetHandSize());
 	userPerspective_ = new UserPerspective();
 	table_->addPlayer(userPerspective_);
 	table_->addPlayer(aiPerspective_);

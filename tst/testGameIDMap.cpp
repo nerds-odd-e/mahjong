@@ -11,8 +11,9 @@ TEST_GROUP(GameIDMap) {
 	int id1;
 	int id2;
 	void setup() {
-		game1 = new Game();
-		game2 = new Game();
+        Settings settings;
+		game1 = new Game(settings);
+		game2 = new Game(settings);
 		id1 = map.addGameAndGetID(game1);
 		id2 = map.addGameAndGetID(game2);
 	}

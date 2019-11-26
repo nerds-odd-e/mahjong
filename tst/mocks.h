@@ -124,6 +124,8 @@ public:
 #include "game.h"
 class MockGame: public Game {
 public:
+    MockGame(const Settings& settings) : Game{settings} {};
+
 	virtual void nextMove(PlayerActionRequest *request) {
 		UNUSED(request);
 		mock().actualCall("nextMove").onObject(this).withParameter("request",

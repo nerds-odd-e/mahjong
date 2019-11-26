@@ -6,7 +6,7 @@ class Hand;
 class EvaluatorAdaptor;
 class AIPerspective: public Player{
 public:
-	AIPerspective();
+	AIPerspective(unsigned int max_holding_count);
 	virtual ~AIPerspective();
 
 	void deal(const Tile tiles[], int n, int distance);
@@ -25,6 +25,7 @@ protected:
 
 private:
 	EvaluatorAdaptor * evaluator;
+    const unsigned int max_holding_count_;
 
 };
 

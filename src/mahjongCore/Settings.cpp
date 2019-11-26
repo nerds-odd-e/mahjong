@@ -2,8 +2,8 @@
 #include <Settings.h>
 #include <vector>
 
-const std::vector<int> HandSizeByLevel{1, 4, 13, 7, 13};
-const std::vector<int> NumberOfSuitesByLevel{4, 1, 4, 4, 4};
+const std::vector<unsigned int> HandSizeByLevel{13, 4, 13, 7, 13};
+const std::vector<unsigned int> NumberOfSuitesByLevel{4, 1, 4, 4, 4};
 
 unsigned int Settings::GetHandSize() const {
   return HandSizeByLevel[level_.GetLevel()];

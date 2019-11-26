@@ -3,6 +3,8 @@
 
 
 #include "Perspective.h"
+#include "Settings.h"
+
 class UserPerspective;
 class Wall;
 class MahjongTable;
@@ -10,7 +12,8 @@ class UserView;
 
 class Game {
 public:
-	Game(unsigned int level=1);
+
+	Game(const Settings& settings);
 
 	virtual ~Game();
 

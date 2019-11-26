@@ -13,7 +13,8 @@ TEST_GROUP(game) {
 };
 
 TEST(game, gameShouldTakeActionRequestFromPlayerWhenTick) {
-	game = new Game();
+    Settings settings;
+	game = new Game(settings);
 	Player * player = new MockPlayer();
 	MockPlayerActionRequest action;
 	game->addPlayer(player);
@@ -27,7 +28,8 @@ TEST(game, gameShouldTakeActionRequestFromPlayerWhenTick) {
 }
 
 TEST(game, gameShouldTakeActionRequestAndDoItWhenTick) {
-	game = new Game();
+    Settings settings;
+	game = new Game(settings);
 	Player * player = new MockPlayer();
 	MockPlayerActionRequest action;
 	game->addPlayer(player);
