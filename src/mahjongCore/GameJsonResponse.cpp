@@ -102,7 +102,7 @@ void GameStatusJSONGenerator::catPlayerTilesToString(Hand * player, char buffer[
 	catTilesToString(buffer, tiles, 1);
 
 	strcat(buffer, "\"melds\":[");
-	n = player->getMelds(meld, MAX_MELD_COUNT);
+	n = player->getMelds(meld, Configuration::getInstance().GetMaxMeldCount());
 	catmeldToString(buffer, meld, n);
 
 	len = strlen(buffer);
