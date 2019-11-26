@@ -23,6 +23,8 @@ set(Main_SRCS
       Perspective.h
       PlayerActionRequest.cpp
       PlayerActionRequest.h
+      Settings.cpp
+      Settings.h
       tile.cpp
       tile.h
       TileArray.cpp

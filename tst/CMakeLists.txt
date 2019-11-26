@@ -18,6 +18,7 @@ set(Test_SRCS
     mahjongCore/testGame.cpp
     mahjongCore/testGameLevel.cpp
     mahjongCore/testHand.cpp
+    mahjongCore/testSettings.cpp
     mahjongCore/testTile.cpp
     mahjongCore/testTileArray.cpp
     mahjongCore/testTileArrayIsAbleToChow.cpp
