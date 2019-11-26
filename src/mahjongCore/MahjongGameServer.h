@@ -33,7 +33,7 @@ public:
 	GameID getLastGameID();
 
     unsigned int getLevel() const;
-    unsigned int setLevel(unsigned int level) const;
+    void setLevel(unsigned int level);
 
 private:
     GameLevel gameLevel_;

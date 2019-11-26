@@ -53,5 +53,4 @@ inline unsigned int MahjongGameServer::getLevel() const
 
 inline void MahjongGameServer::setLevel(unsigned int level)
 {
-    return gameLevel_.SetLevel(level);
 }
