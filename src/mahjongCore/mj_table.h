@@ -18,7 +18,7 @@ public:
 	void nextMove();
 
 	void addPlayer(Player * player);
-
+	int getWinForCurrentPlayer() const;
 private:
 	Player * getPlayerOfDistance( int i);
 	int getPlayerCount();
@@ -38,7 +38,6 @@ private:
 	void doPick();
 	void doPong();
 	void doChow(Tile action_tile);
-
 	Wall *wall_;
 	Player * players[MAX_NUMBER_OF_PLAYER];
 	int player_count_;

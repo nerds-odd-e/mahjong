@@ -156,3 +156,8 @@ void MahjongTable::nextMove() {
 		actionRequest.doPlayerAction(currentState_);
 	}
 }
+
+int MahjongTable::getWinForCurrentPlayer() const
+{ 
+	return 1;
+}

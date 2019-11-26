@@ -40,6 +40,8 @@ public:
 
 	void setHand(int distance, Hand * hand);
 
+
+
 private:
 	void add_event(UIEvent * event);
 

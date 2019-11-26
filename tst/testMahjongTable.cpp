@@ -7,8 +7,20 @@
 #include "mj_table.h"
 #include "mocks.h"
 #include "CppUTest/TestHarness.h"
+#include "AIPerspective.h"
+#include "UserPerspective.h"
+
 
 TEST_GROUP(MahjongTable) {
-
+    Wall * wall_ = createWall();
+	MahjongTable * table_ = new MahjongTable(wall_);
+   // AIPerspective * aiPerspective = new AIPerspective();
+	UserPerspective * userPerspective = new UserPerspective();
 };
+
+TEST(MahjongTable, getWinsForCurrentPlayer_freshGame){
+	table_->addPlayer(userPerspective);
+    LONGS_EQUAL(0, table_->getWinForCurrentPlayer());
+}
+
 
