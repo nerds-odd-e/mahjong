@@ -10,14 +10,25 @@ TEST(GameLevel, defaultLevelIsZero) {
     CHECK_EQUAL(0, level.GetLevel());
 }
 
+TEST(GameLevel, initialSubLevelIsZero) {
+    GameLevel level;
+    CHECK_EQUAL(0, level.GetSubLevel());
+}
+
 TEST(GameLevel, incrementLevelIncrements) {
     GameLevel level;
-    level.Increment();
+    level.IncrementLevel();
     CHECK_EQUAL(1, level.GetLevel());
 }
 
-TEST(GameLevel, setLevelSets) {
+TEST(GameLevel, incrementLevelResetsSubLevel) {
     GameLevel level;
-    level.SetLevel(3);
-    CHECK_EQUAL(3, level.GetLevel());
+    level.IncrementLevel();
+    CHECK_EQUAL(0, level.GetSubLevel());
+}
+
+TEST(GameLevel, incrementSubLevelIncrements) {
+    GameLevel level;
+    level.IncrementSubLevel();
+    CHECK_EQUAL(1, level.GetSubLevel());
 }
