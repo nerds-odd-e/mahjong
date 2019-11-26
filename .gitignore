@@ -10,3 +10,7 @@ build/
 .DS_Store
 *.code-workspace
 node_modules/
+*.cmake
+CMakeFiles
+Makefile
+CMakeCache.txt
