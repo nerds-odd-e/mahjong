@@ -19,7 +19,7 @@ private:
 	MahjongCommand * parseWithExtractedParameters(const char * cmd,
 			const char * parameters);
 	MahjongCommand * parseWithExtractedParametersForGame(
-			GameID gameID, const char * cmd, Tile tile);
+			Game* game, const char * cmd, Tile tile);
 };
 
 #endif /* HTMLCOMMANDPARSER_H_ */

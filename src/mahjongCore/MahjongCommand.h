@@ -143,4 +143,15 @@ private:
 	Tile tile_;
 };
 
+class MJCommandSetLevel: public MahjongCommand {
+public:
+	MJCommandSetLevel(Game *game, int level) :
+		game_(game), level_(level) {
+	}
+	void execute(GameJsonResponse *respond);
+private:
+	Game* game_;
+	int level_;
+};
+
 #endif /* MAHJONGCOMMAND_H_ */

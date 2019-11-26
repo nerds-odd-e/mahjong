@@ -34,17 +34,24 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 	std::sscanf(cmd, "/%d/%s", &gameID, gameCmd);
 	Tile tile = atoi(parameters);
 
-	return parseWithExtractedParametersForGame(gameID, gameCmd, tile);
-}
-
-MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
-		GameID gameID, const char * cmd, Tile tile) {
-	if (strcmp(cmd, "bye") == 0)
+	if (strcmp(gameCmd, "bye") == 0)
 		return new MJCommandQuitGame(server_, gameID);
 
 	Game * game = server_->getGameByID(gameID);
 
-	if (game != NULL) {
+	if (strcmp(gameCmd, "set_level") == 0)
+	{
+		int level = atoi(parameters);
+		return new MJCommandSetLevel(game, level);
+	}
+
+	return parseWithExtractedParametersForGame(game, gameCmd, tile);
+}
+
+MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
+	Game* game, const char * cmd, Tile tile)
+{
+	if (game != nullptr) {
 		if (strcmp(cmd, "start") == 0)
 			return new MJCommandStartNewGame(game);
 
@@ -72,11 +79,12 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
 		if (strcmp(cmd, "win") == 0)
 			return new MJCommandWin(game);
 
-		 if (strcmp(cmd, "undo") == 0)
-			 return new MJCommandWin(game);
+		if (strcmp(cmd, "undo") == 0)
+			return new MJCommandWin(game);
 
 		if (strcmp(cmd, "test_set_next_pick") == 0)
 			return new MJTestSetNextPick(game, tile);
+
 	}
 	return new MJCommandDoesNotExist;
 }

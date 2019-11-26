@@ -40,3 +40,7 @@ void MJCommandAction::execute(GameJsonResponse *respond) {
 void MJTestSetNextPick::execute(GameJsonResponse *respond) {
 	game_->getWall()->changeFirstTileTo(tile_);
 }
+
+void MJCommandSetLevel::execute(GameJsonResponse *respond) {
+
+}
