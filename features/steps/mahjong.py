@@ -97,3 +97,9 @@ def step_impl(context, lvl):
 @then(u'All of my tiles should be "{character}"')
 def step_impl(constext, character):
     pass
+    
+@step(u'My number of wins should be {expected_number_of_wins}')
+def step_impl(context,expected_number_of_wins):
+    result = game_get_request(context, "get_number_of_wins")
+    assert str(expected_number_of_wins) == str(result["number_of_wins"]), f"expected_number_of_wins: {expected_number_of_wins} == number_of_wins {number_of_wins}"
+

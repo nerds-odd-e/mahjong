@@ -27,6 +27,8 @@ public:
 
 	void clear();
 
+	void setContent(std::string content);
+
 private:
 	std::string content_;
 };

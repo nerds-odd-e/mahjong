@@ -158,6 +158,16 @@ class MJCommandGetLevel: public MahjongCommand {
 public:
 	MJCommandGetLevel(Game *game) :
 		game_(game) {
+		}
+	void execute(GameJsonResponse *respond);
+
+		private:
+		Game* game_;
+};
+class MJCommandNumberOfWins: public MahjongCommand {
+public:
+	MJCommandNumberOfWins(Game *game) :
+			game_(game){
 	}
 	void execute(GameJsonResponse *respond);
 private:

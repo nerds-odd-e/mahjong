@@ -47,4 +47,9 @@ void MJCommandSetLevel::execute(GameJsonResponse *respond) {
 
 void MJCommandGetLevel::execute(GameJsonResponse *respond) {
 
+
+}
+
+void MJCommandNumberOfWins::execute(GameJsonResponse *respond) {
+	respond->setContent("{\"number_of_wins\": 0}");
 }

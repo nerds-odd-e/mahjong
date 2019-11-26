@@ -34,6 +34,11 @@ void GameJsonResponse::gameDoesNotExist() {
 	delete event;
 }
 
+void GameJsonResponse::setContent(std::string content)
+{
+	this->content_ = content;
+}
+
 class GameStatusJSONGenerator {
 public:
 	const char * getCurrentStatus(UserView * view, char buffer[], int buffer_size);

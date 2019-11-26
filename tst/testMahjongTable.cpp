@@ -18,9 +18,4 @@ TEST_GROUP(MahjongTable) {
 	UserPerspective * userPerspective = new UserPerspective();
 };
 
-TEST(MahjongTable, getWinsForCurrentPlayer_freshGame){
-	table_->addPlayer(userPerspective);
-    LONGS_EQUAL(0, table_->getWinForCurrentPlayer());
-}
-
 
