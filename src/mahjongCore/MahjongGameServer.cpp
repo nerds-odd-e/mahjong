@@ -8,7 +8,7 @@
 #include "GameIDMap.h"
 
 MahjongGameServer::MahjongGameServer(FpShutdownCallback shutdownCallback) :
-		gameLevel_{}, settings_{gameLevel_}, shutdownCallback_(shutdownCallback), lastGameID_(0) {
+		settings_{}, shutdownCallback_(shutdownCallback), lastGameID_(0) {
 	gamePool_ = new GameIDMap();
 }
 
@@ -48,9 +48,10 @@ Game * MahjongGameServer::getGameByID(GameID gameID) {
 
 inline unsigned int MahjongGameServer::getLevel() const
 {
-    return gameLevel_.GetLevel();
+    return settings_.GetLevel();
 }
 
-inline void MahjongGameServer::setLevel(unsigned int level)
+inline void MahjongGameServer::IncrementLevel()
 {
+    settings_.IncrementLevel();
 }

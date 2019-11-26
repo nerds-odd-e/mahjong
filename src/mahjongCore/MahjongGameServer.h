@@ -33,10 +33,9 @@ public:
 	GameID getLastGameID();
 
     unsigned int getLevel() const;
-    void setLevel(unsigned int level);
+    void IncrementLevel();
 
 private:
-    GameLevel gameLevel_;
     Settings settings_;
 	GameIDMap *gamePool_;
 	FpShutdownCallback shutdownCallback_;

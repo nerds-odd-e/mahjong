@@ -4,26 +4,72 @@
 
 TEST_GROUP(Settings){};
 
-TEST(Settings, defaultHandSizeIsThirteen) {
-  GameLevel level;
-  Settings settings{level};
-  CHECK_EQUAL(13, settings.GetHandSize());
+TEST(Settings, WhenLevelZeroThenHandSizeOne) {
+  Settings settings{};
+  CHECK_EQUAL(1, settings.GetHandSize());
 }
 
-TEST(Settings, levelOneHandSizeIsFour) {
-  GameLevel level{1};
-  Settings settings{level};
+TEST(Settings, WhenLevelOneThenHandSizeIsFour) {
+  Settings settings{};
+  settings.IncrementLevel();
   CHECK_EQUAL(4, settings.GetHandSize());
 }
 
-TEST(Settings, defaultNumberOfSuitesIsFour) {
-  GameLevel level;
-  Settings settings{level};
+TEST(Settings, WhenLevelTwoThenHandSizeIsThirtheen) {
+  Settings settings{};
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  CHECK_EQUAL(13, settings.GetHandSize());
+}
+
+TEST(Settings, WhenLevelThreeThenHandSizeIsSeven) {
+  Settings settings{};
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  CHECK_EQUAL(7, settings.GetHandSize());
+}
+
+TEST(Settings, WhenLevelFourThenHandSizeIsThirtheen) {
+  Settings settings{};
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  CHECK_EQUAL(13, settings.GetHandSize());
+}
+
+TEST(Settings, WhenLevelZeroThenSuiteSizeAll) {
+  Settings settings{};
   CHECK_EQUAL(4, settings.GetNumberOfSuites());
 }
 
-TEST(Settings, levelOneNumberOfSuitesIsOne) {
-  GameLevel level{1};
-  Settings settings{level};
+TEST(Settings, WhenLevelOneThenSuiteSizeIs1) {
+  Settings settings{};
+  settings.IncrementLevel();
   CHECK_EQUAL(1, settings.GetNumberOfSuites());
+}
+
+TEST(Settings, WhenLevelTwoThenSuiteSizeAll) {
+  Settings settings{};
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  CHECK_EQUAL(4, settings.GetNumberOfSuites());
+}
+
+TEST(Settings, WhenLevelThreeThenSuiteSizeAll) {
+  Settings settings{};
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  CHECK_EQUAL(4, settings.GetNumberOfSuites());
+}
+
+TEST(Settings, WhenLevelFourThenHandSuiteSizeAll) {
+  Settings settings{};
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  settings.IncrementLevel();
+  CHECK_EQUAL(4, settings.GetNumberOfSuites());
 }
