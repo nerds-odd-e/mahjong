@@ -16,12 +16,12 @@ set(Test_SRCS
     testUserPerspective.cpp
     testJsonGameResponse.cpp
     mahjongCore/testGame.cpp
+    mahjongCore/testGameLevel.cpp
     mahjongCore/testHand.cpp
     mahjongCore/testTile.cpp
     mahjongCore/testTileArray.cpp
     mahjongCore/testTileArrayIsAbleToChow.cpp
     mahjongCore/testWall.cpp
-
 )
 
 include_directories(${PROJECT_SOURCE_DIR}/src/httpServer)
