@@ -1,3 +1,6 @@
+#ifndef GAMELEVEL_H_
+#define GAMELEVEL_H_
+
 class GameLevel {
 public:
   GameLevel(unsigned int level = 0) : level_(level), subLevel_(0) {}
@@ -9,3 +12,5 @@ private:
   unsigned int level_;
   unsigned int subLevel_;
 };
+
+#endif // GAMELEVEL_H_

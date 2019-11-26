@@ -1,3 +1,6 @@
+#ifndef SETTINGS_H_
+#define SETTINGS_H_
+
 class GameLevel;
 
 class Settings {
@@ -9,3 +12,5 @@ public:
 private:
   const GameLevel &level_;
 };
+
+#endif // SETTINGS_H_
