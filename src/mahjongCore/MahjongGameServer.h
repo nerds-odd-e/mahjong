@@ -4,7 +4,9 @@
 #include <memory>
 #include "Perspective.h"
 #include "GameID.h"
+#include "GameLevel.h"
 #include "MahjongCommand.h"
+#include "Settings.h"
 
 class Wall;
 class Game;
@@ -30,7 +32,12 @@ public:
 
 	GameID getLastGameID();
 
+    unsigned int getLevel() const;
+    unsigned int setLevel(unsigned int level) const;
+
 private:
+    GameLevel gameLevel_;
+    Settings settings_;
 	GameIDMap *gamePool_;
 	FpShutdownCallback shutdownCallback_;
 	GameID lastGameID_;
