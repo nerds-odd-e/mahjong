@@ -88,9 +88,12 @@ def step_impl(context, result):
 
 @given(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
-    pass
+    game_get_request(context, "set_level_settings?" + str(lvl))
 
 @then(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
     pass
 
+@then(u'All of my tiles should be "{character}"')
+def step_impl(constext, character):
+    pass
