@@ -44,6 +44,10 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 		int level = atoi(parameters);
 		return new MJCommandSetLevel(game, level);
 	}
+	else if (strcmp(gameCmd, "get_level") == 0)
+	{
+		return new MJCommandGetLevel(game);
+	}
 
 	return parseWithExtractedParametersForGame(game, gameCmd, tile);
 }
