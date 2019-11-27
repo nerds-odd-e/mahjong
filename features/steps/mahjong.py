@@ -118,7 +118,7 @@ def step_impl(context, result):
 def step_impl(context, tiles_in_hand):
     event = game_get_request(context, "current")
     hand = event['players'][0]['hand']
-    assert tiles_in_hand == len(hand), f"expected '{tiles_in_hand}', but got '{len(hand)}'"
+    assert int(tiles_in_hand) == len(hand), f"expected '{tiles_in_hand}', but got '{len(hand)}'"
     
 @given(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
