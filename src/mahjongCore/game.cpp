@@ -7,7 +7,14 @@
 Game::Game(Settings & settings) : settings_(settings) {
 	wall_ = createWallSetting(settings_);	
 	table_ = new MahjongTable(wall_, settings_.GetGameLevel());
-	aiPerspective_ = new AIPerspective(settings_);
+	if (settings.GetGameLevel().GetLevel() > 0)
+	{
+		aiPerspective_ = new AIPerspective(settings_);
+	}
+	else
+	{
+		aiPerspective_ = new DummyPlayerPerspective(settings_);
+	}
 	userPerspective_ = new UserPerspective(settings_);
 	table_->addPlayer(userPerspective_);
 	table_->addPlayer(aiPerspective_);

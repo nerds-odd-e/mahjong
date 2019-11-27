@@ -2,6 +2,7 @@ Feature: Mahjong Game Testability
 
 Background:
     Given I have joined a game
+    And I am level "1" player
     And I start a game
 
 Scenario: Starting a game hosted by player

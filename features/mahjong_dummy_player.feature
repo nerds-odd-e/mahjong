@@ -2,17 +2,10 @@ Feature: Mahjong Game - Dummy Player
 
 Background:
     Given I have joined a game
-    And I start a game at Level 0
+    And I am level "0" player
 
-# @wip
-# Scenario Outline: Dummy Player Discard Behaviour
-#    Given Dummy Player's hand is "🀚"
-#    And is Dummy Player's turn
-#    And Dummy Player picked "<picked tile>"
-#    When Dummy Player discards a tile
-#    Then the discarded tile is "<discarded tile>"
-
-#    Examples:
-#    | picked tile | discarded tile |
-#    | 🀛           | 🀛             |
-#    | 🀚           | 🀚             |
+Scenario: Dummy Player Discard Behaviour
+  Given I start a game
+  And it's my opponent's turn and it picks "🀛"
+  When my opponent discards a tile
+  Then the discarded tile is "🀛"

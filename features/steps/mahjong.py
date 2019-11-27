@@ -151,3 +151,23 @@ def step_impl(context):
     p = game_get_request(context, "current") 
     assert are_all_tiles_in_one_suit(p['players'][0]['hand']), f"Player's tiles are not of the same suit"
     assert are_all_tiles_in_one_suit(p['players'][1]['hand']), f"Opponent's tiles are not of the same suit"
+
+@given(u'it\'s my opponent\'s turn and it picks "{tile}"')
+def step_impl(context, tile):
+    context.execute_steps(u'''
+        When I pick
+        And the next tile to be picked is "{tile}"
+        And I discard my new pick
+        '''.format(tile = tile))
+
+@when(u'my opponent discards a tile')
+def step_impl(context):
+    pass
+
+@then(u'the discarded tile is "{tile}"')
+def step_impl(context, tile):
+    result = game_get_request(context, "next_event")
+    result = game_get_request(context, "next_event")
+
+    assert str(result['action']) == 'discard'
+    assert to_tile_id(tile) == result['tile'], f"expected: {to_tile_id(tile)} == actual tile {result['tile']}"
