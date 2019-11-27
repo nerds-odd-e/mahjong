@@ -3,10 +3,6 @@
 
 #include "tile.h"
 #include "PlayerActionRequest.h"
-struct PlayerGameData
-{
-	int number_of_wins {0};
-};
 
 class Player {
 public:
@@ -30,16 +26,8 @@ public:
 	}
 	virtual void pushActionRequest(PlayerActionRequest *actionRequest)=0;
 
-	int getWins() const
-	{
-		return game_data_.number_of_wins;
-	}
-
 protected:
 	PlayerActionRequest currentActionRequest_;
-
-private:
-	PlayerGameData game_data_;
 };
 
 #endif /* PLAYER_H_ */
