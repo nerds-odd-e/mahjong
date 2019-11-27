@@ -19,6 +19,9 @@ def to_tile_id(tile):
         "🀚": 66,
         "🀛": 67,
         "🀡": 73,
+        "🀆": 48,
+        "🀏": 57,
+        "🀐": 97,
         "🀑": 98,
         "🀔": 101,
         "🀗": 104,
@@ -29,16 +32,23 @@ def to_tile_id(tile):
 def is_in_circles(tile):
     return tile in range(to_tile_id("🀙"), to_tile_id("🀡") + 1)
 
+def is_in_characters(tile):
+    return tile in range(to_tile_id("🀆"), to_tile_id("🀏") + 1)
+
+def is_in_bamboo(tile):
+    return tile in range(to_tile_id("🀐"), to_tile_id("🀘") + 1)
+
+
 def are_all_tiles_in_one_suit(tiles):
     if is_in_circles(tiles[0]):
         for tile in tiles:
             if not is_in_circles(tile):
                 return False        
-    else if is_in_characters(tiles[0]):
+    elif is_in_characters(tiles[0]):
         for tile in tiles:
             if not is_in_characters(tile):
                 return False
-    else if is_in_bamboo(tiles[0]):
+    elif is_in_bamboo(tiles[0]):
         for tile in tiles:
             if not is_in_bamboo(tile):
                 return False            
