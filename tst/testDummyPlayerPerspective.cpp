@@ -31,3 +31,11 @@ TEST(dummy_player_perspective, player_discards_picked_tile)
 	CHECK_EQUAL(picked_tile, action_request->tile_);
 	LONGS_EQUAL(ACTION_DISCARD, action_request->action_);
 }
+
+TEST(dummy_player_perspective, player_doesnt_win)
+{
+	Tile picked_tile{ C(1) };
+	perspective->pick(picked_tile, 0);
+	PlayerActionRequest* action_request = perspective->takeActionRequest1();
+	LONGS_EQUAL(ACTION_DISCARD, action_request->action_);
+}

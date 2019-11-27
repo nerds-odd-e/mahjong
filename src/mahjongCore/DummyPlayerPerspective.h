@@ -8,4 +8,8 @@ public:
 DummyPlayerPerspective(Settings & settings) : AIPerspective(settings) {}
 protected:
     Tile whichToDiscard() override;
+    bool isAbleToWin() const override
+    {
+        return false;
+    }
 };

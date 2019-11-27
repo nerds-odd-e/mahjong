@@ -48,10 +48,16 @@ Tile AIPerspective::whichToDiscard() {
 
 	return holdings[index_to_throw];
 }
+
+bool AIPerspective::isAbleToWin() const
+{
+	player->isAbleToWin(NO_TILE);
+}
+
 void AIPerspective::pick(Tile tile, int distance) {
 	if (distance == 0) {
 		player->pick(tile);
-		if (player->isAbleToWin(NO_TILE))
+		if (isAbleToWin())
 			currentActionRequest_.action_ = ACTION_WIN;
 		else {
 			currentActionRequest_.action_ = ACTION_DISCARD;

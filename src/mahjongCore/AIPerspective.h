@@ -21,6 +21,7 @@ public:
 
 protected:
 	virtual Tile whichToDiscard();
+	virtual bool isAbleToWin() const;
 	Hand * player;
 
 private:
