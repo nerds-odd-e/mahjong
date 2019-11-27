@@ -46,6 +46,7 @@ private:
 	int host;
 	Tile last_tile;
 	int restartCount_;
+    int handSize_;
 	GameState * currentState_;
 	GameStateEndOfGame endOfGameState_;
 	GameStatePicked pickedState_;
