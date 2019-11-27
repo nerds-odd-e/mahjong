@@ -6,7 +6,7 @@ TEST_GROUP(Settings){};
 
 TEST(Settings, WhenLevelZeroThenHandSizeOne) {
   Settings settings{};
-  CHECK_EQUAL(13, settings.GetHandSize());
+  CHECK_EQUAL(1, settings.GetHandSize());
 }
 
 TEST(Settings, WhenLevelOneThenHandSizeIsFour) {

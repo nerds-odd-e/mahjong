@@ -7,7 +7,7 @@
 Game::Game(const Settings & settings) : settings_(settings) {
 	wall_ = createWallSetting(settings_);	
 	table_ = new MahjongTable(wall_);
-	aiPerspective_ = new AIPerspective(settings.GetHandSize());
+	aiPerspective_ = new AIPerspective();
 	userPerspective_ = new UserPerspective();
 	table_->addPlayer(userPerspective_);
 	table_->addPlayer(aiPerspective_);

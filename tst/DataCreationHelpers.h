@@ -17,6 +17,8 @@ const Tile WINNING_TILE = 10;
 const Tile ANY_TILE = 8;
 const Tile defaultTilesPongTheWinningTileAndChowWinningTilePlusOne[] = { WINNING_TILE, WINNING_TILE, WINNING_TILE+2, WINNING_TILE+2 };
 
+constexpr unsigned int max_holding_count = 13;
+
 class HandBuilder {
 public:
 	HandBuilder(): numberOfTiles_(0){}
@@ -61,7 +63,7 @@ private:
 	}
 
 private:
-	Tile tiles_[MAX_HOLDING_COUNT];
+	Tile tiles_[max_holding_count];
 	int numberOfTiles_;
 };
 

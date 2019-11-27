@@ -2,7 +2,8 @@
 #include "Hand.h"
 #include "Wall.h"
 #include "mj_table.h"
-#include "configuration.h"
+
+constexpr unsigned int ai_max_holding_count = 13;
 
 MahjongTable::MahjongTable(Wall *wall) :
 		wall_(wall), player_count_(0), current_player(0), host(0), restartCount_(
@@ -92,13 +93,14 @@ int MahjongTable::chow(Tile with) {
 
 void MahjongTable::restartGame() {
 	wall_->shuffleAndRebuild();
-	Tile tiles[MAX_HOLDING_COUNT];
+	Tile tiles[ai_max_holding_count];
 	int cnt = getPlayerCount();
 	for (; cnt > 0; cnt--) {
-		for (int i = 0; i < Configuration::getInstance().GetMaxHoldingCount(); i++) {
+
+		for (int i = 0; i < ai_max_holding_count; i++) {
 			tiles[i] = wall_->popATile();
 		}
-		deal(tiles, Configuration::getInstance().GetMaxHoldingCount());
+		deal(tiles, ai_max_holding_count);
 	}
 //	pick(wall_->popATile());
     currentState_ = &pickingState_;

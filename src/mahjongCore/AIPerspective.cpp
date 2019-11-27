@@ -6,7 +6,9 @@
 #include "EvaluatorAdaptor.h"
 #include "assert.h"
 
-AIPerspective::AIPerspective(unsigned int max_holding_count) : max_holding_count_{max_holding_count} {
+constexpr unsigned int ai_max_holding_count = 13;
+
+AIPerspective::AIPerspective() {
 	currentActionRequest_.action_ = ACTION_RESTART;
 	player = NULL;
 	evaluator = createEvaluatorAdaptor();
@@ -30,12 +32,12 @@ Tile AIPerspective::whichToDiscard() {
 	int i;
 	int max = 0;
 	int index_to_throw = 0;
-	Tile holdings[MAX_HOLDING_COUNT + 1];
-	Tile tiles[MAX_HOLDING_COUNT + 1];
-	int tile_count = player->getHoldings(holdings, max_holding_count_);
+	Tile holdings[ai_max_holding_count + 1];
+	Tile tiles[ai_max_holding_count + 1];
+	int tile_count = player->getHoldings(holdings, ai_max_holding_count);
 	holdings[tile_count] = player->getCurrentTileAtHand();
 	for (i = 0; i < tile_count + 1; i++) {
-		player->getHoldings(tiles, max_holding_count_);
+		player->getHoldings(tiles, ai_max_holding_count);
 		tiles[i] = player->getCurrentTileAtHand();
 		int score = evaluator->evaluate_array(TileArray(tiles, tile_count));
 		if (score > max) {

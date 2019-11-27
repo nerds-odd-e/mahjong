@@ -1,9 +1,6 @@
 #ifndef TILE_ARRAY_H_
 #define TILE_ARRAY_H_
 
-#define MAX_HOLDING_COUNT 13
-#define MAX_MELD_COUNT (MAX_HOLDING_COUNT/3)
-
 #include "TileArray.h"
 
 class Hand {
@@ -30,7 +27,9 @@ private:
 	void _chow(Tile tile, Tile smallest);
 
 private:
-	Meld melds_[MAX_MELD_COUNT];
+    static const unsigned int max_meld_count = 4;
+
+	Meld melds_[max_meld_count];
 	TileArray * tileArray_;
 	Tile current_;
 };

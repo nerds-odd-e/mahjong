@@ -2,7 +2,6 @@
 #include "memory.h"
 #include <stdlib.h>
 #include "Perspective.h"
-#include "configuration.h"
 
 Hand::~Hand() {
 	delete tileArray_;
@@ -11,7 +10,7 @@ Hand::~Hand() {
 Hand::Hand() : tileArray_(NULL){
 	int i;
 	current_ = NO_TILE;
-	for (i = 0; i < Configuration::getInstance().GetMaxMeldCount(); i++) {
+	for (i = 0; i < max_meld_count; i++) {
 		melds_[i] = 0;
 	}
 }
@@ -38,7 +37,7 @@ int Hand::getHoldings(Tile * tiles_buffer, int buffer_size) const {
 
 int Hand::getMelds(Meld * tiles_buffer, int buffer_size) const {
 	int tile_count = 0;
-	for (; tile_count < Configuration::getInstance().GetMaxMeldCount(); tile_count++) {
+	for (; tile_count < max_meld_count; tile_count++) {
 		if (this->melds_[tile_count])
 			tiles_buffer[tile_count] = this->melds_[tile_count];
 		else
@@ -55,7 +54,7 @@ void Hand::deal(const Tile tiles[], int buffer_size) {
 	delete tileArray_;
 	tileArray_ = new TileArray(tiles, buffer_size);
 
-	for (int i = 0; i < Configuration::getInstance().GetMaxMeldCount(); i++)
+	for (int i = 0; i < max_meld_count; i++)
 		this->melds_[i] = 0;
 }
 
@@ -81,7 +80,7 @@ void Hand::rearrangeAfterMeld(Meld meld) {
 	this->current_ = (*tileArray_)[cnt - 1];
 	tileArray_->remove(current_, 1);
 
-	for (i = 0; i < Configuration::getInstance().GetMaxMeldCount(); i++) {
+	for (i = 0; i < max_meld_count; i++) {
 		if (this->melds_[i] == 0)
 			break;
 	}

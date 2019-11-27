@@ -4,7 +4,9 @@
 #include "Hand.h"
 #include "string.h"
 #include "stdio.h"
-#include "configuration.h"
+
+constexpr unsigned int max_holding_count = 13;
+constexpr unsigned int max_meld_count = 4;
 
 void GameJsonResponse::newGame(GameID gameID) {
 	const int buffer_size = 1000;
@@ -92,9 +94,9 @@ void GameStatusJSONGenerator::catmeldToString(char buffer[], const Meld * meld, 
 void GameStatusJSONGenerator::catPlayerTilesToString(Hand * player, char buffer[],
 		int buffer_size) {
 	strcat(buffer, ",\"hand\":[");
-	Tile tiles[MAX_HOLDING_COUNT];
-	Meld meld[MAX_MELD_COUNT];
-	int n = player->getHoldings(tiles, Configuration::getInstance().GetMaxHoldingCount());
+	Tile tiles[max_holding_count];
+	Meld meld[max_meld_count];
+	int n = player->getHoldings(tiles, max_holding_count);
 	catTilesToString(buffer, tiles, n);
 	int len = strlen(buffer);
 	if (buffer[len - 1] == ',') {
@@ -107,7 +109,7 @@ void GameStatusJSONGenerator::catPlayerTilesToString(Hand * player, char buffer[
 	catTilesToString(buffer, tiles, 1);
 
 	strcat(buffer, "\"melds\":[");
-	n = player->getMelds(meld, Configuration::getInstance().GetMaxMeldCount());
+	n = player->getMelds(meld, max_meld_count);
 	catmeldToString(buffer, meld, n);
 
 	len = strlen(buffer);
