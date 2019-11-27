@@ -2,12 +2,11 @@ Feature: Mahjong Lvl 0 pair wins
 
     Background:
         Given I have joined a game
-        And I start a game
         And I am level "0" player
+        And I start a game
 
-    @wip
     Scenario:
-        Then I have "1" tile in hand
+        Then I should see that I have "1" tiles
 
     @wip
     Scenario:

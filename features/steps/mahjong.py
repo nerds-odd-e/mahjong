@@ -69,7 +69,7 @@ def step_impl(context):
 @then(u'I should see that I have "{number_of_tiles}" tiles')
 def step_impl(context, number_of_tiles):
     p = game_get_request(context, "current") 
-    assert p['players'][0]['player_index'] == 0
+    assert p['players'][0]['player_index'] == 0, f"Player Index is {p['players'][0]['player_index']}"
     assert str(len(p['players'][0]['hand'])) == number_of_tiles, f"number of tiles is {len(p['players'][0]['hand'])}"
 
 @then(u'I\'ve got one tile picked')
