@@ -94,7 +94,7 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
 			return new MJTestSetNextPick(game, tile);
 
 		if (strcmp(cmd, "get_number_of_wins") == 0)
-			return new MJCommandNumberOfWins(game);
+			return new MJCommandNumberOfWins(server_, game);
 	}
 	return new MJCommandDoesNotExist;
 }

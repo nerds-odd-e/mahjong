@@ -1,9 +1,10 @@
-@wip
 Feature: Mahjong Game Level Two
 
     Background:
         Given I have joined a game
         And I am level "2" player
+
+    @wip
     Scenario: Beginning of level two
         Then My number of wins should be 0
         When I start an immediately win game

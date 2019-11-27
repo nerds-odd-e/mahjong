@@ -181,11 +181,12 @@ class MJCommandStartImmediateWinGame:public MJCommandStartNewGame
 
 class MJCommandNumberOfWins: public MahjongCommand {
 public:
-	MJCommandNumberOfWins(Game *game) :
-			game_(game){
+	MJCommandNumberOfWins(MahjongGameServer* server, Game *game) :
+			server_{server}, game_{game}{
 	}
 	void execute(GameJsonResponse *respond);
 private:
+	MahjongGameServer* server_;
 	Game* game_;
 };
 
