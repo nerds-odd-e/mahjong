@@ -60,3 +60,8 @@ unsigned int MahjongGameServer::GetProgress()
 {
 	return settings_.GetGameLevel().GetSubLevel();
 }
+
+void MahjongGameServer::setLevel(unsigned int level)
+{
+	settings_.GetGameLevel().SetLevel(level);
+}

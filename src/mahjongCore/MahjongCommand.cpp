@@ -42,7 +42,7 @@ void MJTestSetNextPick::execute(GameJsonResponse *respond) {
 }
 
 void MJCommandSetLevel::execute(GameJsonResponse *respond) {
-    
+    server_->setLevel(level_);
 }
 
 void MJCommandGetLevel::execute(GameJsonResponse *respond) {

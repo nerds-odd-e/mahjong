@@ -34,6 +34,7 @@ public:
 
     unsigned int GetLevel();
     void IncrementLevel();
+	void setLevel(unsigned int level);
 
 	unsigned int GetProgress();
 

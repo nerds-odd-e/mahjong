@@ -1,4 +1,3 @@
-@wip
 Feature: Mahjong Game level one suit
 
 Scenario: Starting a game hosted by player

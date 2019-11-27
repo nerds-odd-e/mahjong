@@ -42,7 +42,7 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 	if (strcmp(gameCmd, "set_level") == 0)
 	{
 		int level = atoi(parameters);
-		return new MJCommandSetLevel(game, level);
+		return new MJCommandSetLevel(server_, level);
 	}
 	else if (strcmp(gameCmd, "get_level") == 0)
 	{

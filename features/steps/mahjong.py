@@ -149,4 +149,5 @@ def step_impl(context,expected_number_of_wins):
 @then(u'All of my tiles should be of the same type')
 def step_impl(context):
     p = game_get_request(context, "current") 
-    assert are_all_tiles_in_one_suit(p['players'][0]['hand'])
+    assert are_all_tiles_in_one_suit(p['players'][0]['hand']), f"Player's tiles are not of the same suit"
+    assert are_all_tiles_in_one_suit(p['players'][1]['hand']), f"Opponent's tiles are not of the same suit"
