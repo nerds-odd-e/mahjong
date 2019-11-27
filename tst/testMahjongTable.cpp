@@ -15,8 +15,7 @@ TEST_GROUP(MahjongTable) {
     Wall * wall_ = createWall();
     Settings settings;
 	MahjongTable * table_ = new MahjongTable(wall_, settings.GetGameLevel());
-   // AIPerspective * aiPerspective = new AIPerspective();
-	UserPerspective * userPerspective = new UserPerspective();
+    UserPerspective * userPerspective = new UserPerspective(settings);
 };
 
 

@@ -3,10 +3,11 @@
 
 #include "tile.h"
 #include "PlayerActionRequest.h"
+#include "Settings.h"
 
 class Player {
 public:
-	Player() : currentActionRequest_(NO_ACTION, NO_TILE){}
+	Player(Settings & settings) : currentActionRequest_(NO_ACTION, NO_TILE), settings_{settings} {}
 	virtual ~Player(){}
 
 	virtual void deal(const Tile tiles[], int n, int distance)=0;
@@ -28,6 +29,7 @@ public:
 
 protected:
 	PlayerActionRequest currentActionRequest_;
+	Settings & settings_;
 };
 
 #endif /* PLAYER_H_ */

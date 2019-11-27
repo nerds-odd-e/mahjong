@@ -8,7 +8,7 @@
 
 constexpr unsigned int ai_max_holding_count = 13;
 
-AIPerspective::AIPerspective() {
+AIPerspective::AIPerspective(Settings & settings) : Player(settings) {
 	currentActionRequest_.action_ = ACTION_RESTART;
 	player = NULL;
 	evaluator = createEvaluatorAdaptor();

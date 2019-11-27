@@ -21,7 +21,7 @@ public:
 
 class UserPerspective: public Player, public UserView {
 public:
-	UserPerspective();
+	UserPerspective(Settings & settings);
 	virtual ~UserPerspective();
 
 	virtual void deal(const Tile tiles[], int n, int distance);

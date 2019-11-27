@@ -36,7 +36,8 @@ TEST(HTMLCommandParser, parse_shutdown) {
 }
 
 TEST(HTMLCommandParser, restart) {
-	UserPerspective game;
+	Settings settings;
+	UserPerspective game( settings);
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
 	cmd = parser->parse("/3/start", "");
@@ -51,7 +52,8 @@ TEST(HTMLCommandParser, game_does_not_exist) {
 }
 
 TEST(HTMLCommandParser, MJCommandDiscard) {
-	UserPerspective game;
+	Settings settings;
+	UserPerspective game( settings);
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
 	cmd = parser->parse("/3/throw", "5");
@@ -59,7 +61,8 @@ TEST(HTMLCommandParser, MJCommandDiscard) {
 }
 
 TEST(HTMLCommandParser, MJCommandPick) {
-	UserPerspective game;
+	Settings settings;
+	UserPerspective game( settings);
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
 	cmd = parser->parse("/3/pick", "");
@@ -67,7 +70,8 @@ TEST(HTMLCommandParser, MJCommandPick) {
 }
 
 TEST(HTMLCommandParser, MJCommandChow) {
-	UserPerspective game;
+	Settings settings;
+	UserPerspective game( settings);
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
 	cmd = parser->parse("/3/chow", "2");
@@ -75,7 +79,8 @@ TEST(HTMLCommandParser, MJCommandChow) {
 }
 
 TEST(HTMLCommandParser, MJCommandPong) {
-	UserPerspective game;
+	Settings settings;
+	UserPerspective game( settings);
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
 	cmd = parser->parse("/3/pong", "");
@@ -83,7 +88,8 @@ TEST(HTMLCommandParser, MJCommandPong) {
 }
 
 TEST(HTMLCommandParser, MJCommandKong) {
-	UserPerspective game;
+	Settings settings;
+	UserPerspective game( settings);
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
 	cmd = parser->parse("/3/kong", "2");
@@ -91,7 +97,8 @@ TEST(HTMLCommandParser, MJCommandKong) {
 }
 
 TEST(HTMLCommandParser, MJCommandWin) {
-	UserPerspective game;
+	Settings settings;
+	UserPerspective game( settings);
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
 	cmd = parser->parse("/3/win", "");

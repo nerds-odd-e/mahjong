@@ -9,9 +9,10 @@
 TEST_GROUP(UserPerspective) {
 	UserPerspective * userPerspective;
 	UIEvent *event;
+	Settings settings;
 
 	void setup() {
-		userPerspective = new UserPerspective();
+		userPerspective = new UserPerspective(settings);
 	}
 
 	void teardown() {

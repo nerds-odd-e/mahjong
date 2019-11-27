@@ -8,7 +8,7 @@
 #include "game.h"
 #include "UIEvent.h"
 
-UserPerspective::UserPerspective() {
+UserPerspective::UserPerspective(Settings & settings) :Player(settings) {
 	eventFactory_ = new UIEventFactory;
 	last_tile = NO_TILE;
 	int i = 0;
@@ -89,6 +89,8 @@ void UserPerspective::pushActionRequest(PlayerActionRequest * actionRequest) {
 			add_event(eventFactory_->createMessageEvent("Are you kidding?"));
 			return;
 		}
+		// if lvl == 2
+		// settings-> getlvlsublevel ++
 	} else if (actionRequest->action_ == ACTION_PONG) {
 		if (!player->isAbleToPong(this->last_tile)) {
 			add_event(eventFactory_->createMessageEvent("Are you kidding?"));

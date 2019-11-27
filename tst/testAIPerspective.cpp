@@ -11,9 +11,10 @@ TEST_GROUP(ai_perspective)
 {
 	AIPerspective * perspective;
 	EvaluatorAdaptor * evaluator;
+	Settings settings_;
 	void setup() {
 		evaluator = createMockEvaluator();
-		perspective = new AIPerspective();
+		perspective = new AIPerspective(settings_);
 		perspective->setEvaluator(evaluator);
 		Tile holdings[] = { C(1) };
 		perspective->deal(holdings, 1, 0);

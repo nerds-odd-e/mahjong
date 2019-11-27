@@ -6,7 +6,7 @@ class Hand;
 class EvaluatorAdaptor;
 class AIPerspective: public Player{
 public:
-	AIPerspective();
+	AIPerspective(Settings & settings);
 	virtual ~AIPerspective();
 
 	void deal(const Tile tiles[], int n, int distance);

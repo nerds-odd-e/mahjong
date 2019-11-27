@@ -26,6 +26,8 @@ public:
 #include "TileArray.h"
 class MockPlayer: public Player {
 public:
+	MockPlayer(Settings & settings) : Player(settings) {}
+
 	virtual void destroy(Player *self) {
 		free(self);
 	}
