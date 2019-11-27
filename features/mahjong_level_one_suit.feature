@@ -1,5 +1,5 @@
 Feature: Mahjong Game level one suit
-
+@wip
 Scenario: Starting a game hosted by player
     Given I have joined a game
     And I am level "1" player
