@@ -1,9 +1,9 @@
 Feature: Mahjong Lvl 0 pair wins
 
     Background:
-        Given I am level "0" player
-        And I have joined a game
-        Given I start a game
+        Given I have joined a game
+        And I start a game
+        And I am level "0" player
 
     @wip
     Scenario:
