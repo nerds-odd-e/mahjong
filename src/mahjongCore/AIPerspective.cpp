@@ -2,30 +2,14 @@
 #include <stdio.h>
 #include <string.h>
 #include "AIPerspective.h"
-#include "Hand.h"
-#include "EvaluatorAdaptor.h"
 #include "assert.h"
 
 constexpr unsigned int ai_max_holding_count = 13;
 
-AIPerspective::AIPerspective(Settings & settings) : Player(settings) {
-	currentActionRequest_.action_ = ACTION_RESTART;
-	player = NULL;
-	evaluator = createEvaluatorAdaptor();
-}
-AIPerspective::~AIPerspective() {
-	if (player)
-		delete player;
-	delete evaluator;
+AIPerspective::AIPerspective(Settings & settings) : BaseAIPerspective(settings) {
 }
 
-void AIPerspective::deal(const Tile tiles[], int n, int distance) {
-	if (distance == 0) {
-		Hand * player_data = createHand();
-		player_data->deal(tiles, n);
-		player = player_data;
-		currentActionRequest_.action_ = ACTION_PICK;
-	}
+AIPerspective::~AIPerspective() {
 }
 
 Tile AIPerspective::whichToDiscard() {
@@ -49,16 +33,15 @@ Tile AIPerspective::whichToDiscard() {
 	return holdings[index_to_throw];
 }
 
-bool AIPerspective::isAbleToWin() const
+bool AIPerspective::isAbleToWin(Tile tile) const
 {
-	player->isAbleToWin(NO_TILE);
+	return player->isAbleToWin(tile);
 }
 
 void AIPerspective::pick(Tile tile, int distance) {
 	if (distance == 0) {
 		player->pick(tile);
-		if (isAbleToWin())
-		{
+		if (isAbleToWin(NO_TILE))
 			currentActionRequest_.action_ = ACTION_WIN;
 			UserLost();
 		}
@@ -90,7 +73,7 @@ void AIPerspective::discard(Tile tile, int distance) {
 	if (distance == 0)
 		player->discard(tile);
 	else {
-		if (player->isAbleToWin(tile))
+		if (isAbleToWin(tile))
 			currentActionRequest_.action_ = ACTION_WIN;
 		else
 			currentActionRequest_.action_ = ACTION_PICK;
