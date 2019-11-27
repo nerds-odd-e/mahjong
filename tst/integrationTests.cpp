@@ -55,7 +55,7 @@ private:
 	bool wallEnd_;
 }*lastCreatedEverIncreasingWall = NULL;
 
-static Wall * createEverIncreasingWall() {
+static Wall * createEverIncreasingWall(const Settings& settings) {
 	lastCreatedEverIncreasingWall = new EverIncreasingWall;
 	return lastCreatedEverIncreasingWall;
 }
@@ -72,7 +72,7 @@ TEST_GROUP(html_game) {
 		server = new MahjongGameServer();
 		game = new HTMLMahjongGame(server);
 		UT_PTR_SET(createEvaluatorAdaptor, createSimpleEvaluator);
-		UT_PTR_SET(createWall, createEverIncreasingWall);
+		UT_PTR_SET(createWallSetting, createEverIncreasingWall);
 		execute_cmd("/join");
 		gameID = server->getLastGameID();
 		wall = lastCreatedEverIncreasingWall;

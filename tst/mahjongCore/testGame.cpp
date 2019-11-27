@@ -9,11 +9,11 @@
 #include "../mocks.h"
 
 TEST_GROUP(game) {
+	Settings settings;
 	Game * game;
 };
 
 TEST(game, gameShouldTakeActionRequestFromPlayerWhenTick) {
-    Settings settings;
 	game = new Game(settings);
 	Player * player = new MockPlayer();
 	MockPlayerActionRequest action;
@@ -28,7 +28,6 @@ TEST(game, gameShouldTakeActionRequestFromPlayerWhenTick) {
 }
 
 TEST(game, gameShouldTakeActionRequestAndDoItWhenTick) {
-    Settings settings;
 	game = new Game(settings);
 	Player * player = new MockPlayer();
 	MockPlayerActionRequest action;

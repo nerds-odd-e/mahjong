@@ -3,7 +3,10 @@
 
 class GameLevel {
 public:
-  GameLevel(unsigned int level = 0) : level_(level), subLevel_(0) {}
+  GameLevel(unsigned int level = 0) : level_(level), subLevel_(0) {
+    int k =0;
+    (void)k;
+  }
   unsigned int GetLevel() const { return level_; }
   unsigned int GetSubLevel() const { return subLevel_; }
   void SetLevel(unsigned int level) { level_ = level;}

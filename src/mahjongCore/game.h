@@ -35,7 +35,7 @@ private:
 	Player * aiPerspective_;
 	Player * player_;
 	UserPerspective * userPerspective_;
-	unsigned char level_;
+	const Settings & settings_;
 };
 
 #endif /* SYSTEM_H_ */

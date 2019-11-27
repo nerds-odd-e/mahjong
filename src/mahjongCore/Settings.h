@@ -5,7 +5,7 @@
 
 class Settings {
 public:
-  Settings() = default;
+  Settings() :level_(0){} ;
   unsigned int GetHandSize() const;
   unsigned int GetNumberOfSuites() const;
   GameLevel& GetGameLevel();

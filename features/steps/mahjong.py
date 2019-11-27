@@ -26,6 +26,24 @@ def to_tile_id(tile):
     }
     return map[tile]
 
+def is_in_circles(tile):
+    return tile in range(to_tile_id("🀙"), to_tile_id("🀡") + 1)
+
+def are_all_tiles_in_one_suit(tiles):
+    if is_in_circles(tiles[0]):
+        for tile in tiles:
+            if not is_in_circles(tile):
+                return False        
+    else if is_in_characters(tiles[0]):
+        for tile in tiles:
+            if not is_in_characters(tile):
+                return False
+    else if is_in_bamboo(tiles[0]):
+        for tile in tiles:
+            if not is_in_bamboo(tile):
+                return False            
+    return True
+
 @given(u'I have joined a game')
 def step_impl(context):
     context.scenario.game_id = get_request(context, 'join')['game_id']
@@ -88,14 +106,10 @@ def step_impl(context, result):
 
 @given(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
-    get_request(context, "set_level_settings?" + str(lvl))
+    game_get_request(context, "set_level?" + str(lvl))
 
 @then(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
-    pass
-
-@then(u'All of my tiles should be "{character}"')
-def step_impl(constext, character):
     pass
 
 @when(u'I win the game')
@@ -115,3 +129,8 @@ def step_impl(context):
 def step_impl(context,expected_number_of_wins):
     result = game_get_request(context, "get_number_of_wins")
     assert str(expected_number_of_wins) == str(result["number_of_wins"]), f"expected_number_of_wins: {expected_number_of_wins} == number_of_wins {number_of_wins}"
+
+@then(u'All of my tiles should be of the same type')
+def step_impl(context):
+    p = game_get_request(context, "current") 
+    assert are_all_tiles_in_one_suit(p['players'][0]['hand'])

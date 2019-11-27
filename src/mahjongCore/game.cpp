@@ -4,9 +4,8 @@
 #include "UserPerspective.h"
 #include "DummyPlayerPerspective.h"
 
-
-Game::Game(const Settings& settings) {
-	wall_ = createWall();
+Game::Game(const Settings & settings) : settings_(settings) {
+	wall_ = createWallSetting(settings_);	
 	table_ = new MahjongTable(wall_);
 	aiPerspective_ = new AIPerspective(settings.GetHandSize());
 	userPerspective_ = new UserPerspective();

@@ -2,7 +2,7 @@
 #define GAME__H
 
 #include "tile.h"
-
+#include "Settings.h"
 #define MAX_TILE_COUNT 500
 
 class Wall {
@@ -29,5 +29,6 @@ private:
 };
 
 extern Wall * (*createWall)(void);
+extern Wall * (*createWallSetting)(const Settings & settings);
 
 #endif

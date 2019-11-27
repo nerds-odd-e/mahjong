@@ -122,6 +122,7 @@ public:
 };
 
 #include "game.h"
+
 class MockGame: public Game {
 public:
     MockGame(const Settings& settings) : Game{settings} {};
@@ -140,7 +141,6 @@ public:
 	virtual UserView *getUserView() {
 		return (UserView *) mock().actualCall("getUserView").onObject(this).returnValue().getPointerValue();
 	}
-
 };
 
 #include "UserPerspective.h"

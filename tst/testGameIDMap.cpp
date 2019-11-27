@@ -1,3 +1,5 @@
+#include <memory>
+
 #include "GameIDMap.h"
 #include "game.h"
 #include "CppUTest/TestHarness.h"
@@ -6,8 +8,9 @@
 
 TEST_GROUP(GameIDMap) {
 	GameIDMap map;
-	Game *game1;
-	Game *game2;
+	Game * game1;
+	Game * game2;
+	Settings settings;
 	int id1;
 	int id2;
 	void setup() {
