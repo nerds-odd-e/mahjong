@@ -126,7 +126,8 @@ def step_impl(context, lvl):
 
 @then(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
-    pass
+    result = game_get_request(context, "get_level")
+    assert str(result['current_level']) == lvl, f"Current level is {result['current_level']}"
 
 @when(u'I win the game')
 def step_impl(context):

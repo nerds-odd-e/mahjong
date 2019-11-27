@@ -46,7 +46,7 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 	}
 	else if (strcmp(gameCmd, "get_level") == 0)
 	{
-		return new MJCommandGetLevel(game);
+		return new MJCommandGetLevel(server_);
 	}
 	if (strcmp(gameCmd, "start_immediately_win") == 0)
 	{

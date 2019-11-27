@@ -156,13 +156,13 @@ private:
 
 class MJCommandGetLevel: public MahjongCommand {
 public:
-	MJCommandGetLevel(Game *game) :
-		game_(game) {
+	MJCommandGetLevel(MahjongGameServer* server) :
+		server_{server} {
 		}
 	void execute(GameJsonResponse *respond);
 
-		private:
-		Game* game_;
+private:
+    MahjongGameServer* server_;
 };
 
 class MJCommandStartImmediateWinGame:public MJCommandStartNewGame
