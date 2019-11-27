@@ -8,8 +8,7 @@ public:
   Settings() = default;
   unsigned int GetHandSize() const;
   unsigned int GetNumberOfSuites() const;
-  unsigned int GetLevel() const;
-  void IncrementLevel();
+  GameLevel& GetGameLevel();
 
 private:
   GameLevel level_;

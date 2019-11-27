@@ -46,12 +46,17 @@ Game * MahjongGameServer::getGameByID(GameID gameID) {
 	return gamePool_->getGameByID(gameID);
 }
 
-inline unsigned int MahjongGameServer::getLevel() const
+unsigned int MahjongGameServer::GetLevel()
 {
-    return settings_.GetLevel();
+    return settings_.GetGameLevel().GetLevel();
 }
 
-inline void MahjongGameServer::IncrementLevel()
+void MahjongGameServer::IncrementLevel()
 {
-    settings_.IncrementLevel();
+    settings_.GetGameLevel().IncrementLevel();
+}
+
+void MahjongGameServer::GetProgress()
+{
+	settings_.GetGameLevel().GetSubLevel();
 }

@@ -13,11 +13,7 @@ unsigned int Settings::GetNumberOfSuites() const {
   return NumberOfSuitesByLevel[level_.GetLevel()];
 }
 
-unsigned int Settings::GetLevel() const
+GameLevel& Settings::GetGameLevel()
 {
-    return level_.GetLevel();
-}
-void Settings::IncrementLevel()
-{
-    level_.IncrementLevel();
+  return level_;
 }

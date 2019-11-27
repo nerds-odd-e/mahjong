@@ -32,8 +32,10 @@ public:
 
 	GameID getLastGameID();
 
-    unsigned int getLevel() const;
+    unsigned int GetLevel();
     void IncrementLevel();
+
+	void GetProgress();
 
 private:
     Settings settings_;
