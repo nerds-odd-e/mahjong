@@ -10,7 +10,11 @@ public:
   void SetSubLevel(unsigned int sublevel) { subLevel_ = sublevel;}
   void IncrementLevel() { ++level_; subLevel_ = 0; }
   void IncrementSubLevel() { ++subLevel_; }
+  void Won();
+  void Lost();
+ 
 private:
+
   unsigned int level_;
   unsigned int subLevel_;
 };

@@ -58,7 +58,10 @@ void AIPerspective::pick(Tile tile, int distance) {
 	if (distance == 0) {
 		player->pick(tile);
 		if (isAbleToWin())
+		{
 			currentActionRequest_.action_ = ACTION_WIN;
+			UserLost();
+		}
 		else {
 			currentActionRequest_.action_ = ACTION_DISCARD;
 			currentActionRequest_.tile_ = whichToDiscard();

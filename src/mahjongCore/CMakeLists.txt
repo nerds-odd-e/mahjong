@@ -12,6 +12,7 @@ set(Main_SRCS
       GameIDMap.cpp
       GameIDMap.h
       GameLevel.h
+      GameLevel.cpp
       GameState.cpp
       GameState.h
       Hand.cpp

@@ -28,8 +28,8 @@ public:
 	virtual void pushActionRequest(PlayerActionRequest *actionRequest)=0;
 
 protected:
-	unsigned int GetLevel() const {return settings_.GetGameLevel().GetLevel();}
-	void IncrementSubLevel() {settings_.GetGameLevel().IncrementSubLevel();}
+	void UserWon() {settings_.GetGameLevel().Won();}
+	void UserLost() {settings_.GetGameLevel().Lost();}
 
 	PlayerActionRequest currentActionRequest_;
 	Settings & settings_;
