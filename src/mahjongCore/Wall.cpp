@@ -28,7 +28,8 @@ const int TILE_TYPE_COUNT = sizeof(all_tile_types)/sizeof(all_tile_types[0]);
 const int TILES_PER_TYPE = 4;
 
 static Wall * create_wall_impl_setting(const Settings & settings) {
-	Tile * tile_types;
+	Tile * tile_types = const_cast<Tile *>(all_tile_types);
+	int tile_type_count = sizeof(all_tile_types)/sizeof(all_tile_types[0]);
 	auto numberOfSuites = settings.GetNumberOfSuites();
 	if(numberOfSuites == 1)
 	{
@@ -36,21 +37,19 @@ static Wall * create_wall_impl_setting(const Settings & settings) {
 		if(suitType == 1)
 		{
 			tile_types = const_cast<Tile *>(character_tile_types); 	
+			tile_type_count = sizeof(character_tile_types)/sizeof(character_tile_types[0]);
 		}
 		else if(suitType == 2)
 		{
 			tile_types = const_cast<Tile *>(circle_tile_types); 	
+			tile_type_count = sizeof(circle_tile_types)/sizeof(circle_tile_types[0]);
 		}
 		else
 		{
-			tile_types = const_cast<Tile *>(bamboo_tile_types); 	
+			tile_types = const_cast<Tile *>(bamboo_tile_types);
+			tile_type_count = sizeof(bamboo_tile_types)/sizeof(bamboo_tile_types[0]); 	
 		}
 	}
-	else
-	{
-		tile_types = const_cast<Tile *>(all_tile_types);
-	}
-	int tile_type_count = sizeof(tile_types)/sizeof(tile_types[0]);
 	return new Wall(tile_types, tile_type_count, 70);
 }
 

@@ -7,7 +7,7 @@ Scenario: Starting a game hosted by player
     Then All of my tiles should be of the same type
 
 @wip
-Scenario: Starting a game hosted by player
+Scenario: Starting a game hosted by player with 4 tiles
     Given I have joined a game
     And I am level "1" player
     When I start a game
