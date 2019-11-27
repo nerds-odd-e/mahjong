@@ -113,12 +113,6 @@ def step_impl(context, wins):
 @when(u'Outcome of the game is "{result}"')
 def step_impl(context, result):
     raise NotImplementedError(u'STEP: When Result of the game is win')
-
-@then(u'my hand should be of size {tiles_in_hand}')
-def step_impl(context, tiles_in_hand):
-    event = game_get_request(context, "current")
-    hand = event['players'][0]['hand']
-    assert int(tiles_in_hand) == len(hand), f"expected '{tiles_in_hand}', but got '{len(hand)}'"
     
 @given(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
