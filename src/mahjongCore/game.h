@@ -13,7 +13,7 @@ class UserView;
 class Game {
 public:
 
-	Game(const Settings& settings);
+	Game(Settings& settings);
 
 	virtual ~Game();
 
@@ -35,7 +35,7 @@ private:
 	Player * aiPerspective_;
 	Player * player_;
 	UserPerspective * userPerspective_;
-	const Settings & settings_;
+	Settings& settings_;
 };
 
 #endif /* SYSTEM_H_ */

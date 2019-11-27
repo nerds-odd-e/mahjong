@@ -3,6 +3,7 @@
 
 #include "tile.h"
 #include "GameState.h"
+#include "GameLevel.h"
 
 class Wall;
 class Hand;
@@ -11,7 +12,7 @@ class PlayerActionRequest;
 
 class MahjongTable{
 public:
-	MahjongTable(Wall * wall);
+	MahjongTable(Wall * wall, GameLevel& gameLevel);
 
 	~MahjongTable();
 
@@ -49,6 +50,7 @@ private:
 	GameStateEndOfGame endOfGameState_;
 	GameStatePicked pickedState_;
 	GameStatePicking pickingState_;
+	GameLevel& gameLevel_;
 
 	friend class GameStateEndOfGame;
 	friend class GameStatePicked;

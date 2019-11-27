@@ -13,7 +13,8 @@
 
 TEST_GROUP(MahjongTable) {
     Wall * wall_ = createWall();
-	MahjongTable * table_ = new MahjongTable(wall_);
+    Settings settings;
+	MahjongTable * table_ = new MahjongTable(wall_, settings.GetGameLevel());
    // AIPerspective * aiPerspective = new AIPerspective();
 	UserPerspective * userPerspective = new UserPerspective();
 };

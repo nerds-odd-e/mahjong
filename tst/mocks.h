@@ -125,7 +125,7 @@ public:
 
 class MockGame: public Game {
 public:
-    MockGame(const Settings& settings) : Game{settings} {};
+    MockGame(Settings& settings) : Game{settings} {};
 
 	virtual void nextMove(PlayerActionRequest *request) {
 		UNUSED(request);

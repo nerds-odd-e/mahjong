@@ -5,10 +5,10 @@
 
 constexpr unsigned int ai_max_holding_count = 13;
 
-MahjongTable::MahjongTable(Wall *wall) :
+MahjongTable::MahjongTable(Wall *wall, GameLevel& gameLevel) :
 		wall_(wall), player_count_(0), current_player(0), host(0), restartCount_(
 				0), currentState_(&endOfGameState_), endOfGameState_(this), pickedState_(
-				this), pickingState_(this) {
+				this), pickingState_(this), gameLevel_(gameLevel) {
 }
 
 MahjongTable::~MahjongTable() {
