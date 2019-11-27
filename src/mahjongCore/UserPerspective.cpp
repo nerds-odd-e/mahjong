@@ -89,8 +89,11 @@ void UserPerspective::pushActionRequest(PlayerActionRequest * actionRequest) {
 			add_event(eventFactory_->createMessageEvent("Are you kidding?"));
 			return;
 		}
-		// if lvl == 2
-		// settings-> getlvlsublevel ++
+
+		if (GetLevel() == 2)
+		{
+			IncrementSubLevel();	
+		}
 	} else if (actionRequest->action_ == ACTION_PONG) {
 		if (!player->isAbleToPong(this->last_tile)) {
 			add_event(eventFactory_->createMessageEvent("Are you kidding?"));
