@@ -9,17 +9,18 @@ class Wall;
 class Hand;
 class Player;
 class PlayerActionRequest;
+class Settings;
 
 class MahjongTable{
 public:
-	MahjongTable(Wall * wall, GameLevel& gameLevel);
-
+	MahjongTable(Wall * wall, Settings& settings);
 	~MahjongTable();
 
 	void nextMove();
 
 	void addPlayer(Player * player);
 	int getWinForCurrentPlayer() const;
+	void restartGame();
 private:
 	Player * getPlayerOfDistance( int i);
 	int getPlayerCount();
@@ -32,7 +33,6 @@ private:
 	void pong();
 	int chow( Tile with);
 	void restartGameWhenAllPlayersAreReady();
-	void restartGame();
 	PlayerActionRequest popActionRequest();
 	void discard(Tile& action_tile);
 	void doWin();
@@ -50,7 +50,7 @@ private:
 	GameStateEndOfGame endOfGameState_;
 	GameStatePicked pickedState_;
 	GameStatePicking pickingState_;
-	GameLevel& gameLevel_;
+	Settings& settings_;
 
 	friend class GameStateEndOfGame;
 	friend class GameStatePicked;

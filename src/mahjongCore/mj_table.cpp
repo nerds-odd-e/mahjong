@@ -2,13 +2,13 @@
 #include "Hand.h"
 #include "Wall.h"
 #include "mj_table.h"
+#include "Settings.h"
 
-constexpr unsigned int ai_max_holding_count = 13;
-
-MahjongTable::MahjongTable(Wall *wall, GameLevel& gameLevel) :
+MahjongTable::MahjongTable(Wall *wall, Settings& settings) :
 		wall_(wall), player_count_(0), current_player(0), host(0), restartCount_(
 				0), currentState_(&endOfGameState_), endOfGameState_(this), pickedState_(
-				this), pickingState_(this), gameLevel_(gameLevel) {
+				this), pickingState_(this), settings_(settings) {
+
 }
 
 MahjongTable::~MahjongTable() {
@@ -93,14 +93,14 @@ int MahjongTable::chow(Tile with) {
 
 void MahjongTable::restartGame() {
 	wall_->shuffleAndRebuild();
-	Tile tiles[ai_max_holding_count];
+	Tile tiles[settings_.GetHandSize()];
 	int cnt = getPlayerCount();
 	for (; cnt > 0; cnt--) {
 
-		for (int i = 0; i < ai_max_holding_count; i++) {
+		for (int i = 0; i < settings_.GetHandSize(); i++) {
 			tiles[i] = wall_->popATile();
 		}
-		deal(tiles, ai_max_holding_count);
+		deal(tiles, settings_.GetHandSize());
 	}
 //	pick(wall_->popATile());
     currentState_ = &pickingState_;

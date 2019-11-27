@@ -89,9 +89,7 @@ void UserPerspective::pushActionRequest(PlayerActionRequest * actionRequest) {
 			add_event(eventFactory_->createMessageEvent("Are you kidding?"));
 			return;
 		}
-
 		UserWon();
-
 	} else if (actionRequest->action_ == ACTION_PONG) {
 		if (!player->isAbleToPong(this->last_tile)) {
 			add_event(eventFactory_->createMessageEvent("Are you kidding?"));
