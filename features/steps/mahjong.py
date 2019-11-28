@@ -55,6 +55,21 @@ def are_all_tiles_in_one_suit(tiles):
                 return False            
     return True
 
+def giving_the_same_tiles_to_users_hand(context,replace_tile):
+    p = game_get_request(context, "current")
+    tiles_in_hand = p['players'][0]['hand']
+
+    for tile in tiles_in_hand:
+        game_get_request(context, "test_set_next_pick?" + str(to_tile_id(replace_tile)))
+        game_get_request(context, "pick")
+        game_get_request(context, f"throw?{tile}")
+
+    p = game_get_request(context, "current")
+    new_hand = p['players'][0]['hand']
+
+    for tile in new_hand:
+        assert  tile == to_tile_id(replace_tile), f"expected '{to_tile_id(replace_tile)}', but got '{tile}'"
+
 @given(u'I have joined a game')
 def step_impl(context):
     context.scenario.game_id = get_request(context, 'join')['game_id']
@@ -134,23 +149,18 @@ def step_impl(context, lvl):
     result = game_get_request(context, "get_level")
     assert str(result['current_level']) == lvl, f"Current level is {result['current_level']}"
 
-@when(u'I win the game')
+@when(u'I play an immediately win game')
 def step_impl(context):
-    raise NotImplementedError(u'STEP: When I win the game')
-
-@when(u'I start an immediately win game')
-def step_impl(context):
-    game_get_request(context, "start_immediately_win")
-
-@when(u'I try to win')
-def step_impl(context):
+    giving_the_same_tiles_to_users_hand(context,"🀙")
+    game_get_request(context, "test_set_next_pick?" + str(to_tile_id("🀙")))
+    result = game_get_request(context, "pick")
     result = game_get_request(context, "win")
-    assert False, f"result_of_wins: {result}"
 
 @step(u'My number of wins should be {expected_number_of_wins}')
 def step_impl(context,expected_number_of_wins):
     result = game_get_request(context, "get_number_of_wins")
-    assert str(expected_number_of_wins) == str(result["number_of_wins"]), f"expected_number_of_wins: {expected_number_of_wins} == number_of_wins {number_of_wins}"
+    number_of_wins = result["number_of_wins"]
+    assert_eq(str(expected_number_of_wins),str(number_of_wins))
 
 @then(u'All of my tiles should be of the same type')
 def step_impl(context):
@@ -176,3 +186,8 @@ def step_impl(context, tile):
 
     assert str(result['action']) == 'discard'
     assert to_tile_id(tile) == result['tile'], f"expected: {to_tile_id(tile)} == actual tile {result['tile']}"
+
+
+def assert_eq(expected, actual):
+    assert expected == actual, f"expected: {expected}, actual: {actual}"
+   
