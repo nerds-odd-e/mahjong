@@ -30,6 +30,5 @@ private:
 };
 
 extern Wall * (*createWall)(void);
-extern Wall * (*createWallSetting)(const Settings & settings);
 
 #endif
