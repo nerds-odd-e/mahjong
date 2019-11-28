@@ -11,4 +11,4 @@ Feature: Mahjong Lvl 0 pair wins
     @wip
     Scenario:
         Given I won
-        Then I am level "1" player
+        Then I must be level "1" player

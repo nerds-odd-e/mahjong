@@ -89,6 +89,10 @@ def step_impl(context):
     p = game_get_request(context, "current")
     assert p['players'][0]['new_pick'] == 0
 
+@when(u'I won {win_count} times')
+def step_impl(context, win_count):
+    raise NotImplementedError(u'STEP: When my win_count is 1')
+
 @step(u'the next tile to be picked is "{tile}"')
 def step_impl(context, tile):
     game_get_request(context, "test_set_next_pick?" + str(to_tile_id(tile)))
@@ -125,7 +129,7 @@ def step_impl(context, result):
 def step_impl(context, lvl):
     game_get_request(context, "set_level?" + str(lvl))
 
-@then(u'I am level "{lvl}" player')
+@then(u'I must be level "{lvl}" player')
 def step_impl(context, lvl):
     result = game_get_request(context, "get_level")
     assert str(result['current_level']) == lvl, f"Current level is {result['current_level']}"
