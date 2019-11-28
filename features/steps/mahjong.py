@@ -190,4 +190,3 @@ def step_impl(context, tile):
 
 def assert_eq(expected, actual):
     assert expected == actual, f"expected: {expected}, actual: {actual}"
-   
