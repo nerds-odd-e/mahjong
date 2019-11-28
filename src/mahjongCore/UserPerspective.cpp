@@ -100,6 +100,8 @@ void UserPerspective::pushActionRequest(PlayerActionRequest * actionRequest) {
 			add_event(eventFactory_->createMessageEvent("Are you kidding?"));
 			return;
 		}
+	} else if (actionRequest->action_ == ACTION_FORCE_WIN) {
+		UserWon();
 	}
 	this->currentActionRequest_ = *actionRequest;
 }

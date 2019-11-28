@@ -106,7 +106,7 @@ def step_impl(context):
 
 @when(u'I won {win_count} times')
 def step_impl(context, win_count):
-    raise NotImplementedError(u'STEP: When my win_count is 1')
+    game_get_request(context, "force_win")
 
 @step(u'the next tile to be picked is "{tile}"')
 def step_impl(context, tile):

@@ -132,6 +132,13 @@ public:
 	}
 };
 
+class MJCommandForceWin: public MJCommandAction {
+public:
+	MJCommandForceWin(Game *game) :
+			MJCommandAction(game, ACTION_FORCE_WIN, NO_TILE) {
+	}
+};
+
 class MJTestSetNextPick: public MahjongCommand {
 public:
 	MJTestSetNextPick(Game *game, Tile tile) :
