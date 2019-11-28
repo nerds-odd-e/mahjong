@@ -2,6 +2,7 @@
 #include "Wall.h"
 #include "mj_table.h"
 #include "UserPerspective.h"
+#include "AIPerspective.h"
 #include "DummyPlayerPerspective.h"
 
 Game::Game(Settings & settings) : settings_(settings) {

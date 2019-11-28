@@ -23,8 +23,8 @@ protected:
 	Hand * player;
 	EvaluatorAdaptor * evaluator;
 
-	virtual Tile whichToDiscard();
-  	virtual bool isAbleToWin() const;
+	virtual Tile whichToDiscard() = 0;
+  	virtual bool isAbleToWin(Tile tile) const;
 };
 
 #endif /* BASE_AI_PERSPECTIVE_H_ */

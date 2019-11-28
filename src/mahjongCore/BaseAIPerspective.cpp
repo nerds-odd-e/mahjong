@@ -31,7 +31,7 @@ void BaseAIPerspective::deal(const Tile tiles[], int n, int distance) {
 void BaseAIPerspective::pick(Tile tile, int distance) {
 	if (distance == 0) {
 		player->pick(tile);
-		if (isAbleToWin())
+		if (isAbleToWin(NO_TILE))
 			currentActionRequest_.action_ = ACTION_WIN;
 		else {
 			currentActionRequest_.action_ = ACTION_DISCARD;
@@ -61,7 +61,7 @@ void BaseAIPerspective::discard(Tile tile, int distance) {
 	if (distance == 0)
 		player->discard(tile);
 	else {
-		if (isAbleToWin())
+		if (isAbleToWin(tile))
 			currentActionRequest_.action_ = ACTION_WIN;
 		else
 			currentActionRequest_.action_ = ACTION_PICK;
@@ -72,5 +72,11 @@ void BaseAIPerspective::setEvaluator(EvaluatorAdaptor * evaluator){
 	if (this->evaluator != NULL)
 		delete this->evaluator;
 	this->evaluator = evaluator;
+}
+
+
+bool BaseAIPerspective::isAbleToWin(Tile tile) const
+{
+	return player->isAbleToWin(tile);
 }
 

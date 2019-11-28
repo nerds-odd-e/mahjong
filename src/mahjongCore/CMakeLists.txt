@@ -3,6 +3,8 @@ set(Main_SRCS
       aiGame.h
       AIPerspective.cpp
       AIPerspective.h
+      BaseAIPerspective.cpp
+      BaseAIPerspective.h
       DummyPlayerPerspective.cpp
       DummyPlayerPerspective.h
       EvaluatorAdaptor.cpp

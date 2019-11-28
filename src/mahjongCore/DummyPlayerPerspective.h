@@ -1,14 +1,14 @@
 #pragma once
 
-#include "AIPerspective.h"
+#include "BaseAIPerspective.h"
 
-class DummyPlayerPerspective : public AIPerspective
+class DummyPlayerPerspective : public BaseAIPerspective
 {
 public:
-DummyPlayerPerspective(Settings & settings) : AIPerspective(settings) {}
+DummyPlayerPerspective(Settings & settings) : BaseAIPerspective(settings) {}
 protected:
     Tile whichToDiscard() override;
-    bool isAbleToWin() const override
+    bool isAbleToWin(Tile tile) const override
     {
         return false;
     }
