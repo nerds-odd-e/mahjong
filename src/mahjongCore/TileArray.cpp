@@ -194,10 +194,6 @@ bool TileArray::isAbleToChow(Tile tile) const
 
 bool TileArray::isNotAbleToChowOnTheRight(const Tile& tile) const
 {
-    return !has(previousTile(tile)) || !has(Tile(tile.getID() - 2));
+    return !has(tile.previousTile()) || !has(tile.previousTile().previousTile());
 }
 
-Tile TileArray::previousTile(const Tile& tile) const
-{
-    return Tile(tile.getID() - 1);
-}

@@ -31,6 +31,10 @@ public:
 		return Tile(tileNumber_+ 1);
 	}
 
+    Tile previousTile() const {
+		return Tile(tileNumber_- 1);
+	}
+
 	Tile& operator = (const Tile& tile) {
 		tileNumber_ = tile.tileNumber_;
 		return *this;
