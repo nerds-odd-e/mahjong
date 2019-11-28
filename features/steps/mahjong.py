@@ -72,6 +72,12 @@ def step_impl(context, number_of_tiles):
     assert p['players'][0]['player_index'] == 0, f"Player Index is {p['players'][0]['player_index']}"
     assert str(len(p['players'][0]['hand'])) == number_of_tiles, f"number of tiles is {len(p['players'][0]['hand'])}"
 
+@then(u'I should see that all players have "{number_of_tiles}" tiles')
+def step_impl(context, number_of_tiles):
+    players = game_get_request(context, "current")['players'] 
+    for i, p in enumerate(players):
+        assert len(p['hand']) == int(number_of_tiles), f"number of tiles for player {i} is {len(p['hand'])} not {number_of_tiles}"
+
 @then(u'I\'ve got one tile picked')
 def step_impl(context):
     p = game_get_request(context, "current") 
