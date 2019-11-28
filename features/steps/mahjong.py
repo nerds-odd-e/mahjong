@@ -20,6 +20,7 @@ def to_tile_id(tile):
         "🀛": 67,
         "🀡": 73,
         "🀆": 48,
+        "🀇": 49,
         "🀏": 57,
         "🀐": 97,
         "🀑": 98,
@@ -33,7 +34,7 @@ def is_in_circles(tile):
     return tile in range(to_tile_id("🀙"), to_tile_id("🀡") + 1)
 
 def is_in_characters(tile):
-    return tile in range(to_tile_id("🀆"), to_tile_id("🀏") + 1)
+    return tile in range(to_tile_id("🀇"), to_tile_id("🀏") + 1)
 
 def is_in_bamboo(tile):
     return tile in range(to_tile_id("🀐"), to_tile_id("🀘") + 1)
