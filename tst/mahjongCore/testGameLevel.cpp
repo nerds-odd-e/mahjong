@@ -48,6 +48,12 @@ TEST(GameLevel, LevelTwoFourWins_ThenGoToLevelThree) {
     CHECK_EQUAL(3, level.GetLevel());
 }
 
+TEST(GameLevel, LevelZeroOneWin_ThenGoToLevelOne) {
+    GameLevel level{0};
+    level.Won();
+    CHECK_EQUAL(1, level.GetLevel());
+}
+
 TEST(GameLevel, LevelTwoThreeWinsOneLose_ThenStayInLevelTwo) {
     GameLevel level{2};
     CHECK_EQUAL(2, level.GetLevel());

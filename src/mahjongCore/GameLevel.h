@@ -15,6 +15,9 @@ public:
  
 private:
 
+  void UpgradeFromLevelZero();
+  void UpgradeFromLevelTwo();
+
   unsigned int level_;
   unsigned int subLevel_;
 };
