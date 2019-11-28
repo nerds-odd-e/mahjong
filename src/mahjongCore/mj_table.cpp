@@ -92,7 +92,7 @@ int MahjongTable::chow(Tile with) {
 }
 
 void MahjongTable::restartGame() {
-	wall_->shuffleAndRebuild();
+	wall_->shuffleAndRebuild(settings_.GetNumberOfSuites());
 	Tile tiles[settings_.GetHandSize()];
 	int cnt = getPlayerCount();
 	for (; cnt > 0; cnt--) {
