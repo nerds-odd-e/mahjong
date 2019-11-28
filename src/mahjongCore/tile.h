@@ -27,7 +27,7 @@ public:
 	Tile(char tileNumber) : tileNumber_(tileNumber){}
 	Tile(const Tile& tile) : tileNumber_(tile.tileNumber_){}
 
-	Tile nextTile() {
+	Tile nextTile() const {
 		return Tile(tileNumber_+ 1);
 	}
 

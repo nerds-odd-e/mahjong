@@ -65,3 +65,21 @@ TEST(TileArrayIsAbleToChow, not_able_to_chow_when_missing_next)
 
     CHECK_FALSE(tiles.isAbleToChow(C(1)));
 }
+
+TEST(TileArrayIsAbleToChow, not_able_to_chow_when_missing_second_next)
+{
+    tiles_array[0] = C(2);
+    tiles_array[1] = C(5);
+	TileArray tiles(tiles_array, 2);
+
+    CHECK_FALSE(tiles.isAbleToChow(C(1)));
+}
+
+TEST(TileArrayIsAbleToChow, able_to_chow_when_in_the_middle)
+{
+    tiles_array[0] = C(2);
+    tiles_array[1] = C(4);
+	TileArray tiles(tiles_array, 2);
+
+    CHECK_TRUE(tiles.isAbleToChow(C(3)));
+}

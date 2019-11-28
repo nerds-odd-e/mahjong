@@ -174,26 +174,20 @@ const Tile& TileArray::operator[] (int n) const {
 
 bool TileArray::isAbleToChow(Tile tile) const 
 {
-    if(tileCount_ < 2)
-    {
-        return false;
-    }
-    
-    if(tile == C(4) && isNotAbleToChowOnTheRight(tile))
-    {
-        return false;
-    }
-
-    if(tile == C(1) && !has(tile.nextTile()))
-    {
-        return false;
-    }
-
-	return true;
+    return (isAbleToChowOnTheRight(tile) || isAbleToChowOnTheLeft(tile) || isAbleToChowInTheMiddle(tile));
 }
 
-bool TileArray::isNotAbleToChowOnTheRight(const Tile& tile) const
+bool TileArray::isAbleToChowOnTheRight(const Tile& tile) const
 {
-    return !has(tile.previousTile()) || !has(tile.previousTile().previousTile());
+    return (has(tile.previousTile()) && has(tile.previousTile().previousTile()));
 }
 
+bool TileArray::isAbleToChowOnTheLeft(const Tile& tile) const
+{
+    return (has(tile.nextTile()) && has(tile.nextTile().nextTile()));
+}
+
+bool TileArray::isAbleToChowInTheMiddle(const Tile& tile) const
+{
+    return (has(tile.nextTile()) && has(tile.previousTile()));
+}
