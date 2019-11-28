@@ -1,13 +1,15 @@
 #ifndef GAME__H
 #define GAME__H
 
+#include <vector>
+
 #include "tile.h"
 #include "Settings.h"
 #define MAX_TILE_COUNT 500
 
 class Wall {
 public:
-	Wall(const Tile * tileTypes, int tileTypeCount, int maxPicks);
+	Wall (const std::vector<Tile>& tileTypes, int maxPicks);
 	virtual ~Wall();
 	virtual void shuffleAndRebuild(const unsigned int suitCount = 4);
 	virtual bool isEnd();
@@ -23,8 +25,7 @@ private:
 
 private:
 	Tile tilePool_[MAX_TILE_COUNT];
-	const Tile *tileTypes_;
-	int tileTypeCount_;
+	std::vector<Tile> tileTypes_;
 	int picksCount_;
 	int maxPicks_;
 };

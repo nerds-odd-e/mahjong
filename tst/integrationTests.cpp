@@ -24,10 +24,12 @@ void setCheapestTileForSimpleEvaluator(Tile tile);
 
 #include "mocks.h"
 
+static std::vector<Tile> empty_tiles{};
+
 class EverIncreasingWall: public Wall {
 public:
 	EverIncreasingWall() :
-			Wall(NULL, 0, 0), currentTile_(1), wallEnd_(false) {
+			Wall(empty_tiles, 0), currentTile_(1), wallEnd_(false) {
 	}
 
 	Tile popATile() {

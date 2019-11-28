@@ -52,30 +52,30 @@ TEST_GROUP(wall) {
 };
 
 TEST(wall, wallIsNotEndWhenCreated) {
-	Tile tileTypes[] = {C(1)};
-	wall = new Wall(tileTypes, 1, maxPops);
+	std::vector<Tile> tileTypes = {C(1)};
+	wall = new Wall(tileTypes, maxPops);
 	CHECK(!wall->isEnd());
 }
 
 TEST(wall, popFromwallThatIsNotEnd) {
-	Tile tileTypes[] = {C(1)};
-	wall = new Wall(tileTypes, 1, maxPops);
+	std::vector<Tile> tileTypes = {C(1)};
+	wall = new Wall(tileTypes, maxPops);
 	CHECK_EQUAL(C(1), wall->popATile());
 }
 
 TEST(wall, wallBecomesEmptyWhenPopTheMaxTimes) {
-	Tile tileTypes[] = {C(1)};
+	std::vector<Tile> tileTypes = {C(1)};
 	int maxPops = 2;
-	wall = new Wall(tileTypes, 1, maxPops);
+	wall = new Wall(tileTypes, maxPops);
 	wall->popATile();
 	wall->popATile();
 	CHECK(wall->isEnd());
 }
 
 TEST(wall, popRightTilesAfterShuffle) {
-	Tile tileTypes[] = {C(1), C(2)};
+	std::vector<Tile> tileTypes = {C(1), C(2)};
 	int maxPops = 8;
-	wall = new Wall(tileTypes, 2, maxPops);
+	wall = new Wall(tileTypes, maxPops);
 
 	wall->shuffleAndRebuild();
 
@@ -90,9 +90,9 @@ TEST(wall, randomnessAfterShuffle) {
 	// get the same set of random number every time.
 	srand(100);
 
-	Tile tileTypes[] = {C(1), C(2)};
+	std::vector<Tile> tileTypes = {C(1), C(2)};
 	int maxPops = 8;
-	wall = new Wall(tileTypes, 2, maxPops);
+	wall = new Wall(tileTypes, maxPops);
 
 	wall->shuffleAndRebuild();
 

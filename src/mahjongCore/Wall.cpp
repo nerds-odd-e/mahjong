@@ -1,4 +1,5 @@
 #include <stdlib.h>
+
 #include "Wall.h"
 #include "Settings.h"
 #include "GameLevel.h"
@@ -9,32 +10,32 @@
  * SIMPLIFIED_MAHJONG is for people who cannot read Chinese.
  */
 #ifndef SIMPLIFIED_MAHJONG
-static const Tile all_tile_types[] = { C(1), C(2), C(3), C(4), C(5), C(6), C(7),
+static const std::vector<Tile> all_tile_types = { C(1), C(2), C(3), C(4), C(5), C(6), C(7),
 		C(8), C(9), R(1), R(2), R(3), R(4), R(5), R(6), R(7), R(8), R(9),
 		B(1), B(2), B(3), B(4), B(5), B(6), B(7), B(8), B(9), MJ_EAST,
 		MJ_SOUTH, MJ_WEST, MJ_NORTH, MJ_ZHONG, MJ_FA, MJ_BAI };
 
-static const Tile character_tile_types[] = { C(1), C(2), C(3), C(4), C(5), C(6), C(7), C(8), C(9)};
-static const Tile circle_tile_types[] = {  R(1), R(2), R(3), R(4), R(5), R(6), R(7), R(8), R(9)};
-static const Tile bamboo_tile_types[] = { B(1), B(2), B(3), B(4), B(5), B(6), B(7), B(8), B(9)};
+static const std::vector<Tile> character_tile_types = { C(1), C(2), C(3), C(4), C(5), C(6), C(7), C(8), C(9)};
+static const std::vector<Tile> circle_tile_types = {  R(1), R(2), R(3), R(4), R(5), R(6), R(7), R(8), R(9)};
+static const std::vector<Tile> bamboo_tile_types = { B(1), B(2), B(3), B(4), B(5), B(6), B(7), B(8), B(9)};
 
 #else
-static const Tile all_types[] = {R(1), R(2), R(3), R(4), R(5), R(6), R(7), R(8), R(9),
+static const std::vector<Tile> all_types = {R(1), R(2), R(3), R(4), R(5), R(6), R(7), R(8), R(9),
 		B(1), B(2), B(3), B(4), B(5), B(6), B(7), B(8), B(9)};
 #endif
 
-const int TILE_TYPE_COUNT = sizeof(all_tile_types)/sizeof(all_tile_types[0]);
+const int TILE_TYPE_COUNT = all_tile_types.size();
 
 const int TILES_PER_TYPE = 4;
 
 static Wall * create_wall_impl() {
-	return new Wall(all_tile_types, TILE_TYPE_COUNT, 70);
+	return new Wall(all_tile_types, 70);
 }
 
 Wall * (*createWall)() = create_wall_impl;
 
-Wall::Wall(const Tile * tileTypes, int tileTypeCount, int maxPicks) :
-	tileTypes_(tileTypes), tileTypeCount_(tileTypeCount), maxPicks_(maxPicks){
+Wall::Wall(const std::vector<Tile>& tileTypes, int maxPicks) :
+	tileTypes_(tileTypes), maxPicks_(maxPicks){
 	initializePool();
 }
 
@@ -44,7 +45,7 @@ void Wall::initializePool(const unsigned int suitCount) {
 	applySettings(suitCount);
 	
 	for (int j = 0; j < TILES_PER_TYPE; j++)
-		for (int i = 0; i < tileTypeCount_; i++)
+		for (int i = 0; i < tileTypes_.size(); i++)
 			this->tilePool_[cnt++] = tileTypes_[i];
 
 	this->picksCount_ = 0;
@@ -54,8 +55,7 @@ void Wall::applySettings(const unsigned int suitCount)
 {
 	if(suitCount == 1)
 	{
-		tileTypes_ = const_cast<Tile *>(character_tile_types); 	
-		tileTypeCount_ = sizeof(character_tile_types)/sizeof(character_tile_types[0]);
+		tileTypes_ = character_tile_types; 
 	}
 }
 
@@ -64,7 +64,7 @@ int Wall::randomIndex() {
 }
 
 int Wall::getAllCount() {
-	return tileTypeCount_ * TILES_PER_TYPE;
+	return tileTypes_.size() * TILES_PER_TYPE;
 }
 
 void Wall::swap(int index1, int index2) {
