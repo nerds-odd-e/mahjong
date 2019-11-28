@@ -1,6 +1,11 @@
+#include <vector>
+#include <algorithm>
+#include <cassert>
+
 #include "CppUTest/TestHarness.h"
 #include "CppUTestExt/MockSupport.h"
 #include "Wall.h"
+
 
 TEST_GROUP(wall) {
 	Wall * wall;
@@ -9,8 +14,40 @@ TEST_GROUP(wall) {
 		wall = NULL;
 		maxPops = 2;
 	}
+
 	void teardown() {
 		delete wall;
+	}
+
+    static bool IsCharacter(Tile& tile)
+	{
+		return tile.getID() >= C(1).getID() && tile.getID() <= C(9).getID();
+	}
+
+	static bool IsCircle(Tile& tile)
+	{
+		return tile.getID() >= R(1).getID() && tile.getID() <= R(9).getID();
+	}
+
+	static bool IsBamboo(Tile& tile)
+	{
+		return tile.getID() >= B(1).getID() && tile.getID() <= B(9).getID();
+	}
+
+	bool IsTheSameSuit()
+	{
+        std::vector<Tile> pool{};
+
+		while(!wall->isEnd())
+		{
+			pool.push_back(wall->popATile());
+		}
+
+		bool is_character = std::all_of(pool.begin(), pool.end(), IsCharacter);
+		bool is_circle = std::all_of(pool.begin(), pool.end(), IsCircle);
+		bool is_bamboo = std::all_of(pool.begin(), pool.end(), IsBamboo);
+
+		return is_character || is_circle || is_bamboo;
 	}
 };
 
@@ -68,5 +105,23 @@ TEST(wall, randomnessAfterShuffle) {
 
 	CHECK(hasC1);
 	CHECK(hasC2);
+}
+
+TEST(wall, poolWithOneSuite)
+{
+	wall = createWall();
+	
+	wall->shuffleAndRebuild(1);
+    
+    CHECK(IsTheSameSuit());
+}
+
+TEST(wall, poolWithFourSuite)
+{
+	wall = createWall();
+
+	wall->shuffleAndRebuild();
+
+	CHECK(!IsTheSameSuit());
 }
 

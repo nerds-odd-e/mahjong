@@ -38,14 +38,25 @@ Wall::Wall(const Tile * tileTypes, int tileTypeCount, int maxPicks) :
 	initializePool();
 }
 
-void Wall::initializePool() {
+void Wall::initializePool(const unsigned int suitCount) {
 	int cnt = 0;
 
+	applySettings(suitCount);
+	
 	for (int j = 0; j < TILES_PER_TYPE; j++)
 		for (int i = 0; i < tileTypeCount_; i++)
 			this->tilePool_[cnt++] = tileTypes_[i];
 
 	this->picksCount_ = 0;
+}
+
+void Wall::applySettings(const unsigned int suitCount)
+{
+	if(suitCount == 1)
+	{
+		tileTypes_ = const_cast<Tile *>(character_tile_types); 	
+		tileTypeCount_ = sizeof(character_tile_types)/sizeof(character_tile_types[0]);
+	}
 }
 
 int Wall::randomIndex() {
@@ -62,8 +73,8 @@ void Wall::swap(int index1, int index2) {
 	this->tilePool_[index2] = temp;
 }
 
-void Wall::shuffleAndRebuild() {
-	initializePool();
+void Wall::shuffleAndRebuild(const unsigned int suitCount) {
+	initializePool(suitCount);
 
 	for (int i = 0; i < SHUFFLE_TIMES; i++)
 		swap(randomIndex(), randomIndex());

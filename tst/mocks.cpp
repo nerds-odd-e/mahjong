@@ -26,7 +26,7 @@ class MockWall:public Wall{
 public:
 	MockWall():Wall(NULL, 0, 0){}
 	~MockWall(){}
-	void shuffleAndRebuild() {
+	void shuffleAndRebuild(const unsigned int suitCount = 4) override{
 		mock().actualCall("shuffleAndRebuild").onObject(this);
 	}
 

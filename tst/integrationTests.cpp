@@ -44,7 +44,7 @@ public:
 		wallEnd_ = true;
 	}
 
-	void shuffleAndRebuild() {
+	void shuffleAndRebuild(const unsigned int suitCount = 4) override{
 	}
 
 	void setCurrentTile(int t) {

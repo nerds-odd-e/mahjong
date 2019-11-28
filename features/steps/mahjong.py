@@ -152,7 +152,6 @@ def step_impl(context,expected_number_of_wins):
 def step_impl(context):
     p = game_get_request(context, "current") 
     assert are_all_tiles_in_one_suit(p['players'][0]['hand']), f"Player's tiles are not of the same suit"
-    assert are_all_tiles_in_one_suit(p['players'][1]['hand']), f"Opponent's tiles are not of the same suit"
 
 @given(u'it\'s my opponent\'s turn and it picks "{tile}"')
 def step_impl(context, tile):
