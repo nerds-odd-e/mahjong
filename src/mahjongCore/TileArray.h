@@ -19,6 +19,9 @@ public:
 	void replaceOneOf(Tile tile, Tile with);
 
 private:
+    bool isNotAbleToChowOnTheRight(const Tile& tile) const;
+    Tile previousTile(const Tile& tile) const; 
+
 	Tile * tiles_;
 	int tileCount_;
 };
