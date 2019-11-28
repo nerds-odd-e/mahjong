@@ -41,10 +41,10 @@ void SubLevelUp(GameLevel & level, const int iterations)
     }
 }
 
-TEST(GameLevel, LevelTwoFourWins_ThenGoToLevelThree) {
+TEST(GameLevel, LevelTwoFiveWins_ThenGoToLevelThree) {
     GameLevel level{2};
     CHECK_EQUAL(2, level.GetLevel());
-    SubLevelUp(level,4);
+    SubLevelUp(level,5);
     CHECK_EQUAL(3, level.GetLevel());
 }
 
@@ -62,13 +62,13 @@ TEST(GameLevel, LevelTwoThreeWinsOneLose_ThenStayInLevelTwo) {
     CHECK_EQUAL(2, level.GetLevel());
 }
 
-TEST(GameLevel, LevelTwoFourWinsOneLose_ThenGoToLevelThree) {
+TEST(GameLevel, LevelTwoFiveWinsOneLose_ThenGoToLevelThree) {
     GameLevel level{2};
     SubLevelUp(level,2);
     CHECK_EQUAL(2, level.GetLevel());
     level.Lost();
     CHECK_EQUAL(2, level.GetLevel());
-    SubLevelUp(level,2);
+    SubLevelUp(level,3);
     CHECK_EQUAL(3, level.GetLevel());
 }
 

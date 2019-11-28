@@ -11,13 +11,9 @@ public:
   void IncrementSubLevel() { ++subLevel_; }
   void Won();
   void Lost();
-
+  
+ 
 private:
-  void UpgradeFromLevelZero();
-  void UpgradeFromLevelOne();
-  void UpgradeFromLevelTwo();
-  void UpgradeFromLevelFour();
-
   unsigned int level_;
   int subLevel_;
 };

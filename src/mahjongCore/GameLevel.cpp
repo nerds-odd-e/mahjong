@@ -1,27 +1,21 @@
 #include "GameLevel.h"
+#include <map>
 
-constexpr unsigned int kNumberOfSubLevelsForLevelTwo {4};
-constexpr unsigned int kNumberOfSubLevelsForLevelOne {3};
-constexpr unsigned int kNumberOfSubLevelsForLevelFour {4};
+const std::map<unsigned int, unsigned int> levelToWinsMap{
+  {0, 1},
+  {1, 3},
+  {2, 5},
+  {3, 5},
+  {4, 4},
+  {5, 5},
+};
 
 void GameLevel::Won()
 {
-  switch (level_)
+  IncrementSubLevel();
+  if (levelToWinsMap.at(level_) == subLevel_)
   {
-  case 0:
-      UpgradeFromLevelZero();
-    break;
-  case 1:
-      UpgradeFromLevelOne();
-    break;
-  case 2:
-      UpgradeFromLevelTwo();
-    break;
-  case 4:
-      UpgradeFromLevelFour();
-    break;
-  default:
-    break;
+     IncrementLevel();
   }
 }
 
@@ -29,38 +23,5 @@ void GameLevel::Lost()
 {
   if (level_ != 4)
     return;
-
   subLevel_--;
-}
-
-void GameLevel::UpgradeFromLevelZero()
-{
-  IncrementLevel();
-}
-
-void GameLevel::UpgradeFromLevelOne()
-{
-  IncrementSubLevel();
-  if (subLevel_ == kNumberOfSubLevelsForLevelOne)
-  {
-    IncrementLevel();
-  }
-}
-
-void GameLevel::UpgradeFromLevelTwo()
-{
-  IncrementSubLevel();
-  if (subLevel_ == kNumberOfSubLevelsForLevelTwo)
-  {
-    IncrementLevel();
-  }
-}
-
-void GameLevel::UpgradeFromLevelFour()
-{
-  IncrementSubLevel();
-  if (subLevel_ == kNumberOfSubLevelsForLevelFour)
-  {
-    IncrementLevel();
-  }
 }
