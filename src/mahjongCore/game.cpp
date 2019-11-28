@@ -6,7 +6,7 @@
 #include "DummyPlayerPerspective.h"
 
 Game::Game(Settings & settings) : settings_(settings) {
-	wall_ = createWallSetting(settings_);	
+	wall_ = createWall();	
 	table_ = new MahjongTable(wall_, settings_);
 	if (settings.GetGameLevel().GetLevel() > 0)
 	{
