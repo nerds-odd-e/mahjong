@@ -1,6 +1,8 @@
 #include "GameLevel.h"
 
 constexpr unsigned int kNumberOfSubLevelsForLevelTwo {4};
+constexpr unsigned int kNumberOfSubLevelsForLevelOne {3};
+
 
 void GameLevel::Won()
 {
@@ -8,6 +10,9 @@ void GameLevel::Won()
   {
   case 0:
       UpgradeFromLevelZero();
+    break;
+  case 1:
+      UpgradeFromLevelOne();
     break;
   case 2:
       UpgradeFromLevelTwo();
@@ -25,6 +30,15 @@ void GameLevel::Lost()
 void GameLevel::UpgradeFromLevelZero()
 {
   IncrementLevel();
+}
+
+void GameLevel::UpgradeFromLevelOne()
+{
+  IncrementSubLevel();
+  if (subLevel_ == kNumberOfSubLevelsForLevelOne)
+  {
+    IncrementLevel();
+  }
 }
 
 void GameLevel::UpgradeFromLevelTwo()

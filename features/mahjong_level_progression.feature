@@ -2,7 +2,7 @@ Feature: Mahjong Game - level progression
 
     Background:
         Given I have joined a game
-    @wip
+
     Scenario Outline: level progression
         And I am level "<level>" player
         When I won <win_count> times 
@@ -10,4 +10,5 @@ Feature: Mahjong Game - level progression
         Examples:
             | level | win_count | next_level |
             | 0     | 1         | 1          |
-            | 1     | 5         | 2          |
+            | 1     | 3         | 2          |
+            | 2     | 5         | 3          |
