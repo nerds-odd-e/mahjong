@@ -9,10 +9,9 @@ Feature: Mahjong Game - level progression
         Then I must be level "<next_level>" player
         Examples:
             | level | win_count | next_level |
+            | 0     | 1         | 1          |
             | 1     | 3         | 2          |
             | 2     | 5         | 3          |
             | 3     | 5         | 4          |
             | 4     | 4         | 5          |
-#            | 0     | 1         | 1          |
-
 
