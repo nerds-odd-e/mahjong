@@ -30,15 +30,21 @@ def to_tile_id(tile):
     }
     return map[tile]
 
+def tile_types():
+    map = {"circles": circles()}
+    return map
+
+def circles():
+    return range(to_tile_id("🀙"), to_tile_id("🀡") + 1)
+
 def is_in_circles(tile):
-    return tile in range(to_tile_id("🀙"), to_tile_id("🀡") + 1)
+    return tile in circles()
 
 def is_in_characters(tile):
     return tile in range(to_tile_id("🀇"), to_tile_id("🀏") + 1)
 
 def is_in_bamboo(tile):
     return tile in range(to_tile_id("🀐"), to_tile_id("🀘") + 1)
-
 
 def are_all_tiles_in_one_suit(tiles):
     if is_in_circles(tiles[0]):
@@ -191,3 +197,19 @@ def step_impl(context, tile):
 
 def assert_eq(expected, actual):
     assert expected == actual, f"expected: {expected}, actual: {actual}"
+
+    
+@step(u'I am in round "{round}"')    
+def step_impl(context, round):
+    for _ in range(round):
+        game_get_request(context, "start")
+
+@then(u'I must see all my tiles are "{suit}"')
+def step_impl(context, suit):
+    
+    p = game_get_request(context, "current") 
+    # if suit == "circle"
+    #     assert is_in_circles(p['players'][0]['hand'])
+    # elif suit == "cirlce"
+    #     assert is_in_circles(p['players'][0]['hand'])
+    assert False, suit
