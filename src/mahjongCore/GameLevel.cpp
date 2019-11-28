@@ -2,7 +2,7 @@
 
 constexpr unsigned int kNumberOfSubLevelsForLevelTwo {4};
 constexpr unsigned int kNumberOfSubLevelsForLevelOne {3};
-
+constexpr unsigned int kNumberOfSubLevelsForLevelFour {4};
 
 void GameLevel::Won()
 {
@@ -17,6 +17,9 @@ void GameLevel::Won()
   case 2:
       UpgradeFromLevelTwo();
     break;
+  case 4:
+      UpgradeFromLevelFour();
+    break;
   default:
     break;
   }
@@ -24,7 +27,10 @@ void GameLevel::Won()
 
 void GameLevel::Lost()
 {
+  if (level_ != 4)
+    return;
 
+  subLevel_--;
 }
 
 void GameLevel::UpgradeFromLevelZero()
@@ -45,6 +51,15 @@ void GameLevel::UpgradeFromLevelTwo()
 {
   IncrementSubLevel();
   if (subLevel_ == kNumberOfSubLevelsForLevelTwo)
+  {
+    IncrementLevel();
+  }
+}
+
+void GameLevel::UpgradeFromLevelFour()
+{
+  IncrementSubLevel();
+  if (subLevel_ == kNumberOfSubLevelsForLevelFour)
   {
     IncrementLevel();
   }

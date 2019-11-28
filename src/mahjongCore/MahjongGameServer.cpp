@@ -56,7 +56,7 @@ void MahjongGameServer::IncrementLevel()
     settings_.GetGameLevel().IncrementLevel();
 }
 
-unsigned int MahjongGameServer::GetProgress()
+int MahjongGameServer::GetSublevel()
 {
 	return settings_.GetGameLevel().GetSubLevel();
 }

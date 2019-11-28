@@ -55,7 +55,7 @@ void MJCommandGetLevel::execute(GameJsonResponse *respond)
 
 void MJCommandNumberOfWins::execute(GameJsonResponse *respond) {
 	std::string response_json =
-		"{\"number_of_wins\":" + std::to_string(server_->GetProgress()) + "\n}";
+		"{\"number_of_wins\":" + std::to_string(server_->GetSublevel()) + "\n}";
 
 	respond->setContent(response_json);
 }

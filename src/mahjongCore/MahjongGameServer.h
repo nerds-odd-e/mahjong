@@ -36,7 +36,7 @@ public:
     void IncrementLevel();
 	void setLevel(unsigned int level);
 
-	unsigned int GetProgress();
+	int GetSublevel();
 
 private:
     Settings settings_;
