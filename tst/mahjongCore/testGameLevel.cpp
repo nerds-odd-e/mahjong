@@ -56,7 +56,6 @@ TEST(GameLevel, LevelZeroOneWin_ThenGoToLevelOne) {
 
 TEST(GameLevel, LevelTwoThreeWinsOneLose_ThenStayInLevelTwo) {
     GameLevel level{2};
-    CHECK_EQUAL(2, level.GetLevel());
     SubLevelUp(level,3);
     CHECK_EQUAL(2, level.GetLevel());
     level.Lost();
@@ -65,7 +64,6 @@ TEST(GameLevel, LevelTwoThreeWinsOneLose_ThenStayInLevelTwo) {
 
 TEST(GameLevel, LevelTwoFourWinsOneLose_ThenGoToLevelThree) {
     GameLevel level{2};
-    CHECK_EQUAL(2, level.GetLevel());
     SubLevelUp(level,2);
     CHECK_EQUAL(2, level.GetLevel());
     level.Lost();
@@ -83,18 +81,25 @@ TEST(GameLevel, LevelFourFourWinsNoLose_ThenGoToLevelFive) {
 
 TEST(GameLevel, LevelFourThreeWinsNoLose_ThenStayLevelFour) {
     GameLevel level{4};
-    CHECK_EQUAL(4, level.GetLevel());
     SubLevelUp(level, 3);
     CHECK_EQUAL(4, level.GetLevel());
 }
 
 TEST(GameLevel, LevelFourFourWinsOneLose_ThenStayLevelFour) {
     GameLevel level{4};
-    CHECK_EQUAL(4, level.GetLevel());
     CHECK_EQUAL(0, level.GetSubLevel());
     level.Lost();
-    CHECK_TRUE(0 > level.GetSubLevel());
+    CHECK_EQUAL(-1, level.GetSubLevel());
     SubLevelUp(level, 4);
     CHECK_EQUAL(3, level.GetSubLevel());
     CHECK_EQUAL(4, level.GetLevel());
+}
+
+TEST(GameLevel, LevelFourFiveWinsOneLose_ThenGoToLevelFive) {
+    GameLevel level{4};
+    level.Lost();
+    CHECK_EQUAL(-1, level.GetSubLevel());
+    SubLevelUp(level, 5);
+    CHECK_EQUAL(0, level.GetSubLevel());
+    CHECK_EQUAL(5, level.GetLevel());
 }
