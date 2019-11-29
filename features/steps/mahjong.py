@@ -172,10 +172,24 @@ def step_impl(context, lvl):
 
 @when(u'I play an immediately win game')
 def step_impl(context):
-    giving_the_same_tiles_to_users_hand(context,"🀙")
-    game_get_request(context, "test_set_next_pick?" + str(to_tile_id("🀙")))
-    result = game_get_request(context, "pick")
-    try_win(context)
+
+    result = game_get_request(context,"current")
+
+    hand_size = len(result['players'][0]['hand'])
+
+    new_hand = ""
+    for i in range(0, hand_size):
+        new_hand +=  "🀙"
+        if i != hand_size - 1:
+            new_hand += ','
+
+    context.execute_steps(u'''
+        Given my hand is "{new_hand}"
+        When My opponent discards the "🀙"
+        '''.format(new_hand = new_hand))
+
+    result = game_get_request(context,"win")
+
 
 @step(u'My number of wins should be {expected_number_of_wins}')
 def step_impl(context,expected_number_of_wins):
