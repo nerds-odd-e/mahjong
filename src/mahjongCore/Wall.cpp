@@ -3,7 +3,7 @@
 #include "Wall.h"
 #include "Settings.h"
 #include "GameLevel.h"
-#include <iostream>
+#include <algorithm>
 
 constexpr int SHUFFLE_TIMES = 1000;
 
@@ -104,4 +104,15 @@ Tile Wall::peekTile(int index){
 
 void Wall::setShuffleTimes(int 	shuffleTimes){
 	shuffleTimes_=shuffleTimes;
+}
+
+void Wall::GeneratePredefinedHand(const HandGenerationRule) {
+  const auto target_tile{tilePool_[0]};
+  auto i{1};
+  std::find_if(std::begin(tilePool_) + 1, std::end(tilePool_),
+               [target_tile, &i](const Tile t1) {
+                 ++i;
+                 return target_tile.getID() == t1.getID();
+               });
+  swap(1, i - 1);
 }

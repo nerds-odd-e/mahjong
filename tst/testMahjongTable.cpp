@@ -53,8 +53,11 @@ TEST(MahjongTable, it_must_have_4_tiles_when_the_level_is_1) {
   CHECK_EQUAL(4, handSize);
 }
 
-TEST(MahjongTable, after_initial_deal_the_player_has_to_have_a_pair_of_tiles) {
+TEST(MahjongTable, level_1_sublevel_3_player_draws_a_pair_and_two_randoms) {
   settings.GetGameLevel().IncrementLevel();
+  settings.GetGameLevel().IncrementSubLevel();
+  settings.GetGameLevel().IncrementSubLevel();
+  wall_->setShuffleTimes(0);
   StartGame();
 
   std::list<Tile> tilesList(std::begin(tiles), std::begin(tiles) + handSize);
@@ -68,6 +71,8 @@ TEST(MahjongTable, test_wall_consistency_on_level_1) {
   constexpr auto COUNT_OF_TILES_PER_TYPE{4};
   wall_->setShuffleTimes(0);
   settings.GetGameLevel().IncrementLevel();
+  settings.GetGameLevel().IncrementSubLevel();
+  settings.GetGameLevel().IncrementSubLevel();
 
   StartGame();
 

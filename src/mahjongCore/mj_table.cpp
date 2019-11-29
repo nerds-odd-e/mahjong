@@ -92,32 +92,25 @@ int MahjongTable::chow(Tile with) {
 }
 
 void MahjongTable::restartGame() {
-	wall_->shuffleAndRebuild(settings_.GetNumberOfSuites());
-	Tile tiles[settings_.GetHandSize()];
-	int cnt = getPlayerCount();
-	for (; cnt > 0; cnt--) {
+  wall_->shuffleAndRebuild(settings_.GetNumberOfSuites());
+  Tile tiles[settings_.GetHandSize()];
+  int cnt = getPlayerCount();
 
-		for (int i = 0; i < settings_.GetHandSize(); i++) {
-			tiles[i] = wall_->popATile();
-		}
-		if (settings_.GetGameLevel().GetLevel() == 1) {
-			auto target_tile{tiles[0]};
-			Tile found_tile{};
-			auto i{1};
-			while(found_tile != target_tile)
-			{
-				if (wall_->peekTile(i) == target_tile)
-				{
-					found_tile = wall_->peekTile(i);
-				}
-				++i;
-			}
-      		wall_->swap(1, i);
-        }
-		deal(tiles, settings_.GetHandSize());
-	}
-//	pick(wall_->popATile());
-    currentState_ = &pickingState_;
+  if (settings_.GetGameLevel().GetLevel() == 1) {
+    if (settings_.GetGameLevel().GetSubLevel() == 2) {
+      wall_->GeneratePredefinedHand(HandGenerationRule::LEVEL_1_RULE_3);
+    }
+  }
+
+  for (; cnt > 0; cnt--) {
+    for (int i = 0; i < settings_.GetHandSize(); i++) {
+      Tile t = wall_->popATile();
+      tiles[i] = t;
+    }
+    deal(tiles, settings_.GetHandSize());
+  }
+  //   pick(wall_->popATile());
+  currentState_ = &pickingState_;
 }
 
 void MahjongTable::restartGameWhenAllPlayersAreReady() {
