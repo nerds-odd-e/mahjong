@@ -3,6 +3,7 @@
 #include "MahjongGameServer.h"
 #include "GameJsonResponse.h"
 #include "Wall.h"
+#include "Hand.h"
 
 void MJCommandGetCurrentGameStatus::execute(GameJsonResponse *respond) {
 	respond->currentGameStatus(game_->getUserView());
@@ -58,4 +59,19 @@ void MJCommandNumberOfWins::execute(GameJsonResponse *respond) {
 		"{\"number_of_wins\":" + std::to_string(server_->GetSublevel()) + "\n}";
 
 	respond->setContent(response_json);
+}
+
+void MJCommandSetHand::execute(GameJsonResponse *respond) {
+    Tile tiles[tiles_.size()];
+
+    int index = 0;
+    for(const auto tile : tiles_)
+    {
+        tiles[index++] = tile;
+    }
+
+    Hand* custom_hand = new Hand();
+    custom_hand->deal(tiles, tiles_.size());
+
+	game_->getUserView()->setHand(0, custom_hand);
 }

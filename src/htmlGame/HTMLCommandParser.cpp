@@ -52,6 +52,22 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 	{
 		return new MJCommandStartImmediateWinGame(game);
 	}
+    if (strcmp(gameCmd, "set_hand") == 0)
+    {
+        size_t pos = 0;
+        std::string s{parameters};
+        std::string tile;
+        std::vector<int> tiles;
+        std::string delimiter = ",";
+        while ((pos = s.find(delimiter)) != std::string::npos)
+        {
+            tile = s.substr(0, pos);
+            tiles.push_back(std::stoi(tile));
+            s.erase(0, pos + delimiter.length());
+        }
+
+        return new MJCommandSetHand(game, tiles);
+    }
 
 	return parseWithExtractedParametersForGame(game, gameCmd, tile);
 }

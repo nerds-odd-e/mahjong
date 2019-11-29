@@ -18,6 +18,7 @@ def to_tile_id(tile):
         "🀙": 65,
         "🀚": 66,
         "🀛": 67,
+        "🀜": 68,
         "🀡": 73,
         "🀆": 48,
         "🀇": 49,
@@ -70,6 +71,9 @@ def are_all_tiles_in_one_suit(tiles):
             if not is_in_bamboo(tile):
                 return False            
     return True
+
+def try_win(context):
+    game_get_request(context, "win")
 
 def giving_the_same_tiles_to_users_hand(context,replace_tile):
     p = game_get_request(context, "current")
@@ -171,7 +175,7 @@ def step_impl(context):
     giving_the_same_tiles_to_users_hand(context,"🀙")
     game_get_request(context, "test_set_next_pick?" + str(to_tile_id("🀙")))
     result = game_get_request(context, "pick")
-    result = game_get_request(context, "win")
+    try_win(context)
 
 @step(u'My number of wins should be {expected_number_of_wins}')
 def step_impl(context,expected_number_of_wins):
@@ -215,9 +219,41 @@ def step_impl(context, round):
         game_get_request(context, "start")
 
 @then(u'I must see all my tiles are "{suit}"')
-def step_impl(context, suit):
-    
+def step_impl(context, suit):    
     p = game_get_request(context, "current") 
     for tile in  p['players'][0]['hand']:
         if tile not in tile_types()[suit]:
             assert False, "Not all tiles are " + suit
+
+@given(u'my hand is "{replace_tiles}"')
+def step_impl(context, replace_tiles):
+    tiles = replace_tiles.split(",")
+
+    request_tiles = ""
+    for tile in tiles:
+        request_tiles += str(to_tile_id(tile)) + ","
+
+    game_get_request(context, "set_hand?" + request_tiles)
+
+@when(u'My opponent discards the "{next_tile}"')
+def step_impl(context, next_tile):
+    game_get_request(context, "test_set_next_pick?49")
+    game_get_request(context, "pick")
+    game_get_request(context, "next_event")
+    game_get_request(context, "test_set_next_pick?" + str(to_tile_id(next_tile)))
+    game_get_request(context, "throw?49")
+    game_get_request(context, "next_event")
+    game_get_request(context, "next_event")
+    game_get_request(context, "next_event")
+
+@then(u'I should see that I can do only these "{possible_actions}"')
+def step_impl(context, possible_actions):
+    p = game_get_request(context, "current")
+    wanted_actions = possible_actions.split(" ")
+    assert_eq(wanted_actions, p['allowed_actions'])
+
+@then(u'I should see that I can do only these ""')
+def step_impl(context):
+    p = game_get_request(context, "current")
+    possible_actions = []
+    assert_eq(possible_actions, p['allowed_actions'])

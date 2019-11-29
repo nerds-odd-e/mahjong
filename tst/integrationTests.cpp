@@ -72,7 +72,7 @@ TEST_GROUP(html_game) {
 
 	void setup() {
 		server = new MahjongGameServer();
-		server->setLevel(2);
+		server->setLevel(4);
 		game = new HTMLMahjongGame(server);
 		UT_PTR_SET(createEvaluatorAdaptor, createSimpleEvaluator);
 		UT_PTR_SET(createWall, createEverIncreasingWall);

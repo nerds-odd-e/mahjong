@@ -4,6 +4,8 @@
 #include "GameID.h"
 #include "tile.h"
 #include "PlayerActionRequest.h"
+#include <vector>
+#include <string>
 
 class MahjongGameServer;
 class Game;
@@ -195,6 +197,16 @@ public:
 private:
 	MahjongGameServer* server_;
 	Game* game_;
+};
+
+class MJCommandSetHand: public MahjongCommand {
+public:
+	MJCommandSetHand(Game *game, const std::vector<int>& tiles) : game_{game}, tiles_{tiles}{
+	}
+	void execute(GameJsonResponse *respond);
+private:
+	Game* game_;
+    std::vector<int> tiles_;
 };
 
 #endif /* MAHJONGCOMMAND_H_ */

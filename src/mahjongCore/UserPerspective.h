@@ -17,6 +17,7 @@ public:
 	virtual int getNumberOfPlayer() = 0;
 	virtual Hand *getHand(int distance) = 0;
 	virtual Tile getCurrentDiscardTile() = 0;
+    virtual void setHand(int distance, Hand * hand) = 0;
 };
 
 class UserPerspective: public Player, public UserView {
@@ -38,7 +39,7 @@ public:
 	virtual Hand *getHand(int distance);
 	virtual Tile getCurrentDiscardTile();
 
-	void setHand(int distance, Hand * hand);
+	void setHand(int distance, Hand * hand) override;
 
 
 

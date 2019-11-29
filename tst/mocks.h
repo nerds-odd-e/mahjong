@@ -170,6 +170,11 @@ public:
 		return (Tile) mock().actualCall("getCurrentDiscardTile").onObject(this).returnValue().getIntValue();
 	}
 
+    void setHand(int distance, Hand* hand)
+    {
+
+    }
+
 };
 
 #endif /* MOCKS_H_ */
