@@ -150,9 +150,9 @@ void Wall::SwapForADifferentTile(Tile tile, int index)
 
 void Wall::GenerateTwoPairs()
 {
-  SwapForTheSameTile(tilePool_[0], 1);
-  SwapForADifferentTile(tilePool_[1], 2);
-  SwapForTheSameTile(tilePool_[2], 3);
+  SwapForTheSameTile(tilePool_[0 + 4], 1 + 4);
+  SwapForADifferentTile(tilePool_[1 + 4], 2 + 4);
+  SwapForTheSameTile(tilePool_[2 + 4], 3 + 4);
 }
 
 void Wall::GenerateATriplet()

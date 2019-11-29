@@ -55,6 +55,7 @@ TEST(MahjongTable, it_must_have_4_tiles_when_the_level_is_1) {
 
 TEST(MahjongTable, level_1_sublevel_1_player_two_pairs) {
   settings.GetGameLevel().IncrementLevel();
+  table_->addPlayer(userPerspective);
   wall_->setShuffleTimes(0);
   StartGame();
 
