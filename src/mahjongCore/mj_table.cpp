@@ -99,6 +99,8 @@ void MahjongTable::restartGame() {
   if (settings_.GetGameLevel().GetLevel() == 1) {
     if (settings_.GetGameLevel().GetSubLevel() == 0) {
       wall_->GeneratePredefinedHand(HandGenerationRule::LEVEL_1_RULE_1);
+    } else if (settings_.GetGameLevel().GetSubLevel() == 1) {
+      wall_->GeneratePredefinedHand(HandGenerationRule::LEVEL_1_RULE_2);
     } else if (settings_.GetGameLevel().GetSubLevel() == 2) {
       wall_->GeneratePredefinedHand(HandGenerationRule::LEVEL_1_RULE_3);
     }

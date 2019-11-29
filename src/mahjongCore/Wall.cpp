@@ -111,6 +111,9 @@ void Wall::GeneratePredefinedHand(const HandGenerationRule rule) {
   case HandGenerationRule::LEVEL_1_RULE_1:
     GenerateTwoPairs();
     break;
+  case HandGenerationRule::LEVEL_1_RULE_2:
+    GenerateATriplet();
+    break;
   case HandGenerationRule::LEVEL_1_RULE_3:
     GenerateAPair();
     break;
@@ -146,6 +149,13 @@ void Wall::GenerateTwoPairs()
   SwapForTheSameTile(tilePool_[0], 1);
   SwapForADifferentTile(tilePool_[1], 2);
   SwapForTheSameTile(tilePool_[2], 3);
+}
+
+void Wall::GenerateATriplet()
+{
+  SwapForTheSameTile(tilePool_[0], 1);
+  SwapForTheSameTile(tilePool_[0], 2);
+  SwapForADifferentTile(tilePool_[0], 3);
 }
 
 void Wall::GenerateAPair()

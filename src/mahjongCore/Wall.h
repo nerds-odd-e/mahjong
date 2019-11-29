@@ -34,6 +34,7 @@ private:
 	void SwapForTheSameTile(Tile tile, int index);
 	void SwapForADifferentTile(Tile tile, int index);
 	void GenerateTwoPairs();
+	void GenerateATriplet();
 	void GenerateAPair();
 
 private:
