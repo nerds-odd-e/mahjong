@@ -11,8 +11,8 @@ Scenario: Starting a game hosted by player
 
 @wip
 Scenario Outline: In multiple games suits should be cycled
-    When I am in round <round>
-    Then I must see all my tiles are <suit>
+    When I am in round "<round>"
+    Then I must see all my tiles are "<suit>"
 
     Examples:
         | round | suit   |
