@@ -1,3 +1,4 @@
+#include <sstream>
 #include <string.h>
 #include <cstdio>
 #include <stdlib.h>
@@ -44,7 +45,7 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 		int level = atoi(parameters);
 		return new MJCommandSetLevel(server_, level);
 	}
-	else if (strcmp(gameCmd, "get_level") == 0)
+	if (strcmp(gameCmd, "get_level") == 0)
 	{
 		return new MJCommandGetLevel(server_);
 	}
@@ -52,18 +53,14 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 	{
 		return new MJCommandStartImmediateWinGame(game);
 	}
-    if (strcmp(gameCmd, "set_hand") == 0)
+    if (strcmp(gameCmd, "testability_set_hand") == 0)
     {
-        size_t pos = 0;
-        std::string s{parameters};
+        std::istringstream s{parameters};
         std::string tile;
         std::vector<int> tiles;
-        std::string delimiter = ",";
-        while ((pos = s.find(delimiter)) != std::string::npos)
+        while (getline(s, tile, ','))
         {
-            tile = s.substr(0, pos);
             tiles.push_back(std::stoi(tile));
-            s.erase(0, pos + delimiter.length());
         }
 
         return new MJCommandSetHand(game, tiles);
@@ -109,7 +106,7 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
 		if (strcmp(cmd, "undo") == 0)
 			return new MJCommandWin(game);
 
-		if (strcmp(cmd, "test_set_next_pick") == 0)
+		if (strcmp(cmd, "testability_set_next_pick") == 0)
 			return new MJTestSetNextPick(game, tile);
 
 		if (strcmp(cmd, "get_number_of_wins") == 0)

@@ -31,11 +31,11 @@ public:
 		mock().actualCall("shuffleAndRebuild").onObject(this);
 	}
 
-	bool isEnd() {
+	bool isEnd() override {
 		return mock().actualCall("isEnd").onObject(this).returnValue().getIntValue();
 	}
 
-	Tile popATile() {
+	Tile popATile() override {
 		return (Tile) mock().actualCall("popATile").onObject(this).returnValue().getIntValue();
 	}
 };

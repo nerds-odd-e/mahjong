@@ -28,9 +28,18 @@ Visit http://localhost:8889 to play the game.
 
 Acceptance Tests are using Behave (Python).
 
+To run the test:
+
+<pre>
+behave          # run all scenarios
+behave -t~@wip  # run all scenarios except those having @wip tag (useful for CI)
+</pre>
+
 # JSON API
 
-## `GET /join`
+## Joining and starting game
+
+### `GET /join`
 
 Join a new game. Returns:
 
@@ -38,7 +47,7 @@ Join a new game. Returns:
 {"game_id":2}
 ```
 
-## `GET /<game_id>/start`
+### `GET /<game_id>/start`
 
 Start a new round. Right now always returns:
 
@@ -46,7 +55,9 @@ Start a new round. Right now always returns:
 {"action":"update_all"}
 ```
 
-## `GET /<game_id>/current`
+## In a game
+
+### `GET /<game_id>/current`
 
 Get the latest status of the game. Returns:
 
@@ -69,7 +80,7 @@ Get the latest status of the game. Returns:
 }
 ```
 
-## `GET /<game_id>/next_event`
+### `GET /<game_id>/next_event`
 
 After the human player moves, there could be multiple actions taken by other player(s). This api returns one action at a time. When playing with a fast AI player, the UI can use this to display the opponent's move in slow motion. Returns:
 ```
@@ -80,7 +91,7 @@ After the human player moves, there could be multiple actions taken by other pla
 {"action":"win", "player":1,"score":1}
 ```
 
-## `GET /<game_id>/pick`
+### `GET /<game_id>/pick`
 
 Tell the server you want to pick a new tile. Returns:
 
@@ -88,11 +99,11 @@ Tell the server you want to pick a new tile. Returns:
 {"action":"pick", "player":0,"tile":98}
 ```
 
-## `GET /<game_id>/pong`
+### `GET /<game_id>/pong`
 
 Tell the server you want to pong the last discarded tile from your opponent.
 
-## `GET /<game_id>/chow?<tile_id>`
+### `GET /<game_id>/chow?<tile_id>`
 
 Tell the server you want to chow the last discarded tile from your opponent. The <tile_id> indicate the smallest tile you want chow with. For example, if you have 🀚🀛🀜🀝🀞 at hand, and your opponent just discarded 🀜:
 
@@ -104,7 +115,7 @@ Tell the server you want to chow the last discarded tile from your opponent. The
 |chow?🀝     | 🀜🀝🀞         | 🀚🀛🀜                    |
 |chow?🀞     | illegal     |                        |
 
-## `GET /<game_id>/throw?<tile_id>`
+### `GET /<game_id>/throw?<tile_id>`
 
 Tell the server that you want to discard the tile with tile id. Returns:
 
@@ -112,10 +123,20 @@ Tell the server that you want to discard the tile with tile id. Returns:
 {"action":"discard", "player":0,"tile":117}
 ```
 
-## `GET /<game_id>/win`
+### `GET /<game_id>/win`
 
 Tell the server you think you win. Returns
 ```
 {"action":"win", "player":0,"score":1}
 ```
 
+## Testability
+
+### `GET /<game_id>/testability_set_next_pick?<tile_id>`
+
+To change the tile to be picked next (first tile in the wall). Note that if you want the opponent to pick that tile, you need to call this before you throw a tile, because after that you don't not have control of the game until it's your turn to move again.
+
+
+### `GET /<game_id>/testability_set_hand?<tile_id>,<tile_id>,...<tile_id>`
+
+Replace player 0's hand with the given tiles.

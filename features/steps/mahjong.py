@@ -1,35 +1,11 @@
 from behave import *
-import requests
+from mahjong_driver import get_request, game_get_request, to_tile_id
+from mahjong_tester import MJTester, assert_eq
 
-
-def get_request(context, uri):
-    r = requests.get(url = "http://localhost:8889/" + uri)
-    return r.json()
-
-def game_get_request(context, cmd):
-    return get_request(context, str(context.scenario.game_id)+ "/" + cmd) 
 
 def get_my_current_pick(context):
     p = game_get_request(context, "current") 
     return p['players'][0]['new_pick']
-
-def to_tile_id(tile):
-    map = {
-        "🀙": 65,
-        "🀚": 66,
-        "🀛": 67,
-        "🀜": 68,
-        "🀡": 73,
-        "🀆": 48,
-        "🀇": 49,
-        "🀏": 57,
-        "🀐": 97,
-        "🀑": 98,
-        "🀔": 101,
-        "🀗": 104,
-        "🀘": 105
-    }
-    return map[tile]
 
 def tile_types():
     map = {
@@ -80,7 +56,7 @@ def giving_the_same_tiles_to_users_hand(context,replace_tile):
     tiles_in_hand = p['players'][0]['hand']
 
     for tile in tiles_in_hand:
-        game_get_request(context, "test_set_next_pick?" + str(to_tile_id(replace_tile)))
+        game_get_request(context, "testability_set_next_pick?" + str(to_tile_id(replace_tile)))
         game_get_request(context, "pick")
         game_get_request(context, f"throw?{tile}")
 
@@ -131,7 +107,7 @@ def step_impl(context, win_count):
 
 @step(u'the next tile to be picked is "{tile}"')
 def step_impl(context, tile):
-    game_get_request(context, "test_set_next_pick?" + str(to_tile_id(tile)))
+    game_get_request(context, "testability_set_next_pick?" + str(to_tile_id(tile)))
 
 @then(u'I should see my new pick is "{tile}"')
 def step_impl(context, tile):
@@ -172,24 +148,7 @@ def step_impl(context, lvl):
 
 @when(u'I play an immediately win game')
 def step_impl(context):
-
-    result = game_get_request(context,"current")
-
-    hand_size = len(result['players'][0]['hand'])
-
-    new_hand = ""
-    for i in range(0, hand_size):
-        new_hand +=  "🀙"
-        if i != hand_size - 1:
-            new_hand += ','
-
-    context.execute_steps(u'''
-        Given my hand is "{new_hand}"
-        When My opponent discards the "🀙"
-        '''.format(new_hand = new_hand))
-
-    result = game_get_request(context,"win")
-
+    MJTester(context).player_0_immediately_win()
 
 @step(u'My number of wins should be {expected_number_of_wins}')
 def step_impl(context,expected_number_of_wins):
@@ -223,10 +182,6 @@ def step_impl(context, tile):
     assert to_tile_id(tile) == result['tile'], f"expected: {to_tile_id(tile)} == actual tile {result['tile']}"
 
 
-def assert_eq(expected, actual):
-    assert expected == actual, f"expected: {expected}, actual: {actual}"
-
-    
 @step(u'I am in round "{round}"')    
 def step_impl(context, round):
     for _ in range(int(round)):
@@ -241,21 +196,15 @@ def step_impl(context, suit):
 
 @given(u'my hand is "{replace_tiles}"')
 def step_impl(context, replace_tiles):
-    tiles = replace_tiles.split(",")
-
-    request_tiles = ""
-    for tile in tiles:
-        request_tiles += str(to_tile_id(tile)) + ","
-
-    game_get_request(context, "set_hand?" + request_tiles)
+    MJTester(context).replace_player_0_hand_with(replace_tiles)
 
 @when(u'My opponent discards the "{next_tile}"')
 def step_impl(context, next_tile):
-    game_get_request(context, "test_set_next_pick?49")
+    game_get_request(context, "testability_set_next_pick?49")
     game_get_request(context, "pick")
-    game_get_request(context, "next_event")
-    game_get_request(context, "test_set_next_pick?" + str(to_tile_id(next_tile)))
+    game_get_request(context, "testability_set_next_pick?" + str(to_tile_id(next_tile)))
     game_get_request(context, "throw?49")
+    game_get_request(context, "next_event")
     game_get_request(context, "next_event")
     game_get_request(context, "next_event")
     game_get_request(context, "next_event")

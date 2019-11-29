@@ -25,19 +25,19 @@ public:
 	UserPerspective(Settings & settings);
 	virtual ~UserPerspective();
 
-	virtual void deal(const Tile tiles[], int n, int distance);
-	virtual void pick(Tile tile, int distance);
-	virtual void pong(Tile tile, int distance);
-	virtual int chow(Tile tile, Tile with, int distance);
-	virtual void win(int score, int distance);
-	virtual void discard(Tile tile, int distance);
+	virtual void deal(const Tile tiles[], int n, int distance) override;
+	virtual void pick(Tile tile, int distance) override;
+	virtual void pong(Tile tile, int distance) override;
+	virtual int chow(Tile tile, Tile with, int distance) override;
+	virtual void win(int score, int distance) override;
+	virtual void discard(Tile tile, int distance) override;
 
-	virtual void pushActionRequest(PlayerActionRequest *request);
+	virtual void pushActionRequest(PlayerActionRequest *request) override;
 
-	virtual UIEvent * popEvent();
-	virtual int getNumberOfPlayer();
-	virtual Hand *getHand(int distance);
-	virtual Tile getCurrentDiscardTile();
+	virtual UIEvent * popEvent() override;
+	virtual int getNumberOfPlayer() override;
+	virtual Hand *getHand(int distance) override;
+	virtual Tile getCurrentDiscardTile() override;
 
 	void setHand(int distance, Hand * hand) override;
 
