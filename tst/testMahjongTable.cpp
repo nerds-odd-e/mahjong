@@ -63,7 +63,7 @@ TEST(MahjongTable, level_1_sublevel_3_player_draws_a_pair_and_two_randoms) {
   std::list<Tile> tilesList(std::begin(tiles), std::begin(tiles) + handSize);
   tilesList.unique();
 
-  CHECK(tilesList.size() < handSize);
+  CHECK(tilesList.size() == 3);
 }
 
 TEST(MahjongTable, test_wall_consistency_on_level_1) {

@@ -23,7 +23,7 @@ public:
 	virtual Tile peekTile(int index);
 	virtual void changeFirstTileTo(Tile tile);
 	virtual void setShuffleTimes(int shuffleTimes);
-	void GeneratePredefinedHand(const HandGenerationRule);
+	void GeneratePredefinedHand();
 
 private:
 	void initializePool(const unsigned int suitCount = 4);
