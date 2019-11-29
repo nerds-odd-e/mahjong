@@ -32,7 +32,6 @@ TEST_GROUP(MahjongTable) {
     delete table_;
     delete userPerspective;
     delete wall_;
-    memset(tiles, 0, MAX_HAND_SIZE * sizeof(Tile));
   }
 
   void StartGame() {
