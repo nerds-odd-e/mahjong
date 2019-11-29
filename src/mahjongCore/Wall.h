@@ -31,6 +31,7 @@ private:
 	int picksCount_;
 	int maxPicks_;
 	int shuffleTimes_;
+	int suitIndex_ = 0;
 };
 
 extern Wall * (*createWall)(void);

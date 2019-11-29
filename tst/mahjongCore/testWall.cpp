@@ -49,6 +49,28 @@ TEST_GROUP(wall) {
 
 		return is_character || is_circle || is_bamboo;
 	}
+
+	bool ContainsOnlyCircles()
+	{
+		std::vector<Tile> pool{};
+
+		while(!wall->isEnd())
+		{
+			pool.push_back(wall->popATile());
+		}
+		return std::all_of(pool.begin(), pool.end(), IsCircle);
+	}
+	
+	bool ContainsOnlyBamboo()
+	{
+		std::vector<Tile> pool{};
+
+		while(!wall->isEnd())
+		{
+			pool.push_back(wall->popATile());
+		}
+		return std::all_of(pool.begin(), pool.end(), IsBamboo);
+	}
 };
 
 TEST(wall, wallIsNotEndWhenCreated) {
@@ -116,7 +138,7 @@ TEST(wall, poolWithOneSuite)
     CHECK(IsTheSameSuit());
 }
 
-TEST(wall, poolWithFourSuite)
+TEST(wall, poolContainsMoreThanOneSuit)
 {
 	wall = createWall();
 
@@ -125,3 +147,21 @@ TEST(wall, poolWithFourSuite)
 	CHECK(!IsTheSameSuit());
 }
 
+TEST(wall, poolWithOneSuitContainsOnlyCircles)
+{
+	wall = createWall();
+
+	wall->shuffleAndRebuild(1);
+
+	CHECK(ContainsOnlyCircles());
+}
+
+TEST(wall, poolWithOneSuitContainsOnlyBamboo)
+{
+	wall = createWall();
+
+	wall->shuffleAndRebuild(1);
+	wall->shuffleAndRebuild(1);
+
+	CHECK(ContainsOnlyBamboo());
+}
