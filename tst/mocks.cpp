@@ -25,7 +25,7 @@ EvaluatorAdaptor * createMockEvaluator(void)
 static std::vector<Tile> empty_tiles{};
 class MockWall:public Wall{
 public:
-	MockWall():Wall(empty_tiles, 0){}
+	MockWall():Wall( 0){}
 	~MockWall(){}
 	void shuffleAndRebuild(const unsigned int suitCount = 4) override{
 		mock().actualCall("shuffleAndRebuild").onObject(this);

@@ -15,7 +15,7 @@ enum class HandGenerationRule {
 
 class Wall {
 public:
-	Wall (const std::vector<Tile>& tileTypes, int maxPicks);
+	Wall (int maxPicks);
 	virtual ~Wall();
 	virtual void shuffleAndRebuild(const unsigned int suitCount = 4);
 	virtual bool isEnd();

@@ -74,59 +74,57 @@ TEST_GROUP(wall) {
 };
 
 TEST(wall, wallIsNotEndWhenCreated) {
-	std::vector<Tile> tileTypes = {C(1)};
-	wall = new Wall(tileTypes, maxPops);
+	wall = new Wall(maxPops);
 	CHECK(!wall->isEnd());
 }
 
-TEST(wall, popFromwallThatIsNotEnd) {
-	std::vector<Tile> tileTypes = {C(1)};
-	wall = new Wall(tileTypes, maxPops);
-	CHECK_EQUAL(C(1), wall->popATile());
+TEST(wall, popFromwallThatIsNotEmpty) {
+	wall = new Wall(maxPops);
+	wall->shuffleAndRebuild(1);
+	Tile tile = wall->popATile();
+	CHECK(IsCircle(tile));
 }
 
 TEST(wall, wallBecomesEmptyWhenPopTheMaxTimes) {
-	std::vector<Tile> tileTypes = {C(1)};
 	int maxPops = 2;
-	wall = new Wall(tileTypes, maxPops);
+	wall = new Wall(maxPops);
+	
 	wall->popATile();
 	wall->popATile();
 	CHECK(wall->isEnd());
 }
 
-TEST(wall, popRightTilesAfterShuffle) {
-	std::vector<Tile> tileTypes = {C(1), C(2)};
-	int maxPops = 8;
-	wall = new Wall(tileTypes, maxPops);
-
-	wall->shuffleAndRebuild();
+TEST(wall, popCorrectTilesAfterShuffle) {
+	
+	wall = createWall();
+	
+	wall->shuffleAndRebuild(1);
 
 	while (!wall->isEnd()) {
 		Tile tile = wall->popATile();
-		CHECK(tile == C(1) || tile == C(2));
+		CHECK(IsCircle(tile));
 	}
 }
 
 TEST(wall, randomnessAfterShuffle) {
-	// use the same seed to
+    // use the same seed to
 	// get the same set of random number every time.
 	srand(100);
 
-	std::vector<Tile> tileTypes = {C(1), C(2)};
-	int maxPops = 8;
-	wall = new Wall(tileTypes, maxPops);
-
-	wall->shuffleAndRebuild();
-
-	bool hasC1 = false, hasC2 = false;
-	for(int i = 0; i < 4; i++) {
-		Tile tile = wall->popATile();
-		hasC1 |= (tile == C(1));
-		hasC2 |=(tile == C(2));
+	wall = createWall();
+	wall->shuffleAndRebuild(1);	
+	Tile tileToCheck = wall->popATile();
+	bool randomAtListOnceTime = false;
+	for(int i = 0; i < 10; i++) {
+		Tile new_popped_tile = wall->popATile();
+		if(new_popped_tile != tileToCheck)
+		{
+			randomAtListOnceTime = true; 
+			break;	
+		}
+		wall->shuffleAndRebuild(1);
 	}
-
-	CHECK(hasC1);
-	CHECK(hasC2);
+	CHECK(randomAtListOnceTime);
 }
 
 TEST(wall, poolWithOneSuite)

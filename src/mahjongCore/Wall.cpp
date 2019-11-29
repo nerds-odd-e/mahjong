@@ -31,13 +31,13 @@ const int TILE_TYPE_COUNT = all_tile_types.size();
 const int TILES_PER_TYPE = 4;
 
 static Wall * create_wall_impl() {
-	return new Wall(all_tile_types, 70);
+	return new Wall(70);
 }
 
 Wall * (*createWall)() = create_wall_impl;
 
-Wall::Wall(const std::vector<Tile>& tileTypes, int maxPicks) :
-	tileTypes_(tileTypes), maxPicks_(maxPicks), shuffleTimes_(SHUFFLE_TIMES){
+Wall::Wall( int maxPicks) :
+	maxPicks_(maxPicks),shuffleTimes_(SHUFFLE_TIMES){
 	initializePool();
 }
 
@@ -60,6 +60,10 @@ void Wall::applySettings(const unsigned int suitCount)
 		suitIndex_ %= 2;
 		tileTypes_ = tile_suits[suitIndex_++];
 	}
+	else
+	{
+		tileTypes_ = all_tile_types;
+	}	
 }
 
 int Wall::randomIndex() {
