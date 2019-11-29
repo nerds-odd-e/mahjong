@@ -106,17 +106,53 @@ void Wall::setShuffleTimes(int 	shuffleTimes){
 	shuffleTimes_=shuffleTimes;
 }
 
-void Wall::GeneratePredefinedHand() {
-  auto target_tile{tilePool_[0]};
-  auto i{1};
+void Wall::GeneratePredefinedHand(const HandGenerationRule rule) {
+  switch (rule) {
+  case HandGenerationRule::LEVEL_1_RULE_1:
+    GenerateTwoPairs();
+    break;
+  case HandGenerationRule::LEVEL_1_RULE_3:
+    GenerateAPair();
+    break;
+  }
+}
+
+void Wall::SwapForTheSameTile(Tile tile, int index)
+{
+  auto target_tile{tile};
+  auto i{index};
   std::find_if(std::begin(tilePool_) + i, std::end(tilePool_),
                [target_tile, &i](const Tile t) {
                  ++i;
                  return target_tile.getID() == t.getID();
                });
-  swap(1, i - 1);
-  i = 2;
-  target_tile = tilePool_[1];
+  swap(index, i - 1);
+}
+
+void Wall::SwapForADifferentTile(Tile tile, int index)
+{
+  auto target_tile{tile};
+  auto i{index};
+  std::find_if(std::begin(tilePool_) + i, std::end(tilePool_),
+               [target_tile, &i](const Tile t) {
+                 ++i;
+                 return target_tile.getID() != t.getID();
+               });
+  swap(index, i - 1);
+}
+
+void Wall::GenerateTwoPairs()
+{
+  SwapForTheSameTile(tilePool_[0], 1);
+  SwapForADifferentTile(tilePool_[1], 2);
+  SwapForTheSameTile(tilePool_[2], 3);
+}
+
+void Wall::GenerateAPair()
+{
+  SwapForTheSameTile(tilePool_[0], 1);
+  auto i{2};
+  auto target_tile{tilePool_[1]};
   std::find_if(std::begin(tilePool_) + i, std::end(tilePool_),
                [target_tile, &i](const Tile t) {
                  ++i;

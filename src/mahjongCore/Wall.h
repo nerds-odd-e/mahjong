@@ -23,7 +23,7 @@ public:
 	virtual Tile peekTile(int index);
 	virtual void changeFirstTileTo(Tile tile);
 	virtual void setShuffleTimes(int shuffleTimes);
-	void GeneratePredefinedHand();
+	void GeneratePredefinedHand(const HandGenerationRule);
 
 private:
 	void initializePool(const unsigned int suitCount = 4);
@@ -31,6 +31,10 @@ private:
 	int randomIndex();
 	void applySettings(const unsigned int suitCount);
 	void swap(int index1, int index2);
+	void SwapForTheSameTile(Tile tile, int index);
+	void SwapForADifferentTile(Tile tile, int index);
+	void GenerateTwoPairs();
+	void GenerateAPair();
 
 private:
 	Tile tilePool_[MAX_TILE_COUNT];
