@@ -35,7 +35,7 @@ TEST(Settings, WhenLevelFourThenHandSizeIsThirtheen) {
 
 TEST(Settings, WhenLevelZeroThenSuiteSizeAll) {
   Settings settings{};
-  CHECK_EQUAL(4, settings.GetNumberOfSuites());
+  CHECK_EQUAL(1, settings.GetNumberOfSuites());
 }
 
 TEST(Settings, WhenLevelOneThenSuiteSizeIs1) {

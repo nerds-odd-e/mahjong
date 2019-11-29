@@ -14,11 +14,13 @@ public:
 	virtual void shuffleAndRebuild(const unsigned int suitCount = 4);
 	virtual bool isEnd();
 	virtual Tile popATile();
+	virtual Tile peekTile(int index);
 	virtual void changeFirstTileTo(Tile tile);
+	virtual void setShuffleTimes(int shuffleTimes);
+	void swap(int index1, int index2);
 
 private:
 	void initializePool(const unsigned int suitCount = 4);
-	void swap(int index1, int index2);
 	int getAllCount();
 	int randomIndex();
 	void applySettings(const unsigned int suitCount);
@@ -28,6 +30,7 @@ private:
 	std::vector<Tile> tileTypes_;
 	int picksCount_;
 	int maxPicks_;
+	int shuffleTimes_;
 };
 
 extern Wall * (*createWall)(void);

@@ -8,6 +8,7 @@ int main(int ac, char** av) {
 //	GTestConvertor convertor;
 //	convertor.addAllGTestToTestRegistry();
 
+	srand(time(NULL));
 	MockSupportPlugin mockPlugin;
 	TestRegistry::getCurrentRegistry()->installPlugin(&mockPlugin);
 	int res = CommandLineTestRunner::RunAllTests(ac, av);

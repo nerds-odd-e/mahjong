@@ -100,6 +100,20 @@ void MahjongTable::restartGame() {
 		for (int i = 0; i < settings_.GetHandSize(); i++) {
 			tiles[i] = wall_->popATile();
 		}
+		if (settings_.GetGameLevel().GetLevel() == 1) {
+			auto target_tile{tiles[0]};
+			Tile found_tile{};
+			auto i{1};
+			while(found_tile != target_tile)
+			{
+				if (wall_->peekTile(i) == target_tile)
+				{
+					found_tile = wall_->peekTile(i);
+				}
+				++i;
+			}
+      		wall_->swap(1, i);
+        }
 		deal(tiles, settings_.GetHandSize());
 	}
 //	pick(wall_->popATile());

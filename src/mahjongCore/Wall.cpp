@@ -3,8 +3,9 @@
 #include "Wall.h"
 #include "Settings.h"
 #include "GameLevel.h"
+#include <iostream>
 
-#define SHUFFLE_TIMES 1000
+constexpr int SHUFFLE_TIMES = 1000;
 
 /*
  * SIMPLIFIED_MAHJONG is for people who cannot read Chinese.
@@ -35,7 +36,7 @@ static Wall * create_wall_impl() {
 Wall * (*createWall)() = create_wall_impl;
 
 Wall::Wall(const std::vector<Tile>& tileTypes, int maxPicks) :
-	tileTypes_(tileTypes), maxPicks_(maxPicks){
+	tileTypes_(tileTypes), maxPicks_(maxPicks), shuffleTimes_(SHUFFLE_TIMES){
 	initializePool();
 }
 
@@ -76,7 +77,7 @@ void Wall::swap(int index1, int index2) {
 void Wall::shuffleAndRebuild(const unsigned int suitCount) {
 	initializePool(suitCount);
 
-	for (int i = 0; i < SHUFFLE_TIMES; i++)
+	for (int i = 0; i < shuffleTimes_; i++)
 		swap(randomIndex(), randomIndex());
 }
 
@@ -91,8 +92,14 @@ bool Wall::isEnd() {
 	return this->picksCount_ >= maxPicks_ || this->picksCount_ == getAllCount();
 }
 
-
 void Wall::changeFirstTileTo(Tile tile){
 	tilePool_[picksCount_] = tile;
 }
 
+Tile Wall::peekTile(int index){
+	return tilePool_[index];
+}
+
+void Wall::setShuffleTimes(int 	shuffleTimes){
+	shuffleTimes_=shuffleTimes;
+}
