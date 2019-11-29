@@ -17,6 +17,8 @@ public:
 
 	virtual ~Game();
 
+	void CreateAIPerspective();
+
 	virtual UserView *getUserView();
 
 	virtual void nextMove(PlayerActionRequest *request);

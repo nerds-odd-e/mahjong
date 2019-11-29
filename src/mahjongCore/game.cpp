@@ -8,14 +8,7 @@
 Game::Game(Settings & settings) : settings_(settings) {
 	wall_ = createWall();	
 	table_ = new MahjongTable(wall_, settings_);
-	if (settings.GetGameLevel().GetLevel() > 3)
-	{
-		aiPerspective_ = new AIPerspective(settings_);
-	}
-	else
-	{
-		aiPerspective_ = new DummyPlayerPerspective(settings_);
-	}
+	CreateAIPerspective();
 	userPerspective_ = new UserPerspective(settings_);
 	table_->addPlayer(userPerspective_);
 	table_->addPlayer(aiPerspective_);
@@ -28,6 +21,18 @@ Game::~Game() {
 	delete userPerspective_;
 	delete aiPerspective_;
 	delete player_;
+}
+
+void Game::CreateAIPerspective()
+{
+	if (settings_.GetGameLevel().GetLevel() > 3)
+	{
+		aiPerspective_ = new AIPerspective(settings_);
+	}
+	else
+	{
+		aiPerspective_ = new DummyPlayerPerspective(settings_);
+	}
 }
 
 void Game::addPlayer(Player * player) {

@@ -15,10 +15,10 @@ TEST(Settings, WhenLevelOneThenHandSizeIsFour) {
   CHECK_EQUAL(4, settings.GetHandSize());
 }
 
-TEST(Settings, WhenLevelTwoThenHandSizeIsThirtheen) {
+TEST(Settings, WhenLevelTwoThenHandSizeIsFour) {
   Settings settings{};
   settings.GetGameLevel().SetLevel(2);
-  CHECK_EQUAL(13, settings.GetHandSize());
+  CHECK_EQUAL(4, settings.GetHandSize());
 }
 
 TEST(Settings, WhenLevelThreeThenHandSizeIsSeven) {

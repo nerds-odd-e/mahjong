@@ -11,7 +11,7 @@ Feature: Mahjong Game - hand size level dependent
             | level | hand_size |
             | 0     | 1         |
             | 1     | 4         |
-            | 2     | 13        |
+            | 2     | 4        |
             | 3     | 7         |
             | 4     | 13        |
             | 5     | 13        |

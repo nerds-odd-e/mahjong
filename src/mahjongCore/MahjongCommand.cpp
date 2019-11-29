@@ -44,6 +44,7 @@ void MJTestSetNextPick::execute(GameJsonResponse *respond) {
 
 void MJCommandSetLevel::execute(GameJsonResponse *respond) {
     server_->setLevel(level_);
+	server_->getGameByID(server_->getLastGameID())->CreateAIPerspective();
 }
 
 void MJCommandGetLevel::execute(GameJsonResponse *respond)
