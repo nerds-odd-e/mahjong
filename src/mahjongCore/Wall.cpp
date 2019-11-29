@@ -45,8 +45,8 @@ void Wall::initializePool(const unsigned int suitCount) {
 	applySettings(suitCount);
 	
 	for (int j = 0; j < TILES_PER_TYPE; j++)
-		for (int i = 0; i < tileTypes_.size(); i++)
-			this->tilePool_[cnt++] = tileTypes_[i];
+		for (Tile& tile : tileTypes_)
+			this->tilePool_[cnt++] = tile;
 
 	this->picksCount_ = 0;
 }
