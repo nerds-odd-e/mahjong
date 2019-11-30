@@ -106,9 +106,6 @@ var App = {
     Win: function() {
         this._ExecuteCmd('win', 0);
     },
-    Undo: function() {
-        this._ExecuteCmd('win', 0);
-    },
     WinAck: function(distance, score) {
         this._ResetAllButtons();
         if (score == 0) {
@@ -355,7 +352,6 @@ var App = {
             "<td> <a class='button' id=pong_button onclick='return App.Pong()'>Pong</a>" +
             "<td> <a class='button' id=kong_button onclick='return App.Kong()'>Kong</a>" +
             "<td> <a class='button' id=win_button onclick='return App.Win()'>Win!!</a>" +
-            "<td> <a class='button' id=undo_button onclick='return App.Undo()'>Undo</a>" +
             "</table>";
 
     },
