@@ -5,8 +5,10 @@
 #include "AIPerspective.h"
 #include "DummyPlayerPerspective.h"
 
-Game::Game(Settings & settings) : settings_(settings) {
+Game::Game() : settings_({}) {
 	wall_ = createWall();	
+	aiPerspective_ = NULL;
+	table_ = NULL;
 	userPerspective_ = new UserPerspective(settings_);
 	CreateAIPerspective();
 	player_ = NULL;
@@ -22,6 +24,10 @@ Game::~Game() {
 
 void Game::CreateAIPerspective()
 {
+	if(table_ != NULL) {
+		delete aiPerspective_;
+		delete table_;
+	}
 	if (settings_.GetGameLevel().GetLevel() > 3)
 	{
 		aiPerspective_ = new AIPerspective(settings_);
@@ -69,4 +75,26 @@ void Game::tick() {
 
 Wall * Game::getWall() {
 	return wall_;
+}
+
+unsigned int Game::GetLevel()
+{
+    return settings_.GetGameLevel().GetLevel();
+}
+
+void Game::setLevel(unsigned int level)
+{
+	settings_.GetGameLevel().SetLevel(level);
+	CreateAIPerspective();
+}
+
+void Game::IncrementLevel()
+{
+    settings_.GetGameLevel().IncrementLevel();
+	CreateAIPerspective();
+}
+
+int Game::GetSublevel()
+{
+	return settings_.GetGameLevel().GetSubLevel();
 }

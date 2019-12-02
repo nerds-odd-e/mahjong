@@ -17,7 +17,7 @@ MahjongGameServer::~MahjongGameServer() {
 }
 
 GameID MahjongGameServer::startNewGame() {
-	Game * game = new Game(settings_);
+	Game * game = new Game();
 	lastGameID_ = gamePool_->addGameAndGetID(game);
 	return lastGameID_;
 }
@@ -44,24 +44,4 @@ GameID MahjongGameServer::getLastGameID() {
 
 Game * MahjongGameServer::getGameByID(GameID gameID) {
 	return gamePool_->getGameByID(gameID);
-}
-
-unsigned int MahjongGameServer::GetLevel()
-{
-    return settings_.GetGameLevel().GetLevel();
-}
-
-void MahjongGameServer::IncrementLevel()
-{
-    settings_.GetGameLevel().IncrementLevel();
-}
-
-int MahjongGameServer::GetSublevel()
-{
-	return settings_.GetGameLevel().GetSubLevel();
-}
-
-void MahjongGameServer::setLevel(unsigned int level)
-{
-	settings_.GetGameLevel().SetLevel(level);
 }

@@ -15,14 +15,13 @@ TEST_GROUP(MJCommand) {
 	char buffer[buffer_size];
 	MockHTMLMahjongGameServer server;
 	MockHTMLMahjongGameResponse respond;
-    Settings level_settings;
 	std::shared_ptr<MockGame> game;
 	MockUserView view;
 
 
     void setup()
     {
-        game =std::make_shared<MockGame>(level_settings);
+        game =std::make_shared<MockGame>();
     }
 };
 
@@ -63,8 +62,7 @@ TEST(MJCommand, game_does_not_exsit){
 }
 
 TEST(MJCommand, pick){
-    Settings settings;
-	MockGame game(settings);
+	MockGame game;
 	mock().expectOneCall("nextMove").onObject(&game).ignoreOtherParameters();
 	mock().expectOneCall("getUserView").onObject(&game).andReturnValue((void*)&view);
 	mock().expectOneCall("popAction").onObject(&respond).withParameter("view", &view);
@@ -73,8 +71,7 @@ TEST(MJCommand, pick){
 }
 
 TEST(MJCommand, discard){
-	Settings settings;
-	MockGame game(settings);
+	MockGame game;
 	mock().expectOneCall("nextMove").onObject(&game).ignoreOtherParameters();
 	mock().expectOneCall("getUserView").onObject(&game).andReturnValue((void*)&view);
 	mock().expectOneCall("popAction").onObject(&respond).withParameter("view", &view);
@@ -83,8 +80,7 @@ TEST(MJCommand, discard){
 }
 
 TEST(MJCommand, chow){
-	Settings settings;
-	MockGame game(settings);
+	MockGame game;
 	mock().expectOneCall("nextMove").onObject(&game).ignoreOtherParameters();
 	mock().expectOneCall("getUserView").onObject(&game).andReturnValue((void*)&view);
 	mock().expectOneCall("popAction").onObject(&respond).withParameter("view", &view);
@@ -93,8 +89,7 @@ TEST(MJCommand, chow){
 }
 
 TEST(MJCommand, pong){
-	Settings settings;
-	MockGame game(settings);
+	MockGame game;
 	mock().expectOneCall("nextMove").onObject(&game).ignoreOtherParameters();
 	mock().expectOneCall("getUserView").onObject(&game).andReturnValue((void*)&view);
 	mock().expectOneCall("popAction").onObject(&respond).withParameter("view", &view);
@@ -103,8 +98,7 @@ TEST(MJCommand, pong){
 }
 
 TEST(MJCommand, kong){
-	Settings settings;
-	MockGame game(settings);
+	MockGame game;
 	mock().expectOneCall("nextMove").onObject(&game).ignoreOtherParameters();
 	mock().expectOneCall("getUserView").onObject(&game).andReturnValue((void*)&view);
 	mock().expectOneCall("popAction").onObject(&respond).withParameter("view", &view);
@@ -113,8 +107,7 @@ TEST(MJCommand, kong){
 }
 
 TEST(MJCommand, win){
-	Settings settings;
-	MockGame game(settings);
+	MockGame game;
 	mock().expectOneCall("nextMove").onObject(&game).ignoreOtherParameters();
 	mock().expectOneCall("getUserView").onObject(&game).andReturnValue((void*)&view);
 	mock().expectOneCall("popAction").onObject(&respond).withParameter("view", &view);

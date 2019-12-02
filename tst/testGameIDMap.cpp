@@ -10,13 +10,12 @@ TEST_GROUP(GameIDMap) {
 	GameIDMap map;
 	Game * game1;
 	Game * game2;
-	Settings settings;
 	int id1;
 	int id2;
 	void setup() {
         Settings settings;
-		game1 = new Game(settings);
-		game2 = new Game(settings);
+		game1 = new Game();
+		game2 = new Game();
 		id1 = map.addGameAndGetID(game1);
 		id2 = map.addGameAndGetID(game2);
 	}

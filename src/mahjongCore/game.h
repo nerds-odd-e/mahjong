@@ -13,7 +13,7 @@ class UserView;
 class Game {
 public:
 
-	Game(Settings& settings);
+	Game();
 
 	virtual ~Game();
 
@@ -29,6 +29,11 @@ public:
 
 	Wall * getWall();
 
+    unsigned int GetLevel();
+    void IncrementLevel();
+	void setLevel(unsigned int level);
+	int GetSublevel();
+
 private:
 	PlayerActionRequest * popActionRequest();
 	Player * getPlayerOfDistance(int i);
@@ -37,7 +42,7 @@ private:
 	Player * aiPerspective_;
 	Player * player_;
 	UserPerspective * userPerspective_;
-	Settings& settings_;
+	Settings settings_;
 };
 
 #endif /* SYSTEM_H_ */

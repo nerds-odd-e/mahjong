@@ -32,12 +32,6 @@ public:
 
 	GameID getLastGameID();
 
-    unsigned int GetLevel();
-    void IncrementLevel();
-	void setLevel(unsigned int level);
-
-	int GetSublevel();
-
 private:
     Settings settings_;
 	GameIDMap *gamePool_;

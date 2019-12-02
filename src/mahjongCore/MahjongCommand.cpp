@@ -43,23 +43,15 @@ void MJTestSetNextPick::execute(GameJsonResponse *respond) {
 }
 
 void MJCommandSetLevel::execute(GameJsonResponse *respond) {
-    server_->setLevel(level_);
-	game_->CreateAIPerspective();
+    game_->setLevel(level_);
 }
 
 void MJCommandGetLevel::execute(GameJsonResponse *respond)
 {
     std::string response_json =
-        "{\"current_level\":" + std::to_string(server_->GetLevel()) + "\n}";
+        "{\"current_level\":" + std::to_string(game_->GetLevel()) + "\n}";
 
     respond->setContent(response_json);
-}
-
-void MJCommandNumberOfWins::execute(GameJsonResponse *respond) {
-	std::string response_json =
-		"{\"number_of_wins\":" + std::to_string(server_->GetSublevel()) + "\n}";
-
-	respond->setContent(response_json);
 }
 
 void MJCommandSetHand::execute(GameJsonResponse *respond) {

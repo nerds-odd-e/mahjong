@@ -127,7 +127,7 @@ public:
 
 class MockGame: public Game {
 public:
-    MockGame(Settings& settings) : Game{settings} {};
+    MockGame(): Game() {};
 
 	virtual void nextMove(PlayerActionRequest *request) {
 		UNUSED(request);
