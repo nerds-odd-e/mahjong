@@ -20,4 +20,3 @@ Feature: Mahjong Game Testability
         Given I pick
         And the next tile to be picked is "🀡"
         When I discard my new pick
-        Then I should see my opponent picks up tile "🀡"

@@ -14,3 +14,4 @@ node_modules/
 CMakeFiles
 Makefile
 CMakeCache.txt
+**/__pycache__

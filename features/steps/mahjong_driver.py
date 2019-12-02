@@ -11,15 +11,36 @@ tile_map = {
     "🀚": 66,
     "🀛": 67,
     "🀜": 68,
+	"🀝": 69,
+    "🀞": 70,
+    "🀟": 71,
+    "🀠": 72,
     "🀡": 73,
-    "🀆": 48,
     "🀇": 49,
+    "🀈": 50,
+    "🀉": 51,
+    "🀊": 52,
+    "🀋": 53,
+    "🀌": 54,
+    "🀍": 55,
+    "🀎": 56,
     "🀏": 57,
     "🀐": 97,
     "🀑": 98,
+    "🀒": 99,
+    "🀓": 100,
     "🀔": 101,
+    "🀕": 102,
+    "🀖": 103,
     "🀗": 104,
-    "🀘": 105
+    "🀘": 105,
+    "🀀": 108,
+    "🀁": 111,
+    "🀂": 114,
+    "🀃": 117,
+    "🀄": 120,
+    "🀅": 123,
+    "🀆": 126,
 }
 
 tile_id_map = {v: k for k, v in tile_map.items()}
@@ -53,6 +74,9 @@ class MJDriver:
     def player_0_pick(self):
         self.game_get_request("pick")
 
+    def player_0_discard(self, tile):
+        self.game_get_request(f"throw?{to_tile_id(tile)}") 
+
     def get_current_pick_of_player(self, index):
         result = self.get_current_status()
         return id_to_tile(result['players'][index]['new_pick'])
@@ -61,6 +85,17 @@ class MJDriver:
         tiles = replace_tiles.split(",")
         request_tiles = ",".join(str(to_tile_id(tile)) for tile in tiles)
         game_get_request(self.context_, "testability_set_hand?" + request_tiles)
+
+    def get_last_discard(self):
+        last_discard = None
+        while(True):
+            event = self.get_next_event()
+            if event["action"] == "your_turn":
+                break
+            if event["action"] == "discard":
+                last_discard = event["tile"]
+        return id_to_tile(last_discard)
+        
 
     def _game_id(self):
         return self.context_.scenario.game_id

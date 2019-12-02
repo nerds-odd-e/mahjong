@@ -3,10 +3,6 @@ from mahjong_driver import get_request, game_get_request, to_tile_id
 from mahjong_tester import MJTester, assert_eq
 
 
-def get_my_current_pick(context):
-    p = game_get_request(context, "current") 
-    return p['players'][0]['new_pick']
-
 def tile_types():
     map = {
         "circle": circles(),
@@ -76,7 +72,7 @@ def step_impl(context):
 
 @step(u'I pick')
 def step_impl(context):
-    game_get_request(context, "pick")
+    MJTester(context).driver_.player_0_pick()
 
 @then(u'I should see that I have "{number_of_tiles}" tiles')
 def step_impl(context, number_of_tiles):
@@ -111,23 +107,12 @@ def step_impl(context, tile):
 
 @then(u'I should see my new pick is "{tile}"')
 def step_impl(context, tile):
-    expected = to_tile_id(tile)
-    actual = get_my_current_pick(context)
-    assert  actual == expected, f"expected '{expected}', but got '{actual}'"
+    actual = MJTester(context).driver_.get_current_pick_of_player(0)
+    assert_eq(tile, actual)
 
 @step(u'I discard my new pick')
 def step_impl(context):
-    tile = get_my_current_pick(context)
-    game_get_request(context, f"throw?{tile}") 
-
-@step(u'I should see my opponent picks up tile "{tile}"')
-def step_impl(context, tile):
-    event = game_get_request(context, "next_event")
-    assert event["action"] == "pick"
-    assert event["player"] == 1
-    actual = event["tile"]
-    expected = to_tile_id(tile)
-    assert  actual == expected, f"expected '{expected}', but got '{actual}'"
+    MJTester(context).player_0_discard_new_pick()
 
 @step(u'My number of wins is "{wins}"')
 def step_impl(context, wins):
@@ -161,19 +146,11 @@ def step_impl(context):
     p = game_get_request(context, "current") 
     assert are_all_tiles_in_one_suit(p['players'][0]['hand']), f"Player's tiles are not of the same suit"
 
-@given(u'it\'s my opponent\'s turn and it picks "{tile}"')
+@step(u'my opponent picks a "{tile}" after I pick and discard')
 def step_impl(context, tile):
-    context.execute_steps(u'''
-        When I pick
-        And the next tile to be picked is "{tile}"
-        And I discard my new pick
-        '''.format(tile = tile))
+    MJTester(context).force_player_1_to_pick_after_player_0_pick_and_discard(tile)
 
-@when(u'my opponent discards a tile')
-def step_impl(context):
-    pass
-
-@then(u'the discarded tile is "{tile}"')
+@then(u'the discarded tile is also "{tile}"')
 def step_impl(context, tile):
     result = game_get_request(context, "next_event")
     result = game_get_request(context, "next_event")
@@ -198,25 +175,17 @@ def step_impl(context, suit):
 def step_impl(context, replace_tiles):
     MJTester(context).replace_player_0_hand_with(replace_tiles)
 
-@when(u'My opponent discards the "{next_tile}"')
-def step_impl(context, next_tile):
-    game_get_request(context, "testability_set_next_pick?49")
-    game_get_request(context, "pick")
-    game_get_request(context, "testability_set_next_pick?" + str(to_tile_id(next_tile)))
-    game_get_request(context, "throw?49")
-    game_get_request(context, "next_event")
-    game_get_request(context, "next_event")
-    game_get_request(context, "next_event")
-    game_get_request(context, "next_event")
+@then(u'I should see that my opponent discarded the "{tile}"')
+def step_impl(context, tile):
+    assert_eq(tile, MJTester(context).driver_.get_last_discard())
 
 @then(u'I should see that I can do only these "{possible_actions}"')
 def step_impl(context, possible_actions):
-    p = game_get_request(context, "current")
-    wanted_actions = possible_actions.split(" ")
-    assert_eq(wanted_actions, p['allowed_actions'])
+    allowed_actions = MJTester(context).get_allowed_actions()
+    expected_actions = possible_actions.split(" ")
+    assert_eq(expected_actions, allowed_actions)
 
 @then(u'I should see that I can do only these ""')
 def step_impl(context):
-    p = game_get_request(context, "current")
-    possible_actions = []
-    assert_eq(possible_actions, p['allowed_actions'])
+    allowed_actions = MJTester(context).get_allowed_actions()
+    assert_eq([], allowed_actions)

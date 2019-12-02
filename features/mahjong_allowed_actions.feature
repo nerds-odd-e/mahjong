@@ -7,12 +7,13 @@ Feature: Mahjong Game - allowed actions
 
     Scenario Outline: Melding prompt test
         Given my hand is "🀙,🀙,🀚,🀛"
-        When My opponent discards the "<next tile>"
-        Then I should see that I can do only these "<actions>"
+        When my opponent picks a "<next tile>" after I pick and discard
+        Then I should see that my opponent discarded the "<next tile>"
+        And I should see that I can do only these "<actions>"
 
         Examples:
             | next tile | actions       |
-            | 🀡      |               |
-            | 🀙      | win pong chow |
-            | 🀜      | win chow      |
-            | 🀚      | chow          |
+            | 🀡        |               |
+            | 🀙        | win pong chow |
+            | 🀜        | win chow      |
+            | 🀚        | chow          |

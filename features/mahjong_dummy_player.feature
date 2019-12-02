@@ -6,6 +6,5 @@ Background:
 
 Scenario: Dummy Player Discard Behaviour
   Given I start a game
-  And it's my opponent's turn and it picks "🀛"
-  When my opponent discards a tile
-  Then the discarded tile is "🀛"
+  When my opponent picks a "🀛" after I pick and discard
+  Then the discarded tile is also "🀛"
