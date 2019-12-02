@@ -6,7 +6,7 @@ Feature: Mahjong Game Testability
         And I start a game
 
     Scenario: Starting a game hosted by player
-        Then I should see that I have "4" tiles
+        Then I should see that all players have 4 tiles
         And I have nothing picked
         When I pick
         Then I've got one tile picked

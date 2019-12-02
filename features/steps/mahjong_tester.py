@@ -1,12 +1,14 @@
-from mahjong_driver import MJDriver, get_request, game_get_request, to_tile_id
+from mahjong_driver import join_a_game_and_get_driver
 
 def assert_eq(expected, actual):
     assert expected == actual, f"expected: {expected}, actual: {actual}"
     
+def join_a_game_to_test():
+    return MJTester(join_a_game_and_get_driver())
+
 class MJTester:
-    def __init__(self, context):
-        self.context_ = context
-        self.driver_ = MJDriver(context)
+    def __init__(self, game_driver):
+        self.driver_ = game_driver
 
     def player_0_immediately_win(self):
         result = self.driver_.get_current_status()
@@ -14,7 +16,7 @@ class MJTester:
         new_hand = ','.join("🀙" * hand_size)
         self.replace_player_0_hand_with(new_hand)
         self.force_player_0_to_pick_a("🀙")
-        result = game_get_request(self.context_,"win")
+        result = self.driver_.player_0_win()
 
     def force_player_0_to_pick_a(self, tile):
         self.driver_.testability_set_next_pick(tile)

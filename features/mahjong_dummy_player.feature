@@ -7,4 +7,4 @@ Background:
 Scenario: Dummy Player Discard Behaviour
   Given I start a game
   When my opponent picks a "🀛" after I pick and discard
-  Then the discarded tile is also "🀛"
+  Then I should see that my opponent discarded the "🀛"
