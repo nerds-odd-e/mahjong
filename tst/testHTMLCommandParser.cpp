@@ -56,7 +56,7 @@ TEST(HTMLCommandParser, MJCommandDiscard) {
 	UserPerspective game( settings);
 	mock().expectOneCall("getGameByID").onObject(&server).withParameter(
 			"gameID", 3).andReturnValue(&game);
-	cmd = parser->parse("/3/throw", "5");
+	cmd = parser->parse("/3/discard", "5");
 	STRCMP_EQUAL(typeid(MJCommandDiscard).name(), typeid(*cmd).name());
 }
 

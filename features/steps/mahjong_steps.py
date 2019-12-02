@@ -53,7 +53,7 @@ def giving_the_same_tiles_to_users_hand(context,replace_tile):
     for tile in tiles_in_hand:
         game_get_request(context, "testability_set_next_pick?" + str(to_tile_id(replace_tile)))
         game_get_request(context, "pick")
-        game_get_request(context, f"throw?{tile}")
+        game_get_request(context, f"discard?{tile}")
 
     p = game_get_request(context, "current")
     new_hand = p['players'][0]['hand']

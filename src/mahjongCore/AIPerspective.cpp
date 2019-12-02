@@ -17,7 +17,7 @@ AIPerspective::~AIPerspective() {
 Tile AIPerspective::whichToDiscard() {
 	int i;
 	int max = 0;
-	int index_to_throw = 0;
+	int index_to_discard = 0;
 	Tile holdings[ai_max_holding_count + 1];
 	Tile tiles[ai_max_holding_count + 1];
 	int tile_count = player->getHoldings(holdings, ai_max_holding_count);
@@ -28,9 +28,9 @@ Tile AIPerspective::whichToDiscard() {
 		int score = evaluator->evaluate_array(TileArray(tiles, tile_count));
 		if (score > max) {
 			max = score;
-			index_to_throw = i;
+			index_to_discard = i;
 		}
 	}
 
-	return holdings[index_to_throw];
+	return holdings[index_to_discard];
 }

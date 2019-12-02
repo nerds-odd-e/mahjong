@@ -62,7 +62,7 @@ void MahjongTable::deal(Tile tiles[], int n) {
 	changeCurrentPlayer(1);
 }
 
-void MahjongTable::throw_tile(Tile tile) {
+void MahjongTable::discard_tile(Tile tile) {
 	int i = 0;
 	for (i = 0; i < this->player_count_; i++) {
 		Player * perspective = getPlayerOfDistance(i);
@@ -126,7 +126,7 @@ void MahjongTable::restartGameWhenAllPlayersAreReady() {
 }
 
 void MahjongTable::discard(Tile& action_tile) {
-	throw_tile(action_tile);
+	discard_tile(action_tile);
 	if (wall_->isEnd()) {
 		win(0);
 		currentState_ = &endOfGameState_;

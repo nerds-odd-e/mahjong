@@ -115,7 +115,7 @@ Tell the server you want to chow the last discarded tile from your opponent. The
 |chow?🀝     | 🀜🀝🀞         | 🀚🀛🀜                    |
 |chow?🀞     | illegal     |                        |
 
-### `GET /<game_id>/throw?<tile_id>`
+### `GET /<game_id>/discard?<tile_id>`
 
 Tell the server that you want to discard the tile with tile id. Returns:
 
@@ -134,7 +134,7 @@ Tell the server you think you win. Returns
 
 ### `GET /<game_id>/testability_set_next_pick?<tile_id>`
 
-To change the tile to be picked next (first tile in the wall). Note that if you want the opponent to pick that tile, you need to call this before you throw a tile, because after that you don't not have control of the game until it's your turn to move again.
+To change the tile to be picked next (first tile in the wall). Note that if you want the opponent to pick that tile, you need to call this before you discard a tile, because after that you don't not have control of the game until it's your turn to move again.
 
 
 ### `GET /<game_id>/testability_set_hand?<tile_id>,<tile_id>,...<tile_id>`

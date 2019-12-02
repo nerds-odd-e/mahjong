@@ -148,7 +148,7 @@ var App = {
                     if (App.chowing)
                         App.Chow_with_tile(discard);
                     else
-                        App._Throw(discard);
+                        App._Discard(discard);
             }
         }
     },
@@ -159,15 +159,15 @@ var App = {
         }
         return false;
     },
-    _Throw: function(tile) {
+    _Discard: function(tile) {
         this._ResetAllButtons();
-        App._ExecuteCmd('throw', tile);
+        App._ExecuteCmd('discard', tile);
     },
     _Pick: function() {
         this._ResetAllButtons();
         App._ExecuteCmd('pick', 0);
     },
-    Throw: function(player, tile) {
+    Discard: function(player, tile) {
         if (tile != 0) {
             if (this.players[player].new_pick != tile) {
                 for (var i = 0; i < this.players[player].hand.length; i++)
@@ -271,7 +271,7 @@ var App = {
     _DisplayAction: function(data) {
         if (data.action === 'update_all') { App.updateAll(); return; }
         if (data.action === 'pick') { App.Pick(data.player, data.tile); return; }
-        if (data.action === 'discard') { App.Throw(data.player, data.tile); return; }
+        if (data.action === 'discard') { App.Discard(data.player, data.tile); return; }
         if (data.action === 'win') { App.WinAck(data.player, data.score); return; }
         alert("unknown action: " + data.action)
     },

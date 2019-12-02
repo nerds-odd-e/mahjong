@@ -81,7 +81,7 @@ class MJDriver:
         self.game_get_request("pick")
 
     def player_0_discard(self, tile):
-        self.game_get_request(f"throw?{to_tile_id(tile)}") 
+        self.game_get_request(f"discard?{to_tile_id(tile)}") 
 
     def player_0_win(self):
         return self.game_get_request("win") 

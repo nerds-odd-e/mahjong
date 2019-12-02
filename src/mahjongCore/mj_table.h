@@ -29,7 +29,7 @@ private:
 	void changeCurrentPlayer( int distance);
 	void win( int score);
 	void deal( Tile tiles[], int n);
-	void throw_tile( Tile tile);
+	void discard_tile( Tile tile);
 	void pong();
 	int chow( Tile with);
 	void restartGameWhenAllPlayersAreReady();

@@ -85,7 +85,7 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
 		if (strcmp(cmd, "pick") == 0)
 			return new MJCommandPick(game);
 
-		if (strcmp(cmd, "throw") == 0)
+		if (strcmp(cmd, "discard") == 0)
 			return new MJCommandDiscard(game, tile);
 
 		if (strcmp(cmd, "chow") == 0)
