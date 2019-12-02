@@ -52,7 +52,7 @@ def step_impl(context, tile):
 def step_impl(context):
     tester.player_0_discard_new_pick()
 
-@given(u'I am level "{lvl}" player')
+@step(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
     tester.driver_.set_level(lvl)
 
