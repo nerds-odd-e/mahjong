@@ -134,13 +134,6 @@ public:
 	}
 };
 
-class MJCommandForceWin: public MJCommandAction {
-public:
-	MJCommandForceWin(Game *game) :
-			MJCommandAction(game, ACTION_FORCE_WIN, NO_TILE) {
-	}
-};
-
 class MJTestSetNextPick: public MahjongCommand {
 public:
 	MJTestSetNextPick(Game *game, Tile tile) :
@@ -154,12 +147,13 @@ private:
 
 class MJCommandSetLevel: public MahjongCommand {
 public:
-	MJCommandSetLevel(MahjongGameServer* server, int level) :
-		server_(server), level_(level) {
+	MJCommandSetLevel(MahjongGameServer* server, Game *game, int level) :
+		server_(server), game_(game), level_(level) {
 	}
 	void execute(GameJsonResponse *respond);
 private:
 	MahjongGameServer* server_;
+	Game* game_;
 	int level_;
 };
 

@@ -7,11 +7,8 @@
 
 Game::Game(Settings & settings) : settings_(settings) {
 	wall_ = createWall();	
-	table_ = new MahjongTable(wall_, settings_);
-	CreateAIPerspective();
 	userPerspective_ = new UserPerspective(settings_);
-	table_->addPlayer(userPerspective_);
-	table_->addPlayer(aiPerspective_);
+	CreateAIPerspective();
 	player_ = NULL;
 }
 
@@ -33,6 +30,9 @@ void Game::CreateAIPerspective()
 	{
 		aiPerspective_ = new DummyPlayerPerspective(settings_);
 	}
+	table_ = new MahjongTable(wall_, settings_);
+	table_->addPlayer(userPerspective_);
+	table_->addPlayer(aiPerspective_);
 }
 
 void Game::addPlayer(Player * player) {

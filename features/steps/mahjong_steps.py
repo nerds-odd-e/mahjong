@@ -95,7 +95,8 @@ def step_impl(context):
 @when(u'I won {win_count} times')
 def step_impl(context, win_count):
     for _ in range(int(win_count)):
-        game_get_request(context, "force_win")
+        tester.driver_.start_a_game()
+        tester.player_0_immediately_win()
 
 @step(u'the next tile to be picked is "{tile}"')
 def step_impl(context, tile):
@@ -138,8 +139,8 @@ def step_impl(context,expected_number_of_wins):
 
 @then(u'All of my tiles should be of the same type')
 def step_impl(context):
-    p = game_get_request(context, "current") 
-    assert are_all_tiles_in_one_suit(p['players'][0]['hand']), f"Player's tiles are not of the same suit"
+    suits = tester.driver_.get_suits_of_player_0_hand()
+    assert_eq(1, len(suits))
 
 @step(u'my opponent picks a "{tile}" after I pick and discard')
 def step_impl(context, tile):
@@ -147,15 +148,15 @@ def step_impl(context, tile):
 
 @step(u'I am in round "{round}"')    
 def step_impl(context, round):
-    for _ in range(int(round)):
-        game_get_request(context, "start")
+    for _ in range(int(round) - 1):
+        tester.driver_.start_a_game()
+        tester.player_0_immediately_win()
+    tester.driver_.start_a_game()
 
 @then(u'I must see all my tiles are "{suit}"')
 def step_impl(context, suit):    
-    p = game_get_request(context, "current") 
-    for tile in  p['players'][0]['hand']:
-        if tile not in tile_types()[suit]:
-            assert False, "Not all tiles are " + suit
+    suits = tester.driver_.get_suits_of_player_0_hand()
+    assert_eq(set([suit]), suits)
 
 @given(u'my hand is "{replace_tiles}"')
 def step_impl(context, replace_tiles):

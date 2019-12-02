@@ -32,13 +32,13 @@ public:
 			Wall(0), currentTile_(1), wallEnd_(false) {
 	}
 
-	Tile popATile() {
+	Tile popATile() override {
 		Tile tileToReturn = currentTile_;
 		currentTile_ = currentTile_.nextTile();
 		return tileToReturn;
 	}
 
-	bool isEnd() {
+	bool isEnd() override {
 		return wallEnd_;
 	}
 

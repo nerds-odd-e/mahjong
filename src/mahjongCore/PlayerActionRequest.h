@@ -9,7 +9,6 @@ typedef enum {
 	ACTION_CHOW,
 	ACTION_KONG,
 	ACTION_WIN,
-	ACTION_FORCE_WIN,
 	ACTION_RESTART
 }action_t;
 

@@ -19,6 +19,4 @@ void PlayerActionRequest::doPlayerAction(GameState *currentState_) {
 		currentState_->doPong();
 	else if (ACTION_CHOW == action_)
 		currentState_->doChow(tile_);
-	else if (ACTION_FORCE_WIN == action_)
-		currentState_->doWin();
 }

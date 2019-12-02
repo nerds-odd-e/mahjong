@@ -7,10 +7,6 @@
 
 constexpr int SHUFFLE_TIMES = 1000;
 
-/*
- * SIMPLIFIED_MAHJONG is for people who cannot read Chinese.
- */
-#ifndef SIMPLIFIED_MAHJONG
 static const std::vector<Tile> all_tile_types = { C(1), C(2), C(3), C(4), C(5), C(6), C(7),
 		C(8), C(9), R(1), R(2), R(3), R(4), R(5), R(6), R(7), R(8), R(9),
 		B(1), B(2), B(3), B(4), B(5), B(6), B(7), B(8), B(9), MJ_EAST,
@@ -19,12 +15,6 @@ static const std::vector<Tile> all_tile_types = { C(1), C(2), C(3), C(4), C(5), 
 static const std::vector<Tile> character_tile_types = { C(1), C(2), C(3), C(4), C(5), C(6), C(7), C(8), C(9)};
 static const std::vector<Tile> circle_tile_types = {  R(1), R(2), R(3), R(4), R(5), R(6), R(7), R(8), R(9)};
 static const std::vector<Tile> bamboo_tile_types = { B(1), B(2), B(3), B(4), B(5), B(6), B(7), B(8), B(9)};
-
-static const std::vector<std::vector<Tile>> tile_suits = {circle_tile_types, bamboo_tile_types};
-#else
-static const std::vector<Tile> all_types = {R(1), R(2), R(3), R(4), R(5), R(6), R(7), R(8), R(9),
-		B(1), B(2), B(3), B(4), B(5), B(6), B(7), B(8), B(9)};
-#endif
 
 const int TILE_TYPE_COUNT = all_tile_types.size();
 
@@ -53,11 +43,13 @@ void Wall::initializePool(const unsigned int suitCount) {
 	this->picksCount_ = 0;
 }
 
+static const std::vector<std::vector<Tile>> tile_suits = {circle_tile_types, bamboo_tile_types, character_tile_types};
+
 void Wall::applySettings(const unsigned int suitCount)
 {
 	if(suitCount == 1)
 	{
-		suitIndex_ %= 2;
+		suitIndex_ %= 3;
 		tileTypes_ = tile_suits[suitIndex_++];
 	}
 	else

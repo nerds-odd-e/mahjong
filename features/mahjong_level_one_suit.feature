@@ -9,17 +9,16 @@ Scenario: Starting a game hosted by player
     When I start a game
     Then All of my tiles should be of the same type
 
-@wip
 Scenario Outline: In multiple games suits should be cycled
     When I am in round "<round>"
-    Then I must see all my tiles are "<suit>"
+    Then I must be level "1" player
+    And I must see all my tiles are "<suit>"
 
     Examples:
         | round | suit   |
         | 1     | circle |
         | 2     | bamboo |
         | 3     | character |
-        | 4     | circle |
 
 
     

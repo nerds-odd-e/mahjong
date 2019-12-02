@@ -15,8 +15,11 @@ class MJTester:
         hand_size = len(result['players'][0]['hand'])
         new_hand = ','.join("🀙" * hand_size)
         self.replace_player_0_hand_with(new_hand)
+        self.driver_.pop_event_until_its_player_0_turn()
         self.force_player_0_to_pick_a("🀙")
         result = self.driver_.player_0_win()
+        assert_eq("win", result["action"])
+        assert_eq(0, result["player"])
 
     def force_player_0_to_pick_a(self, tile):
         self.driver_.testability_set_next_pick(tile)

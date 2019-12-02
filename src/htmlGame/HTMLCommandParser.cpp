@@ -43,7 +43,7 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParameters(
 	if (strcmp(gameCmd, "set_level") == 0)
 	{
 		int level = atoi(parameters);
-		return new MJCommandSetLevel(server_, level);
+		return new MJCommandSetLevel(server_, game, level);
 	}
 	if (strcmp(gameCmd, "get_level") == 0)
 	{
@@ -100,12 +100,6 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
 		if (strcmp(cmd, "win") == 0)
 			return new MJCommandWin(game);
 		
-		if (strcmp(cmd, "force_win") == 0)
-			return new MJCommandForceWin(game);
-
-		if (strcmp(cmd, "undo") == 0)
-			return new MJCommandWin(game);
-
 		if (strcmp(cmd, "testability_set_next_pick") == 0)
 			return new MJTestSetNextPick(game, tile);
 
