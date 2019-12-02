@@ -5,7 +5,7 @@ Feature: Mahjong Game - difficulty levels
 
     Scenario Outline: difficulty levels
         Given I am level "<level>" player
-        When I start a game
+        When I start a new round
         Then I should see that all players have <hand_size> tiles
         And I must be level "<level>" player
         And my opponent must be at <opponent_level> level

@@ -65,7 +65,7 @@ class MJDriver:
     def game_get_request(self, cmd):
         return get_request(str(self._game_id)+ "/" + cmd) 
 
-    def start_a_game(self):
+    def start_a_round(self):
         self.game_get_request("start")
 
     def get_current_status(self):
@@ -115,10 +115,6 @@ class MJDriver:
 
     def get_level(self):
         return self.game_get_request("get_level")['current_level']
-
-    def get_number_of_wins(self):
-        result = self.game_get_request("get_number_of_wins")
-        return result["number_of_wins"]
 
     def get_suits_of_player_0_hand(self):
         tile_ids = self.get_current_status()["players"][0]["hand"]

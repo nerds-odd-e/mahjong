@@ -182,17 +182,6 @@ class MJCommandStartImmediateWinGame:public MJCommandStartNewGame
 	}
 };
 
-class MJCommandNumberOfWins: public MahjongCommand {
-public:
-	MJCommandNumberOfWins(MahjongGameServer* server, Game *game) :
-			server_{server}, game_{game}{
-	}
-	void execute(GameJsonResponse *respond);
-private:
-	MahjongGameServer* server_;
-	Game* game_;
-};
-
 class MJCommandSetHand: public MahjongCommand {
 public:
 	MJCommandSetHand(Game *game, const std::vector<int>& tiles) : game_{game}, tiles_{tiles}{

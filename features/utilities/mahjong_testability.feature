@@ -3,7 +3,7 @@ Feature: Mahjong Game Testability
     Background:
         Given I have joined a game
         And I am level "1" player
-        And I start a game
+        And I start a new round
 
     Scenario: Starting a game hosted by player
         Then I should see that all players have 4 tiles

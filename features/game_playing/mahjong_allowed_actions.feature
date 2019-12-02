@@ -3,7 +3,7 @@ Feature: Mahjong Game - allowed actions
     Background:
         Given I have joined a game
         And I am level "1" player
-        And I start a game
+        And I start a new round
 
     Scenario Outline: Melding prompt test
         Given my hand is "🀙,🀙,🀚,🀛"

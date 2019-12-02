@@ -102,9 +102,6 @@ MahjongCommand * HTMLCommandParser::parseWithExtractedParametersForGame(
 		
 		if (strcmp(cmd, "testability_set_next_pick") == 0)
 			return new MJTestSetNextPick(game, tile);
-
-		if (strcmp(cmd, "get_number_of_wins") == 0)
-			return new MJCommandNumberOfWins(server_, game);
 	}
 	return new MJCommandDoesNotExist;
 }

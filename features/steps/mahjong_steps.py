@@ -2,65 +2,6 @@ from behave import *
 from mahjong_tester import join_a_game_to_test, assert_eq
 
 
-def tile_types():
-    map = {
-        "circle": circles(),
-        "character": characters(),
-        "bamboo": bamboos()
-    }
-    return map
-
-def circles():
-    return range(to_tile_id("🀙"), to_tile_id("🀡") + 1)
-
-def characters():
-    return range(to_tile_id("🀇"), to_tile_id("🀏") + 1)
-
-def bamboos():
-    return range(to_tile_id("🀐"), to_tile_id("🀘") + 1)
-
-def is_in_circles(tile):
-    return tile in circles()
-
-def is_in_characters(tile):
-    return tile in characters()
-
-def is_in_bamboo(tile):
-    return tile in bamboos()
-
-def are_all_tiles_in_one_suit(tiles):
-    if is_in_circles(tiles[0]):
-        for tile in tiles:
-            if not is_in_circles(tile):
-                return False        
-    elif is_in_characters(tiles[0]):
-        for tile in tiles:
-            if not is_in_characters(tile):
-                return False
-    elif is_in_bamboo(tiles[0]):
-        for tile in tiles:
-            if not is_in_bamboo(tile):
-                return False            
-    return True
-
-def try_win(context):
-    game_get_request(context, "win")
-
-def giving_the_same_tiles_to_users_hand(context,replace_tile):
-    p = game_get_request(context, "current")
-    tiles_in_hand = p['players'][0]['hand']
-
-    for tile in tiles_in_hand:
-        game_get_request(context, "testability_set_next_pick?" + str(to_tile_id(replace_tile)))
-        game_get_request(context, "pick")
-        game_get_request(context, f"discard?{tile}")
-
-    p = game_get_request(context, "current")
-    new_hand = p['players'][0]['hand']
-
-    for tile in new_hand:
-        assert  tile == to_tile_id(replace_tile), f"expected '{to_tile_id(replace_tile)}', but got '{tile}'"
-
 global tester
 
 @given(u'I have joined a game')
@@ -68,9 +9,9 @@ def step_impl(context):
     global tester
     tester = join_a_game_to_test()
 
-@step(u'I start a game')
+@step(u'I start a new round')
 def step_impl(context):
-    tester.driver_.start_a_game()
+    tester.driver_.start_a_round()
 
 @step(u'I pick')
 def step_impl(context):
@@ -95,7 +36,7 @@ def step_impl(context):
 @when(u'I won {win_count} times')
 def step_impl(context, win_count):
     for _ in range(int(win_count)):
-        tester.driver_.start_a_game()
+        tester.driver_.start_a_round()
         tester.player_0_immediately_win()
 
 @step(u'the next tile to be picked is "{tile}"')
@@ -111,14 +52,6 @@ def step_impl(context, tile):
 def step_impl(context):
     tester.player_0_discard_new_pick()
 
-@step(u'My number of wins is "{wins}"')
-def step_impl(context, wins):
-    raise NotImplementedError(u'STEP: When My number of wins is 2')
-
-@when(u'Outcome of the game is "{result}"')
-def step_impl(context, result):
-    raise NotImplementedError(u'STEP: When Result of the game is win')
-    
 @given(u'I am level "{lvl}" player')
 def step_impl(context, lvl):
     tester.driver_.set_level(lvl)
@@ -132,16 +65,6 @@ def step_impl(context, lvl):
 def step_impl(context):
     tester.player_0_immediately_win()
 
-@step(u'My number of wins should be {expected_number_of_wins}')
-def step_impl(context,expected_number_of_wins):
-    number_of_wins = tester.driver_.get_number_of_wins()
-    assert_eq(str(expected_number_of_wins),str(number_of_wins))
-
-@then(u'All of my tiles should be of the same type')
-def step_impl(context):
-    suits = tester.driver_.get_suits_of_player_0_hand()
-    assert_eq(1, len(suits))
-
 @step(u'my opponent picks a "{tile}" after I pick and discard')
 def step_impl(context, tile):
     tester.force_player_1_to_pick_after_player_0_pick_and_discard(tile)
@@ -149,9 +72,9 @@ def step_impl(context, tile):
 @step(u'I am in round "{round}"')    
 def step_impl(context, round):
     for _ in range(int(round) - 1):
-        tester.driver_.start_a_game()
+        tester.driver_.start_a_round()
         tester.player_0_immediately_win()
-    tester.driver_.start_a_game()
+    tester.driver_.start_a_round()
 
 @then(u'I must see all my tiles are "{suit}"')
 def step_impl(context, suit):    
