@@ -1,0 +1,40 @@
+{
+  "hooks": {
+    "beforeSubmitPrompt": [
+      {
+        "command": "node .agents/skills/dough-execute-plan/scripts/ci-host-hook.mjs cursor",
+        "timeout": 5
+      }
+    ],
+    "postToolUse": [
+      {
+        "command": "node .agents/skills/dough-execute-plan/scripts/ci-host-hook.mjs cursor",
+        "timeout": 5
+      },
+      {
+        "command": "node .agents/skills/dough-execute-plan/scripts/slice-clock-hook.mjs cursor",
+        "timeout": 5
+      },
+      {
+        "command": "node .agents/skills/dough-execute-plan/scripts/session-landing-handoff.mjs --cursor-hook",
+        "timeout": 5,
+        "matcher": "Shell"
+      }
+    ],
+    "stop": [
+      {
+        "command": "node .agents/skills/dough-execute-plan/scripts/ci-host-hook.mjs cursor",
+        "timeout": 5,
+        "loop_limit": 5
+      }
+    ],
+    "preToolUse": [
+      {
+        "command": "node .agents/skills/dough-product-backlog/scripts/product-backlog-guard-hook.mjs . cursor",
+        "timeout": 5,
+        "matcher": "Write|StrReplace|Delete"
+      }
+    ]
+  },
+  "version": 1
+}
